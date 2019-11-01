@@ -1,11 +1,29 @@
 {
-  "name": "acadfy",
-  "version": "1.0.0",
-  "description": "aplicativo de gerenciamento de treino",
+  "name": "example",
+  "version": "0.0.1",
   "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --require ts-node/register start.ts",
+    "test": "jest --config jest.json"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "eslint": "^6.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "pjson": "^1.0.9",
+    "ts-framework": "git+https://github.com/nxtep-io/ts-framework.git#v2",
+    "ts-framework-common": "nxtep-io/ts-framework-common#v2.4",
+    "ts-framework-mongo": "file:../",
+    "ts-node": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "@types/supertest": "^2.0.4",
+    "hat": "^0.0.3",
+    "jest": "^22.4.3",
+    "mongodb-memory-server": "^1.7.3",
+    "supertest": "^3.0.0",
+    "ts-jest": "^22.4.4"
+  }
 }
