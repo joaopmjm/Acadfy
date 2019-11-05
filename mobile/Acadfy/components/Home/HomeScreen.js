@@ -1,12 +1,14 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 
 class HomeScreen extends React.Component {
     render() {
         return (
-            <View style={styles.title}>
-                <Text style={{ color: "white" }}>Treinos</Text>
+            <View style={styles.page}>
+                <Text style={styles.title}>Treinos</Text>
+                <Calendar/>
             </View>
 
         );
@@ -14,10 +16,16 @@ class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        flex: 1, 
-        alignItems: 'center', 
+    page: {
+        flex: 1,
+        alignItems: 'center',
         backgroundColor: "#2E2E2E"
+    },
+    title: {
+        color: "white",
+        fontSize: 25,
+        marginTop: 20,
+        marginBottom: 30
     }
 })
 export default HomeScreen;
