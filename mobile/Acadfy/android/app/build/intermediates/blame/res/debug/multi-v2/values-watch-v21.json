@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/caio/Documents/Insper/Files/Semestre 4/Tecnologias Web/Project 3/acadfy/mobile/Acadfy/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v21/values-watch-v21.xml",
+            "map": [
+                {
+                    "source": "/home/caio/.gradle/caches/transforms-2/files-2.1/aa5477c89caf167b1ee10d693c3da0f0/res/values-watch-v21/values-watch-v21.xml",
+                    "from": {
+                        "startLines": "2,6,10",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,271,499",
+                        "endLines": "5,9,13",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "266,494,724"
+                    }
+                }
+            ]
+        }
+    ]
+}

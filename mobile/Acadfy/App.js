@@ -1,47 +1,55 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter
-  }
-});
+import HomeScreen from './components/Home/HomeScreen';
+import ConfigurationScreen from './components/Configuration/ConfigurationScreen';
+import InformationScreen from './components/Informations/InformationsScreen';
 
-export default App;
+const AppNavigator = createBottomTabNavigator({
+  InformationScreen: {
+    screen: InformationScreen,
+    navigationOptions: {
+      tabBarLabel: 'Information',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
+      )
+    },
+  },
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-home" size={20} color="#0174DF" />
+      )
+    },
+  },
+  ConfigurationScreen: {
+    screen: ConfigurationScreen,
+    navigationOptions: {
+      tabBarLabel: 'Configuration',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-settings" size={20} color="#0174DF" />
+      )
+    }
+  },
+},
+
+  {
+    initialRouteName: 'Home',
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#1C1C1C',
+      }
+
+    }
+  },
+
+);
+
+
+export default createAppContainer(AppNavigator);

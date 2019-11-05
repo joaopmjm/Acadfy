@@ -1,0 +1,4 @@
+#Sun Nov 03 13:36:06 BRST 2019
+base.0=/home/caio/Documents/Insper/Files/Semestre 4/Tecnologias Web/Project 3/acadfy/mobile/Acadfy/android/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
