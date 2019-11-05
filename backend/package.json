@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node --require ts-node/register start.ts",
-    "test": "jest --config jest.json"
+    "test": "jest --config jest.json",
+    "watch": "ts-framework watch"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
