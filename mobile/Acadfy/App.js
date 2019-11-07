@@ -45,7 +45,6 @@ const AppNavigator = createBottomTabNavigator({
       style: {
         backgroundColor: '#1C1C1C',
       }
-
     }
   },
 
