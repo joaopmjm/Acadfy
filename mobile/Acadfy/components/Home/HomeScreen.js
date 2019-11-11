@@ -11,87 +11,142 @@ class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: '5 de novembro de 2019'
+            day: '',
+            month: '',
+            year: '',
+            sunday: ["Supino reto", "Supino inclinado", "Leg Press", "Stiff", "Levantamento Terra"],
+            monday: ["Agachamento livre", "Avanço livre", "Levantamento Terra", "Remada fechada", "Elevação lateral"],
+            tuesday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
+            wednesday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
+            thursday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
+            friday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
+            saturday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
+            currentDayNumber: '',
+            currentDay: 'sunday'
         }
 
-        function goToNextDay() {
+    }
+
+    componentDidMount() {
+        var day = new Date().getDate();
+        var weekDay = new Date().getDay();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var months = {
+            1: "janeiro",
+            2: "fevereiro",
+            3: "março",
+            4: "abril",
+            5: "maio",
+            6: "junho",
+            7: "julho",
+            8: "agosto",
+            9: "setembro",
+            10: "outubro",
+            11: "novembro",
+            12: "dezembro"
+        }
+        var days = {
+            0: 'sunday',
+            1: 'monday',
+            2: 'tuesday',
+            3: 'wednesday',
+            4: 'thursday',
+            5: 'friday',
+            6: 'saturday'
+        }
+        this.setState({
+            day: day,
+            month: months[month],
+            year: year,
+            currentDayNumber: weekDay,
+            currentDay: days[weekDay]
+        })
+    }
+
+    goToNextDay() {
+        var days = {
+            0: 'sunday',
+            1: 'monday',
+            2: 'tuesday',
+            3: 'wednesday',
+            4: 'thursday',
+            5: 'friday',
+            6: 'saturday'
+        }
+        var today = this.state.currentDayNumber;
+        var todayNumber = this.state.day;
+        if (today === 6) {
             this.setState({
-                date: date + 1
+                day: todayNumber + 1,
+                currentDay: days[0],
+                currentDayNumber: 0
+            })
+        } else {
+            this.setState({
+                day: todayNumber + 1,
+                currentDay: days[today + 1],
+                currentDayNumber: today + 1
+            })
+
+        }
+
+    }
+
+    goToPreviouslyDay() {
+        var days = {
+            0: 'sunday',
+            1: 'monday',
+            2: 'tuesday',
+            3: 'wednesday',
+            4: 'thursday',
+            5: 'friday',
+            6: 'saturday'
+        }
+        var today = this.state.currentDayNumber;
+        var todayNumber = this.state.day;
+        if (today === 0) {
+            this.setState({
+                day: todayNumber - 1,
+                currentDay: days[6],
+                currentDayNumber: 6
+            })
+        } else {
+            this.setState({
+                day: todayNumber - 1,
+                currentDay: days[today - 1],
+                currentDayNumber: today - 1,
             })
         }
+
     }
+
+    finishExercise(){
+        //call API to finish exercise
+    }
+
     render() {
-        const list = [
-            {
-                exercise: 'Supino reto',
-                number: '3x12 repetições',
-                rest: '60 segundos'
-            },
-            {
-                exercise: 'Supino inclinado',
-                number: '3x8 repetições',
-                rest: '60 segundos'
-            },
-            {
-                exercise: 'Leg Press',
-                number: '3x12 repetições',
-                rest: '50 segundos'
-            },
-            {
-                exercise: 'Stiff',
-                number: '3x12 repetições',
-                rest: '50 segundos'
-            },
-            {
-                exercise: 'Levantamento Terra',
-                number: '3x12 repetições',
-                rest: '50 segundos'
-            },
-        ]
         return (
             <View style={styles.page}>
                 <ScrollView>
                     <Text style={styles.title}>Treinos</Text>
-                    {/* <Calendar
-                        style={{
-                            borderWidth: 1,
-                            borderColor: 'gray',
-                            height: 350,
-                            backgroundColor: "#2E2E2E",
-                            marginBottom: hp('5%'),
-                            borderColor: "#0174DF"
-                        }}
-                        theme={{
-                            textDayFontFamily: "l",
-                            backgroundColor: '#2E2E2E',
-                            calendarBackground: '#2E2E2E',
-                            textSectionTitleColor: 'white',
-                            selectedDayBackgroundColor: 'blue',
-                            selectedDayTextColor: '#ffffff',
-                            todayTextColor: "#0174DF",
-                            dayTextColor: 'white',
-                            textDisabledColor: '#d9e1e8',
-                            dotColor: '#00adf5',
-                            selectedDotColor: '#ffffff',
-                            monthTextColor: 'white',
-                            indicatorColor: 'white',
-                        }}
-                    /> */}
-                    <Text style={styles.date}>{this.state.date}</Text>
+                    <Text style={styles.date}>{this.state.day + " de " + this.state.month + " de " + this.state.year}</Text>
                     <View style={styles.hrDate} />
                     <View style={styles.exercises}>
                         <View style={styles.buttons}>
-                            <Button type="clear" icon={<Icon name="ios-arrow-dropleft" size={45} color="white" />} />
+                            <Button type="clear" icon={<Icon name="ios-arrow-dropleft" size={45} color="white" />} onPress={() => {
+                                this.goToPreviouslyDay();
+                            }} />
                             <Button type="clear" icon={<Icon name="ios-arrow-dropright" size={45} color="white" />} onPress={() => {
-                                console.log('clicked');
+                                this.goToNextDay();
                             }} />
                         </View>
                         {
-                            list.map((l, i) => (
+                            this.state[this.state.currentDay].map((l, i) => (
                                 <ListItem
                                     key={i}
-                                    title={l.exercise}
-                                    subtitle={l.number}
+                                    title={l}
+                                    subtitle="3x10 repetições"
                                     checkBox
                                     titleStyle={{ color: "white" }}
                                     subtitleStyle={{ color: "white" }}
@@ -101,7 +156,9 @@ class HomeScreen extends React.Component {
                             ))
                         }
                     </View>
-                    {/* <Button  icon={<Icon na size={15} color="white" />} /> */}
+                    <View style={styles.end}>
+                        <Button title="Finalizar treino" buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20 }} />
+                    </View>
                 </ScrollView>
             </View>
 
@@ -150,6 +207,9 @@ const styles = StyleSheet.create({
     buttons: {
         flexDirection: 'row',
         alignSelf: 'center',
+    },
+    end: {
+        marginBottom: hp('5%'),
     }
 })
 export default HomeScreen;
