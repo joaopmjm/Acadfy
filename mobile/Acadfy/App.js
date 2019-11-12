@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 import HomeScreen from './components/Home/HomeScreen';
-import HelpScreen from './components/Help/HelpScreen';
+import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
 
 const AppNavigator = createBottomTabNavigator({
@@ -28,8 +28,8 @@ const AppNavigator = createBottomTabNavigator({
       )
     },
   },
-  HelpScreen: {
-    screen: HelpScreen,
+  DoubtScreen: {
+    screen: DoubtScreen,
     navigationOptions: {
       tabBarLabel: 'Ajuda',
       tabBarIcon: ({ tintColor }) => (
