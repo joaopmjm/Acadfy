@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './components/Home/HomeScreen';
 import ConfigurationScreen from './components/Configuration/ConfigurationScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
+import BuildWorkoutScreen from './components/BuildWorkout/BuildWorkoutScreen';
 
 const AppNavigator = createBottomTabNavigator({
   InformationScreen: {
@@ -32,6 +33,15 @@ const AppNavigator = createBottomTabNavigator({
     screen: ConfigurationScreen,
     navigationOptions: {
       tabBarLabel: 'Configuration',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-settings" size={20} color="#0174DF" />
+      )
+    }
+  },
+  BuildWorkoutScreen: {
+    screen: BuildWorkoutScreen,
+    navigationOptions: {
+      tabBarLabel: 'Build Workout',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-settings" size={20} color="#0174DF" />
       )
