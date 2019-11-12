@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 import HomeScreen from './components/Home/HomeScreen';
-import ConfigurationScreen from './components/Configuration/ConfigurationScreen';
+import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
 import BuildWorkoutScreen from './components/BuildWorkout/BuildWorkoutScreen';
 
@@ -29,12 +29,12 @@ const AppNavigator = createBottomTabNavigator({
       )
     },
   },
-  ConfigurationScreen: {
-    screen: ConfigurationScreen,
+  DoubtScreen: {
+    screen: DoubtScreen,
     navigationOptions: {
-      tabBarLabel: 'Configuration',
+      tabBarLabel: 'Ajuda',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-settings" size={20} color="#0174DF" />
+        <Icon name="ios-help" size={30} color="#0174DF" />
       )
     }
   },
@@ -55,7 +55,6 @@ const AppNavigator = createBottomTabNavigator({
       style: {
         backgroundColor: '#1C1C1C',
       }
-
     }
   },
 
