@@ -9,7 +9,7 @@ export default class UserController {
   @Post('/', [checkJwt, checkRole])
   static async storeUser(req, res) {
 
-    const { name, email, role, password } = req.body;
+    const { name, email, role, password, height, weight, birthDate, personal} = req.body;
 
     const userdb = await User.findOne({email})
 
@@ -20,7 +20,11 @@ export default class UserController {
     const insert = await User.create({
       name,
       email,
-      role
+      role,
+      height, 
+      weight, 
+      birthDate, 
+      personal
     });
 
     const user = await User.findOne({email})

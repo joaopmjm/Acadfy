@@ -50,7 +50,7 @@ export default class AuthController {
   static async register(req: BaseRequest, res: BaseResponse) { 
     try {
 
-      const { name, email, password } = req.body;
+      const { name, email, password, height, weight, birthDate, personal } = req.body;
 
       const userdb = await UserModel.findOne({email})
 
@@ -61,7 +61,11 @@ export default class AuthController {
       const insert = await UserModel.create({
         name,
         email,
-        role: 'consumer'
+        role: 'consumer',
+        height, 
+        weight, 
+        birthDate, 
+        personal
       });
   
       const user = await UserModel.findOne({email})
