@@ -1,0 +1,15 @@
+[Unit]
+Description=Acadfy
+Wants=mongod.service
+After=network.target mongod.service
+
+[Service]
+Type=simple
+# User=ubuntu
+Environment="PORT=80"
+Environment="NODE_ENV=production"
+WorkingDirectory=/home/ubuntu/acadfy/backend/
+ExecStart=/usr/bin/yarn start
+
+[Install]
+WantedBy=multi-user.target
