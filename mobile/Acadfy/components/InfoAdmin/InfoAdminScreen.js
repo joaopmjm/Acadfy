@@ -8,7 +8,7 @@ import {
 } from "react-native-responsive-screen";
 import DatePicker from "react-native-date-picker";
 
-class InformationScreen extends React.Component {
+class InfoAdminScreen extends React.Component {
   render() {
     return <MyReactNativeForm />;
   }
@@ -92,28 +92,36 @@ export const MyReactNativeForm = props => (
         />
         
         <Input
-          label="Peso"
+          label="E-mail"
           labelStyle={styles.input}
-          placeholder="Escreva seu peso"
+          placeholder="Escreva seu e-mail"
           inputStyle={styles.input}
-          onChangeText={handleChange("peso")}
-          onBlur={handleBlur("peso")}
-          value={values.peso}
+          onChangeText={handleChange("email")}
+          onBlur={handleBlur("email")}
+          value={values.email}
         />
         <Input
-          label="Altura"
+          label="Telefone"
           labelStyle={styles.input}
-          placeholder="Escreva sua altura"
+          placeholder="Digite seu telefone"
           inputStyle={styles.input}
-          onChangeText={handleChange("altura")}
-          onBlur={handleBlur("altura")}
+          onChangeText={handleChange("telefone")}
+          onBlur={handleBlur("telefone")}
           value={values.altura}
         />
 
-        <Text style={styles.item}>Data de Nascimento</Text>
+        <Input
+          label="CREF:"
+          labelStyle={styles.input}
+          placeholder="Informe seu registro do CREF "
+          inputStyle={styles.input}
+          onChangeText={handleChange("telefone")}
+          onBlur={handleBlur("telefone")}
+          value={values.altura}
+        />
 
-        <DatePicker mode="date" date={values.date} onDateChange={date => setFieldValue("date", date, false)} />
 
+        
         <Text style={styles.item}>Gênero</Text>
         
         <ButtonGroup
@@ -131,4 +139,4 @@ export const MyReactNativeForm = props => (
   </Formik>
 );
 
-export default InformationScreen;
+export default InfoAdminScreen;
