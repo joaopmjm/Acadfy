@@ -9,23 +9,15 @@ import HomeScreen from './components/Home/HomeScreen';
 import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
 import BuildWorkoutScreen from './components/BuildWorkout/BuildWorkoutScreen';
+import WorkoutDataScreen from './components/WorkoutData/WorkoutDataScreen';
 
 const AppNavigator = createBottomTabNavigator({
-  InformationScreen: {
-    screen: InformationScreen,
+  WorkoutDataScreen: {
+    screen: WorkoutDataScreen,
     navigationOptions: {
-      tabBarLabel: 'Information',
+      tabBarLabel: 'Métricas',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
-      )
-    },
-  },
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      tabBarLabel: 'Home',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-home" size={20} color="#0174DF" />
+        <Icon name="md-pie" size={20} color="#0174DF" />
       )
     },
   },
@@ -37,6 +29,24 @@ const AppNavigator = createBottomTabNavigator({
         <Icon name="ios-help" size={30} color="#0174DF" />
       )
     }
+  },
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-home" size={20} color="#0174DF" />
+      )
+    },
+  },
+  InformationScreen: {
+    screen: InformationScreen,
+    navigationOptions: {
+      tabBarLabel: 'Information',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
+      )
+    },
   },
   BuildWorkoutScreen: {
     screen: BuildWorkoutScreen,
