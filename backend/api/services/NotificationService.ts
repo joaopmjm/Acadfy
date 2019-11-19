@@ -2,7 +2,7 @@ import { BaseError, Service, ServiceOptions } from 'ts-framework-common';
 import SparkPost = require('sparkpost');
 import EmailForgotPassword from '../utils/EmailForgotPassword';
 
-const client = new SparkPost('d682ad8c4465d167e69357aa7a6c29c332a4b456');
+const client = new SparkPost('PLEASE INPUT YOUR SPARKPOST API KEY HERE');
 
 export interface NotificationServiceOptions extends ServiceOptions {
 }
