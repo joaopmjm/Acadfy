@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './components/Home/HomeScreen';
 import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
+import BuildWorkout from './components/BuildWorkout/BuildWorkout';
 
 const AppNavigator = createBottomTabNavigator({
   InformationScreen: {
@@ -25,6 +26,15 @@ const AppNavigator = createBottomTabNavigator({
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-home" size={20} color="#0174DF" />
+      )
+    },
+  },
+  BuildWorkout: {
+    screen: BuildWorkout,
+    navigationOptions: {
+      tabBarLabel: 'Montar Treino',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-fitness" size={20} color="#0174DF" />
       )
     },
   },
