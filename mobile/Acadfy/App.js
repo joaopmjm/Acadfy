@@ -4,7 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
+import InfoAdminScreen from './components/InfoAdmin/InfoAdminScreen';
 import HomeScreen from './components/Home/HomeScreen';
 import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
@@ -21,6 +21,14 @@ const AppNavigator = createBottomTabNavigator({
       )
     },
   },
+  InfoAdminScreen: {
+    screen: InfoAdminScreen,
+    navigationOptions: {
+      tabBarLabel: 'InfoAdmin',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
+      )
+    },
   DoubtScreen: {
     screen: DoubtScreen,
     navigationOptions: {
