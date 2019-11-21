@@ -1,8 +1,8 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post } from 'ts-framework';
-import { UserModel } from '../models/user';
+import { ConsumerModel } from '../models/Consumer';
 import JwtService from '../services/JwtService';
 
-@Controller('/consumerauth')
+@Controller('/Consumerauth')
 export default class AuthController {
 
   /**
@@ -22,22 +22,22 @@ export default class AuthController {
       
       const { email, password } = req.body;
 
-      const userdb = await UserModel.findOne({email})
+      const Consumerdb = await ConsumerModel.findOne({email})
 
-      console.log(userdb)
+      console.log(Consumerdb)
 
-      if (!userdb) {
+      if (!Consumerdb) {
         throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
       }
 
-      const matchPassword = await userdb.validatePassword(password);
+      const matchPassword = await Consumerdb.validatePassword(password);
 
       if (!matchPassword){
         throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
       }
 
       else if (matchPassword) {
-        const token = await JwtService.createSignToken(userdb);
+        const token = await JwtService.createSignToken(Consumerdb);
         return res.success(token);
       }
 
@@ -52,13 +52,13 @@ export default class AuthController {
 
       const { name, email, password, height, weight, birthDate, personal } = req.body;
 
-      const userdb = await UserModel.findOne({email})
+      const Consumerdb = await ConsumerModel.findOne({email})
 
-      if (userdb) {
+      if (Consumerdb) {
         throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
       }
 
-      const insert = await UserModel.create({
+      const insert = await ConsumerModel.create({
         name,
         email,
         role: 'consumer',
@@ -68,10 +68,10 @@ export default class AuthController {
         personal
       });
   
-      const user = await UserModel.findOne({email})
+      const Consumer = await ConsumerModel.findOne({email})
   
-      await user.setPassword(password);
-      await user.save();
+      await Consumer.setPassword(password);
+      await Consumer.save();
 
       return res.success("Registro confirmado na plataforma")
 

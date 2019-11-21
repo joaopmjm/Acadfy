@@ -1,8 +1,8 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post } from 'ts-framework';
-import { UserModel } from '../models/user';
+import { AdminModel } from '../models/Admin';
 import JwtService from '../services/JwtService';
 
-@Controller('/consumerauth')
+@Controller('/Adminauth')
 export default class AuthController {
 
   /**
@@ -22,22 +22,22 @@ export default class AuthController {
       
       const { email, password } = req.body;
 
-      const userdb = await UserModel.findOne({email})
+      const Admindb = await AdminModel.findOne({email})
 
-      console.log(userdb)
+      console.log(Admindb)
 
-      if (!userdb) {
+      if (!Admindb) {
         throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
       }
 
-      const matchPassword = await userdb.validatePassword(password);
+      const matchPassword = await Admindb.validatePassword(password);
 
       if (!matchPassword){
         throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
       }
 
       else if (matchPassword) {
-        const token = await JwtService.createSignToken(userdb);
+        const token = await JwtService.createSignToken(Admindb);
         return res.success(token);
       }
 
@@ -50,28 +50,26 @@ export default class AuthController {
   static async register(req: BaseRequest, res: BaseResponse) { 
     try {
 
-      const { name, email, password, height, weight, birthDate, personal } = req.body;
+      const { name, email, password, birthDate, athletes } = req.body;
 
-      const userdb = await UserModel.findOne({email})
+      const Admindb = await AdminModel.findOne({email})
 
-      if (userdb) {
+      if (Admindb) {
         throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
       }
 
-      const insert = await UserModel.create({
+      const insert = await AdminModel.create({
         name,
         email,
-        role: 'consumer',
-        height, 
-        weight, 
+        role: 'Admin',
         birthDate, 
-        personal
+        athletes
       });
   
-      const user = await UserModel.findOne({email})
+      const Admin = await AdminModel.findOne({email})
   
-      await user.setPassword(password);
-      await user.save();
+      await Admin.setPassword(password);
+      await Admin.save();
 
       return res.success("Registro confirmado na plataforma")
 
