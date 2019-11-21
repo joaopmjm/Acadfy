@@ -20,6 +20,14 @@ export default class ExerciseController {
     return res.success(insert);
   }
 
+
+  @Get('/trainer', [checkJwt, checkRole])
+  static async getExercises(req, res) {
+    const trainer_id = res.locals.userId;
+    return res.success(await Exercise.findByTrainer(trainer_id))
+
+  }
+
   @Get('/', [checkJwt, checkRole])
   static async findAll(req: BaseRequest, res: BaseResponse) {
     try {

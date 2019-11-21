@@ -8,7 +8,8 @@ class ExerciseModel extends BaseModel {
 
   public static async findByTrainer(trainer_id: String) {
     //return this.find({trainer_id: trainer_id})
-    return this.find({where:{trainer_id}})
+    // return this.find({where:{trainer_id}})
+    return await this.find({trainer_id})
   }
 }
 
