@@ -6,18 +6,9 @@ import { checkRole } from '../middlewares/checkRole';
 @Controller('/exercises')
 export default class ExerciseController {
 
-  // @Post('/', [checkJwt, checkRole])
-  @Post('/')
+  @Post('/', [checkJwt, checkRole])
   static async storeExercise(req, res) {
-    console.log(req.body)
-
     const { trainer_id, name, description, gif } = req.body;
-
-    // const exercisedb = await Exercise.findByTrainer({trainer_id})
-
-    // if (exercisedb) {
-    //   throw new HttpError('Exercício já registrado na plataforma', HttpCode.Client.FORBIDDEN);
-    // }
 
     const insert = await Exercise.create({
       trainer_id,
@@ -26,16 +17,10 @@ export default class ExerciseController {
       gif
     });
 
-    const exercise = await Exercise.findByTrainer({trainer_id})
-
-    // await exercise.setPassword(password);
-    await exercise.save();
-
-    return res.success(exercise);
+    return res.success(insert);
   }
 
-  // @Get('/', [checkJwt, checkRole])
-  @Get('/')
+  @Get('/', [checkJwt, checkRole])
   static async findAll(req: BaseRequest, res: BaseResponse) {
     try {
       const exercises = await Exercise.find()
@@ -44,17 +29,4 @@ export default class ExerciseController {
       console.error(error)
     }
   }
-
-
-
-  // @Post('/:id', [checkJwt, checkRole])
-  // static async findAndUpdate(req, res) {
-  //   const exercise = await Exercise.findOneAndUpdate({
-  //     email: req.body.email,
-  //   },                                       {
-  //     $set: { name: req.body.name },
-  //   });
-
-  //   return res.success(exercise);
-  // }
 }

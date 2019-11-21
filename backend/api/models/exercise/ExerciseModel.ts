@@ -7,7 +7,8 @@ class ExerciseModel extends BaseModel {
   static Schema = ExerciseSchema;
 
   public static async findByTrainer(trainer_id: String) {
-    return this.find({trainer_id: trainer_id})
+    //return this.find({trainer_id: trainer_id})
+    return this.find({where:{trainer_id}})
   }
 }
 
