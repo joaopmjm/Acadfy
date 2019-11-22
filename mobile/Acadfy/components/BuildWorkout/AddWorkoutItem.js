@@ -18,6 +18,8 @@ export default class BuildWorkoutHome extends React.Component {
     }
 
     save() {
+        // post
+        this.props.navigation.navigate('HomeScreen')
     }
 
     render() {
@@ -32,13 +34,13 @@ export default class BuildWorkoutHome extends React.Component {
                 />
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={text => this.setState({ exerciseName: text })}
+                    onChangeText={text => this.setState({ sets: text })}
                     placeholder='Número de séries'
                     placeholderTextColor='gray'
                 />
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={text => this.setState({ exerciseName: text })}
+                    onChangeText={text => this.setState({ reps: text })}
                     placeholder='Número de repetições'
                     placeholderTextColor='gray'
                 />
@@ -58,10 +60,6 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: "#2E2E2E",
 
-    },
-
-    container: {
-        flexDirection: 'row',
     },
 
     textInput: {

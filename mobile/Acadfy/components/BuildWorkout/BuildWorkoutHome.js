@@ -9,56 +9,79 @@ export default class BuildWorkoutHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            A: ["Supino reto", "Supino inclinado", "Leg Press", "Stiff", "Levantamento Terra"],
-            B: ["Agachamento livre", "Avanço livre", "Levantamento Terra", "Remada fechada", "Elevação lateral"],
-            C: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
+            students: ['Nicolas', 'Gabriel'],
+            workouts: {
+                A: {
+                    'Supino reto': '3x10',
+                    'Supino inclinado': '3x20',
+                    'Leg Press': '3x10',
+                    'Stiff': '3x10',
+                    'Levantamento Terra': '10x5',
+                },
+                B: {
+                    'Agachamento livre': '3x10',
+                    'Avanço livre': '3x20',
+                    'Levantamento Terra': '3x10',
+                    'Remada fechada': '5x10',
+                    'Elevação lateral': '3x10',
+                }
+            },
             currentStudent: 'Nicolas',
             currentWorkoutCode: 'A'
         }
 
     }
 
-    changeStudent(newStudent) {
-        // call API
+    loadStudents() {
+        // get students
+        this.setState({ students: [] })
     }
 
-    finishExercise() {
-        //call API to finish exercise
+    changeStudent(newStudent) {
+        // call API
+        this.setState({ currentStudent: newStudent })
+    }
+
+    loadWorkouts() {
+
     }
 
     render() {
         return (
             <View style={styles.page}>
-                <ScrollView>
+                <ScrollView style={{marginHorizontal: 20}}>
                     <Text style={styles.title}>Montar Treino</Text>
-                    <Text style={{ color: 'white', fontSize: 15 }}>Escolha um aluno</Text>
-                    <Picker
-                        selectedValue={this.state.currentStudent}
-                        style={styles.picker}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ currentStudent: itemValue })
-                        }>
-                        <Picker.Item label="Nicolas" value="Nicolas" />
-                        <Picker.Item label="Gabriel" value="Gabriel" />
-                    </Picker>
-                    <Text style={{ color: 'white', fontSize: 15 }}>Escolha um treino</Text>
-                    <Picker
-                        selectedValue={this.state.currentWorkoutCode}
-                        style={styles.picker}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ currentWorkoutCode: itemValue })
-                        }
-                        mode='dropdown'>
-                        <Picker.Item label="A" value="A" />
-                        <Picker.Item label="B" value="B" />
-                    </Picker>
+                    <View style={{ flexDirection: 'row'}}>
+                        <View style={{ marginHorizontal: 15}}>
+                            <Text style={{ color: 'white', fontSize: 15 }}>Escolha um aluno</Text>
+                            <Picker
+                                selectedValue={this.state.currentStudent}
+                                style={styles.picker}
+                                onValueChange={(itemValue, _) => this.changeStudent(itemValue)}>
+
+                                {this.state.students.map((s) => (<Picker.Item label={s} value={s} />))}
+
+                            </Picker>
+                        </View>
+                        <View>
+                            <Text style={{ color: 'white', fontSize: 15 }}>Escolha um treino</Text>
+                            <Picker
+                                selectedValue={this.state.currentWorkoutCode}
+                                style={styles.picker}
+                                onValueChange={(itemValue, _) => this.setState({ currentWorkoutCode: itemValue })}>
+
+                                {Object.keys(this.state.workouts).map((w) => (<Picker.Item label={w} value={w} />))}
+
+                            </Picker>
+                        </View>
+                    </View>
                     <View style={styles.exercises}>
                         {
-                            this.state[this.state.currentWorkoutCode].map((l, i) => (
+                            Object.keys(this.state.workouts[this.state.currentWorkoutCode]).map((l, i) => (
                                 <ListItem
                                     key={i}
                                     title={l}
-                                    subtitle="3x10 repetições"
+                                    subtitle={this.state.workouts[this.state.currentWorkoutCode][l] + ' repetições'}
                                     titleStyle={{ color: "white" }}
                                     subtitleStyle={{ color: "white" }}
                                     containerStyle={{ backgroundColor: "#2E2E2E" }}
@@ -70,7 +93,7 @@ export default class BuildWorkoutHome extends React.Component {
                     <View style={styles.end}>
                         <Button
                             title="Adicionar Exercício"
-                            buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20 }}
+                            buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20, marginHorizontal: 50 }}
                             onPress={() => this.props.navigation.navigate('AddItemScreen')}
                         />
                     </View>
@@ -83,9 +106,7 @@ export default class BuildWorkoutHome extends React.Component {
 
 const styles = StyleSheet.create({
     page: {
-        flex: 1,
         height: '100%',
-        alignItems: 'center',
         backgroundColor: "#2E2E2E",
 
     },
