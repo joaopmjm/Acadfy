@@ -12,18 +12,19 @@ export default class EditWorkoutItem extends React.Component {
         this.state = {
             exerciseName: '',
             sets: '',
-            reps: ''
+            reps: '',
+            itemId: this.props.navigation.state.params.itemId
         }
 
     }
 
     save() {
-        // post
+        // patch exercise
         this.props.navigation.navigate('HomeScreen')
     }
 
-    deleteExercise(i) {
-        // post
+    deleteExercise() {
+        // delete exercise
         this.props.navigation.navigate('HomeScreen')
     }
 
@@ -42,20 +43,25 @@ export default class EditWorkoutItem extends React.Component {
                     onChangeText={text => this.setState({ sets: text })}
                     placeholder='Número de séries'
                     placeholderTextColor='gray'
+                    selectTextOnFocus
+                    keyboardType={'numeric'}
                 />
                 <TextInput
                     style={styles.textInput}
+                    value={''}
                     onChangeText={text => this.setState({ reps: text })}
                     placeholder='Número de repetições'
                     placeholderTextColor='gray'
+                    keyboardType={'numeric'}
+                    selectTextOnFocus
                 />
                 <View style={styles.container}>
                     <Button title="Salvar"
-                        buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20, width:200, marginHorizontal: 3,  marginTop: 20 }}
+                        buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20, width: 200, marginHorizontal: 3,  marginTop: 20 }}
                         onPress={() => this.save()}
                     />
                     <Button title="Excluir Exercício"
-                        buttonStyle={{ backgroundColor: '#d40000', borderRadius: 20, width:200, marginHorizontal: 3, marginTop: 20 }}
+                        buttonStyle={{ backgroundColor: '#d40000', borderRadius: 20, width: 200, marginHorizontal: 3, marginTop: 20 }}
                         onPress={() => this.deleteExercise()}
                     />
                 </View>

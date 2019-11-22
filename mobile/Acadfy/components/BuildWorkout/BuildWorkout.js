@@ -37,5 +37,3 @@ const Navigator = createAppContainer(createStackNavigator(
         }
     }
 ));
-
-const context = React.createContext

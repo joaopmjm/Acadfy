@@ -12,7 +12,7 @@ export default class BuildWorkoutHome extends React.Component {
             students: ['Nicolas', 'Gabriel'],
             workouts: {
                 A: {
-                    'Supino reto': '3x10',
+                    'Supino reto': '3x10',  // todo: adicionar um id pra cada item
                     'Supino inclinado': '3x20',
                     'Leg Press': '3x10',
                     'Stiff': '3x10',
@@ -76,6 +76,10 @@ export default class BuildWorkoutHome extends React.Component {
         });
     }
 
+    getWorkout() {
+        return this.state.workouts[this.state.currentWorkoutCode]
+    }
+
     render() {
         return (
             <View style={styles.page} onLayout={() => this.layoutDidLoaded()}>
@@ -107,15 +111,15 @@ export default class BuildWorkoutHome extends React.Component {
                     </View>
                     <View style={styles.exercises}>
                         {
-                            Object.keys(this.state.workouts[this.state.currentWorkoutCode]).map((l, i) => (
+                            Object.keys(this.getWorkout()).map((l, i) => (
                                 <ListItem
                                     key={i}
                                     title={l}
-                                    subtitle={this.state.workouts[this.state.currentWorkoutCode][l] + ' repetições'}
+                                    subtitle={this.getWorkout()[l] + ' repetições'}
                                     titleStyle={{ color: "white" }}
                                     subtitleStyle={{ color: "white" }}
                                     containerStyle={{ backgroundColor: "#2E2E2E" }}
-                                    onPress={() => this.props.navigation.navigate('EditItemScreen')}
+                                    onPress={() => this.props.navigation.navigate('EditItemScreen', this.getWorkout())}
                                     bottomDivider
                                 />
                             ))

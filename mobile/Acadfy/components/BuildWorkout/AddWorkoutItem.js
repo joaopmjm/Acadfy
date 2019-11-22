@@ -37,12 +37,14 @@ export default class AddWorkoutItem extends React.Component {
                     onChangeText={text => this.setState({ sets: text })}
                     placeholder='Número de séries'
                     placeholderTextColor='gray'
+                    keyboardType={'numeric'}
                 />
                 <TextInput
                     style={styles.textInput}
                     onChangeText={text => this.setState({ reps: text })}
                     placeholder='Número de repetições'
                     placeholderTextColor='gray'
+                    keyboardType={'numeric'}
                 />
                 <Button title="Salvar"
                     buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20, marginHorizontal: 100, marginTop: 20 }}
