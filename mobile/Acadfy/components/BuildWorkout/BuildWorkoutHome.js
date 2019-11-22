@@ -29,30 +29,60 @@ export default class BuildWorkoutHome extends React.Component {
             currentStudent: 'Nicolas',
             currentWorkoutCode: 'A'
         }
+    }
 
+
+    loadAll() {
+        this.loadStudents();
+        this.loadWorkouts();
+    }
+
+    layoutDidLoaded() {
+        this.loadStudents();
+        this.loadWorkouts();
+        // this.props.navigation.addListener('willFocus', this.loadWorkouts);
     }
 
     loadStudents() {
         // get students
-        this.setState({ students: [] })
+        this.setState({ students: ['Nicolas', 'Gustavo'] });
     }
 
     changeStudent(newStudent) {
-        // call API
-        this.setState({ currentStudent: newStudent })
+        this.setState({ currentStudent: newStudent });
+        // get workouts
+        this.loadWorkouts();
     }
 
     loadWorkouts() {
-
+        // get workouts
+        this.setState({
+            workouts: {
+                A: {
+                    'Supino reto': Math.random(),
+                    'Supino inclinado': '3x5',
+                    'Leg Press': '3x10',
+                    'Stiff': '3x10',
+                    'Levantamento Terra': '10x5',
+                },
+                B: {
+                    'Agachamento livre': '3x10',
+                    'Avanço livre': '3x20',
+                    'Levantamento Terra': '3x10',
+                    'Remada fechada': '5x10',
+                    'Elevação lateral': '3x10',
+                }
+            }
+        });
     }
 
     render() {
         return (
-            <View style={styles.page}>
-                <ScrollView style={{marginHorizontal: 20}}>
+            <View style={styles.page} onLayout={() => this.layoutDidLoaded()}>
+                <ScrollView style={{ marginHorizontal: 20 }}>
                     <Text style={styles.title}>Montar Treino</Text>
-                    <View style={{ flexDirection: 'row'}}>
-                        <View style={{ marginHorizontal: 15}}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={{ marginHorizontal: 15 }}>
                             <Text style={{ color: 'white', fontSize: 15 }}>Escolha um aluno</Text>
                             <Picker
                                 selectedValue={this.state.currentStudent}
@@ -85,6 +115,7 @@ export default class BuildWorkoutHome extends React.Component {
                                     titleStyle={{ color: "white" }}
                                     subtitleStyle={{ color: "white" }}
                                     containerStyle={{ backgroundColor: "#2E2E2E" }}
+                                    onPress={() => this.props.navigation.navigate('EditItemScreen')}
                                     bottomDivider
                                 />
                             ))

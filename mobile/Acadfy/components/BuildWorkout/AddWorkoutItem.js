@@ -6,7 +6,7 @@ import { TextInput } from 'react-native-gesture-handler';
 
 
 
-export default class BuildWorkoutHome extends React.Component {
+export default class AddWorkoutItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

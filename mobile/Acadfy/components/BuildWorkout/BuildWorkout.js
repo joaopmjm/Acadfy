@@ -5,7 +5,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 import BuildWorkoutHome from './BuildWorkoutHome';
-import AddWorkoutItem from './AddWorkoutItem'
+import AddWorkoutItem from './AddWorkoutItem';
+import EditWorkoutItem from './EditWorkoutItem';
 
 export default class BuildWorkout extends React.Component {
 
@@ -22,6 +23,9 @@ const Navigator = createAppContainer(createStackNavigator(
         },
         AddItemScreen: {
             screen: AddWorkoutItem
+        },
+        EditItemScreen: {
+            screen: EditWorkoutItem
         }
     },
     {
@@ -33,3 +37,5 @@ const Navigator = createAppContainer(createStackNavigator(
         }
     }
 ));
+
+const context = React.createContext
