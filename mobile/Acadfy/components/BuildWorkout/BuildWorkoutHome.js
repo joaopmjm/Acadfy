@@ -12,35 +12,26 @@ export default class BuildWorkoutHome extends React.Component {
             students: ['Nicolas', 'Gabriel'],
             workouts: {
                 A: {
-                    'Supino reto': '3x10',  // todo: adicionar um id pra cada item
-                    'Supino inclinado': '3x20',
-                    'Leg Press': '3x10',
-                    'Stiff': '3x10',
-                    'Levantamento Terra': '10x5',
+                    '1': {
+                        name: 'Supino reto',
+                        sets: '3',
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
                 },
-                B: {
-                    'Agachamento livre': '3x10',
-                    'Avanço livre': '3x20',
-                    'Levantamento Terra': '3x10',
-                    'Remada fechada': '5x10',
-                    'Elevação lateral': '3x10',
-                }
             },
             currentStudent: 'Nicolas',
             currentWorkoutCode: 'A'
         }
     }
 
-
-    loadAll() {
-        this.loadStudents();
-        this.loadWorkouts();
-    }
-
     layoutDidLoaded() {
         this.loadStudents();
         this.loadWorkouts();
-        // this.props.navigation.addListener('willFocus', this.loadWorkouts);
     }
 
     loadStudents() {
@@ -59,19 +50,17 @@ export default class BuildWorkoutHome extends React.Component {
         this.setState({
             workouts: {
                 A: {
-                    'Supino reto': Math.random(),
-                    'Supino inclinado': '3x5',
-                    'Leg Press': '3x10',
-                    'Stiff': '3x10',
-                    'Levantamento Terra': '10x5',
+                    '1': {
+                        name: 'Supino reto',
+                        sets: Math.random().toString(),
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
                 },
-                B: {
-                    'Agachamento livre': '3x10',
-                    'Avanço livre': '3x20',
-                    'Levantamento Terra': '3x10',
-                    'Remada fechada': '5x10',
-                    'Elevação lateral': '3x10',
-                }
             }
         });
     }
@@ -111,15 +100,16 @@ export default class BuildWorkoutHome extends React.Component {
                     </View>
                     <View style={styles.exercises}>
                         {
-                            Object.keys(this.getWorkout()).map((l, i) => (
+                            Object.keys(this.getWorkout()).map((itemId, i) => (
                                 <ListItem
                                     key={i}
-                                    title={l}
-                                    subtitle={this.getWorkout()[l] + ' repetições'}
+                                    title={this.getWorkout()[itemId].name}
+                                    subtitle={this.getWorkout()[itemId].sets.toString() + 'x' 
+                                        + this.getWorkout()[itemId].reps.toString() + ' repetições'}
                                     titleStyle={{ color: "white" }}
                                     subtitleStyle={{ color: "white" }}
                                     containerStyle={{ backgroundColor: "#2E2E2E" }}
-                                    onPress={() => this.props.navigation.navigate('EditItemScreen', this.getWorkout())}
+                                    onPress={() => this.props.navigation.navigate('EditItemScreen', { 'itemId': itemId, content: this.getWorkout()[itemId] })}
                                     bottomDivider
                                 />
                             ))

@@ -6,14 +6,14 @@ import { TextInput } from 'react-native-gesture-handler';
 
 
 
-export default class EditWorkoutItem extends React.Component {
+export default class EditWoroutItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            exerciseName: '',
-            sets: '',
-            reps: '',
-            itemId: this.props.navigation.state.params.itemId
+            exerciseName: this.getName(),
+            sets: this.getSets(),
+            reps: this.getReps(),
+            itemId: this.getItemId()
         }
 
     }
@@ -28,11 +28,28 @@ export default class EditWorkoutItem extends React.Component {
         this.props.navigation.navigate('HomeScreen')
     }
 
+    getItemId() {
+        return this.props.navigation.getParam('itemId')
+    }
+
+    getName() {
+        return this.props.navigation.getParam('content').name
+    }
+
+    getSets() {
+        return this.props.navigation.getParam('content').sets
+    }
+
+    getReps() {
+        return this.props.navigation.getParam('content').reps
+    }
+
     render() {
         return (
             <View style={styles.page}>
                 <TextInput
                     style={styles.textInput}
+                    value={this.state.exerciseName}
                     onChangeText={text => this.setState({ exerciseName: text })}
                     placeholder='Nome do exercício'
                     placeholderTextColor='gray'
@@ -40,6 +57,7 @@ export default class EditWorkoutItem extends React.Component {
                 />
                 <TextInput
                     style={styles.textInput}
+                    value={this.state.sets}
                     onChangeText={text => this.setState({ sets: text })}
                     placeholder='Número de séries'
                     placeholderTextColor='gray'
@@ -48,7 +66,7 @@ export default class EditWorkoutItem extends React.Component {
                 />
                 <TextInput
                     style={styles.textInput}
-                    value={''}
+                    value={this.state.reps}
                     onChangeText={text => this.setState({ reps: text })}
                     placeholder='Número de repetições'
                     placeholderTextColor='gray'
