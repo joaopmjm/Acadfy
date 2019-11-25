@@ -7,7 +7,7 @@ import JwtService from "../services/JwtService";
 
 export const checkJwt = async (req: BaseRequest, res: BaseResponse, next: NextFunction) => {
 
-    const token = req.body.token;
+    const token = req.headers['token'];
     let userId;
 
     try {

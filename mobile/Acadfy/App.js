@@ -4,14 +4,26 @@ import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
 import Register from './components/Register/Register';
+import InfoAdminScreen from './components/InfoAdmin/InfoAdminScreen';
 import HomeScreen from './components/Home/HomeScreen';
 import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
 import BuildWorkoutScreen from './components/BuildWorkout/BuildWorkoutScreen';
-import { createStackNavigator } from 'react-navigation-stack';
+import WorkoutDataScreen from './components/WorkoutData/WorkoutDataScreen';
 
 const AppNavigator = createBottomTabNavigator({
+  WorkoutDataScreen: {
+    screen: WorkoutDataScreen,
+
+    navigationOptions: {
+      tabBarLabel: 'Métricas',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="md-pie" size={20} color="#0174DF" />
+      )
+    },
+  },
   Register: {
     screen: Register,
     navigationOptions: {
@@ -21,14 +33,22 @@ const AppNavigator = createBottomTabNavigator({
       )
     }
   },
-  InformationScreen: {
-    screen: InformationScreen,
+  InfoAdminScreen: {
+    screen: InfoAdminScreen,
     navigationOptions: {
-      tabBarLabel: 'Information',
+      tabBarLabel: 'InfoAdmin',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
       )
     },
+  DoubtScreen: {
+    screen: DoubtScreen,
+    navigationOptions: {
+      tabBarLabel: 'Ajuda',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-help" size={30} color="#0174DF" />
+      )
+    }
   },
   Home: {
     screen: HomeScreen,
@@ -39,14 +59,14 @@ const AppNavigator = createBottomTabNavigator({
       )
     },
   },
-  DoubtScreen: {
-    screen: DoubtScreen,
+  InformationScreen: {
+    screen: InformationScreen,
     navigationOptions: {
-      tabBarLabel: 'Ajuda',
+      tabBarLabel: 'Information',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-help" size={30} color="#0174DF" />
+        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
       )
-    }
+    },
   },
   BuildWorkoutScreen: {
     screen: BuildWorkoutScreen,
