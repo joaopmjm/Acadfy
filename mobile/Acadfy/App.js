@@ -40,7 +40,8 @@ const AppNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
       )
-    },
+    }
+  },
   DoubtScreen: {
     screen: DoubtScreen,
     navigationOptions: {
