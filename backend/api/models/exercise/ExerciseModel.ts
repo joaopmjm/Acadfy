@@ -11,6 +11,10 @@ class ExerciseModel extends BaseModel {
     // return this.find({where:{trainer_id}})
     return await this.find({trainer_id})
   }
+
+  public static async findByDescription(description: String) {
+    return await this.find({description})
+  }
 }
 
 export default MainDatabase.model(ExerciseModel);
