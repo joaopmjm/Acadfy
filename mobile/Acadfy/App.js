@@ -4,6 +4,8 @@ import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
+import Register from './components/Register/Register';
 import InfoAdminScreen from './components/InfoAdmin/InfoAdminScreen';
 import HomeScreen from './components/Home/HomeScreen';
 import DoubtScreen from './components/Doubts/DoubtScreen';
@@ -14,12 +16,22 @@ import WorkoutDataScreen from './components/WorkoutData/WorkoutDataScreen';
 const AppNavigator = createBottomTabNavigator({
   WorkoutDataScreen: {
     screen: WorkoutDataScreen,
+
     navigationOptions: {
       tabBarLabel: 'Métricas',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="md-pie" size={20} color="#0174DF" />
       )
     },
+  },
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      tabBarLabel: 'Register',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
+      )
+    }
   },
   InfoAdminScreen: {
     screen: InfoAdminScreen,
