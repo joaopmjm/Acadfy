@@ -4,13 +4,23 @@ import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
+import Register from './components/Register/Register';
 import HomeScreen from './components/Home/HomeScreen';
 import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
 import BuildWorkoutScreen from './components/BuildWorkout/BuildWorkoutScreen';
+import { createStackNavigator } from 'react-navigation-stack';
 
 const AppNavigator = createBottomTabNavigator({
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      tabBarLabel: 'Register',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
+      )
+    }
+  },
   InformationScreen: {
     screen: InformationScreen,
     navigationOptions: {
