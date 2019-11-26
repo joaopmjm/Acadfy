@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
 
-import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 class Register extends Component {
@@ -15,100 +15,118 @@ class Register extends Component {
         erro: '',
     };
 
-    validateEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
+    validateEmail(email){
+        const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    
+        return expression.test(String(email).toLowerCase())
     }
 
+    /*
     validatePassword(password) {
         var paswd = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
-        if (password.value.match(paswd)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return paswd.test(password)
     }
+    */
 
-register = async () => {
-    const { name, email, password, password2 } = this.state;
+    register = async () => {
+        const { name, email, password, password2 } = this.state;
+        
+        console.log(email)
 
-    try {
-        if (name !== '' && email !== '' && password !== '' && password2 !== '') {
+        try {
+            if (name !== '' && email !== '' && password !== '' && password2 !== '') {
 
-            if (this.validateEmail(email)) {
-            
-                if (this.validatePassword(password)){
-            
-                    if (password === password2) {
-                        const response = await api.post('/auth/register', {
-                            name: this.state.name,
-                            email: this.state.email,
-                            password: this.state.password,
-                        })
-                            .catch(response => console.log(response))
-    
-                        console.log(response)
-                        this.setState({ isRegistred: true, menssage: response.data })
-
-                    } else { this.setState({ isRegistred: false, erro: "Senhas não coincidem!" }) }
+                if (this.validateEmail(email)) {
                 
-                } else { this.setState({ isRegistred: false, erro: "Senha possui caracteres não aceitos!" }) }
-            
-            } else { this.setState({ isRegistred: false, erro: "Email digitado não é um email!" }) }
+                    //if (this.validatePassword(password)){
+                
+                        if (password === password2) {
+                            const response = await api.post('/auth/register', {
+                                name,
+                                email,
+                                password
+                            })
+                                .catch(response => console.log(response))
+        
+                            console.log(response)
+                            this.setState({ isRegistred: true, menssage: response.data })
 
-        } else { this.setState({ isRegistred: false, erro: "Há campos não preenchidos!" }) }
+                        } else { this.setState({ isRegistred: false, erro: "Senhas não coincidem!" }) }
+                    
+                    //} else { this.setState({ isRegistred: false, erro: "Senha possui caracteres não aceitos!" }) }
+                
+                } else { this.setState({ isRegistred: false, erro: "Email digitado não é um email!" }) }
 
-    } catch (err) {
-        this.setState({ isRegistred: false, erro: "Email já registrado!" })
-        console.log(err);
+            } else { this.setState({ isRegistred: false, erro: "Há campos não preenchidos!" }) }
+
+        } catch (err) {
+            this.setState({ isRegistred: false, erro: "Email já registrado!" })
+            console.log(err);
+        }
     }
-}
 
-render() {
-    return (
-        <View style={styles.page}>
-            <Text style={styles.title}>Cadastro</Text>
-            <View>
-                <TextInput
-                    style={styles.form}
-                    type="text"
-                    placeholder="Digite seu nome"
-                    value={this.state.name}
-                    onChangeText={name => this.setState({ name })}
-                />
-                <TextInput
-                    style={styles.form}
+    render() {
+        return (
+            <View style={styles.page}>
+                <Text style={styles.title}>Cadastro</Text>
+                <ScrollView >
+                    <Text style={styles.label}>Nome: </Text>
+                    <TextInput
+                        style={styles.input}
+                        type="text"
+                        placeholder="Digite seu nome"
+                        placeholderTextColor='gray'
+                        value={this.state.name}
+                        onChangeText={name => this.setState({ name })}
+                    />
 
-                    placeholder="Digite seu email"
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                />
-                <TextInput
-                    style={styles.form}
-                    placeholder="Digite sua senha"
-                    value={this.state.password}
-                    onChangeText={password => this.setState({ password })}
-                />
-                <TextInput
-                    style={styles.form}
-                    placeholder="Digite sua senha novamente"
-                    value={this.state.password2}
-                    onChangeText={password2 => this.setState({ password2 })}
-                />
+                    <Text style={styles.label}>Email: </Text>
+                    <TextInput
+                        style={styles.input}
+                        type="text"
+                        placeholder="Digite seu email"
+                        placeholderTextColor='gray'
+                        value={this.state.email}
+                        onChangeText={email => this.setState({ email })}
+                    />
+
+                    <Text style={styles.label}>Senha: </Text>
+                    <TextInput
+                        style={styles.input}
+                        secureTextEntry={true}
+                        placeholder="Digite sua Senha"
+                        placeholderTextColor='gray'
+                        value={this.state.password}
+                        onChangeText={password => this.setState({ password })}
+                    />
+
+                    <Text style={styles.label}>Confirme sua Senha: </Text>
+                    <TextInput
+                        style={styles.input}
+                        secureTextEntry={true}
+                        placeholder="Digite sua Senha"
+                        placeholderTextColor='gray'
+                        value={this.state.password2}
+                        onChangeText={password2 => this.setState({ password2 })}
+                    />
+                
+                    <TouchableOpacity style={styles.button} onPress={() => { this.register() }} >
+                        <Text style={styles.buttonText}>Cadastrar</Text>
+                    </TouchableOpacity>
+
+                    <View style={styles.menssageResView}>
+                        {this.state.isRegistred ?
+                            <Text style={styles.menssageRes}>{this.state.menssage}</Text> :
+                            <Text style={styles.menssageRes}>{this.state.erro}</Text>}
+                    </View>
+
+                    <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Login') }} >
+                        <Text style={styles.buttonText}>Voltar</Text>
+                    </TouchableOpacity>
+                </ScrollView>
             </View>
-            <TouchableOpacity style={styles.button} onPress={() => { this.register() }} >
-                <Text style={styles.buttonText}>Cadastrar</Text>
-            </TouchableOpacity>
-
-            <View style={styles.menssageResView}>
-                {this.state.isRegistred ?
-                    <Text style={styles.menssageRes}>{this.state.menssage}</Text> :
-                    <Text style={styles.menssageRes}>{this.state.erro}</Text>}
-            </View>
-        </View>
-    );
-}
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -129,16 +147,26 @@ const styles = StyleSheet.create({
         marginBottom: hp('7%'),
         alignSelf: 'center',
     },
-    form: {
-        height: 45,
-        width: hp('40%'),
-        paddingHorizontal: 10,
-        backgroundColor: 'white',
-        marginBottom: hp('1%'),
-        borderRadius: 20
+    label: {
+        letterSpacing: 5,
+        color: 'white',
+        fontSize: hp('3%'),
+        alignSelf: 'center',
+    
+    },
+    input: {
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        backgroundColor: '#2E2E2E',
+        color: 'gray',
+        width: wp('40%'),
+        borderRadius: 8,
+        marginBottom: 30,
+        alignSelf: 'center',
+        textAlign: 'center'
     },
     button: {
-        marginTop: hp('2%'),
+        marginTop: hp('1%'),
 
         height: 45,
         width: hp('40%'),
@@ -155,10 +183,11 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     menssageResView: {
-        marginTop: hp('2%'),
+        marginTop: hp('1.5%'),
     },
     menssageRes: {
         color: 'white',
+        alignSelf: 'center',
     }
 })
 
