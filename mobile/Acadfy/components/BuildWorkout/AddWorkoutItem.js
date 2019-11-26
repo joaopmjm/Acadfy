@@ -25,31 +25,33 @@ export default class AddWorkoutItem extends React.Component {
     render() {
         return (
             <View style={styles.page}>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={text => this.setState({ exerciseName: text })}
-                    placeholder='Nome do exercício'
-                    placeholderTextColor='gray'
+                <View style={{ marginHorizontal: 15 }}>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={text => this.setState({ exerciseName: text })}
+                        placeholder='Nome do exercício'
+                        placeholderTextColor='gray'
 
-                />
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={text => this.setState({ sets: text })}
-                    placeholder='Número de séries'
-                    placeholderTextColor='gray'
-                    keyboardType={'numeric'}
-                />
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={text => this.setState({ reps: text })}
-                    placeholder='Número de repetições'
-                    placeholderTextColor='gray'
-                    keyboardType={'numeric'}
-                />
-                <Button title="Salvar"
-                    buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20, marginHorizontal: 100, marginTop: 20 }}
-                    onPress={() => this.save()}
-                />
+                    />
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={text => this.setState({ sets: text })}
+                        placeholder='Número de séries'
+                        placeholderTextColor='gray'
+                        keyboardType={'numeric'}
+                    />
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={text => this.setState({ reps: text })}
+                        placeholder='Número de repetições'
+                        placeholderTextColor='gray'
+                        keyboardType={'numeric'}
+                    />
+                    <Button title="Salvar"
+                        buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20, marginHorizontal: 100, marginTop: 20 }}
+                        onPress={() => this.save()}
+                    />
+                </View>
             </View>
 
         );
@@ -61,10 +63,13 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         backgroundColor: "#2E2E2E",
-
+        fontSize: 15
     },
 
     textInput: {
-        color: 'white'
+        color: 'white',
+        marginTop: 10,
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
     }
 });

@@ -19,7 +19,7 @@ export default class BuildWorkout extends React.Component {
 const Navigator = createAppContainer(createStackNavigator(
     {
         HomeScreen: {
-            screen: BuildWorkoutHome
+            screen: BuildWorkoutHome,
         },
         AddItemScreen: {
             screen: AddWorkoutItem

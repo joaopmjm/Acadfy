@@ -11,7 +11,7 @@ export default class BuildWorkoutHome extends React.Component {
         this.state = {
             students: ['Nicolas', 'Gabriel'],
             workouts: {
-                A: {
+                Seg: {
                     '1': {
                         name: 'Supino reto',
                         sets: '3',
@@ -25,7 +25,7 @@ export default class BuildWorkoutHome extends React.Component {
                 },
             },
             currentStudent: 'Nicolas',
-            currentWorkoutCode: 'A'
+            weekday: 'Seg'
         }
     }
 
@@ -49,7 +49,79 @@ export default class BuildWorkoutHome extends React.Component {
         // get workouts
         this.setState({
             workouts: {
-                A: {
+                Seg: {
+                    '1': {
+                        name: 'Supino reto',
+                        sets: Math.random().toString(),
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
+                },
+                Ter: {
+                    '1': {
+                        name: 'Supino reto',
+                        sets: Math.random().toString(),
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
+                },
+                Qua: {
+                    '1': {
+                        name: 'Supino reto',
+                        sets: Math.random().toString(),
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
+                },
+                Qui: {
+                    '1': {
+                        name: 'Supino reto',
+                        sets: Math.random().toString(),
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
+                },
+                Sex: {
+                    '1': {
+                        name: 'Supino reto',
+                        sets: Math.random().toString(),
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
+                },
+                Sab: {
+                    '1': {
+                        name: 'Supino reto',
+                        sets: Math.random().toString(),
+                        reps: '10'
+                    },
+                    '2': {
+                        name: 'Supino inclinado',
+                        sets: '3',
+                        reps: '20'
+                    }
+                },
+                Dom: {
                     '1': {
                         name: 'Supino reto',
                         sets: Math.random().toString(),
@@ -66,7 +138,7 @@ export default class BuildWorkoutHome extends React.Component {
     }
 
     getWorkout() {
-        return this.state.workouts[this.state.currentWorkoutCode]
+        return this.state.workouts[this.state.weekday]
     }
 
     render() {
@@ -87,11 +159,11 @@ export default class BuildWorkoutHome extends React.Component {
                             </Picker>
                         </View>
                         <View>
-                            <Text style={{ color: 'white', fontSize: 15 }}>Escolha um treino</Text>
+                            <Text style={{ color: 'white', fontSize: 15 }}>Escolha um dia da semana</Text>
                             <Picker
-                                selectedValue={this.state.currentWorkoutCode}
+                                selectedValue={this.state.weekday}
                                 style={styles.picker}
-                                onValueChange={(itemValue, _) => this.setState({ currentWorkoutCode: itemValue })}>
+                                onValueChange={(itemValue, _) => this.setState({ weekday: itemValue })}>
 
                                 {Object.keys(this.state.workouts).map((w) => (<Picker.Item label={w} value={w} />))}
 
