@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -12,26 +12,37 @@ import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
 import BuildWorkoutScreen from './components/BuildWorkout/BuildWorkoutScreen';
 import WorkoutDataScreen from './components/WorkoutData/WorkoutDataScreen';
+import LoginScreen from './components/Login/LoginScreen';
+import { createStackNavigator } from 'react-navigation-stack';
+
+
+const LoginStack = createStackNavigator({
+  Login:{
+    screen: LoginScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+})
+
+const RegisterStack = createStackNavigator({
+  Register:{
+    screen: Register,
+    navigationOptions: {
+      header: null
+    }
+  },
+})
 
 const AppNavigator = createBottomTabNavigator({
   WorkoutDataScreen: {
     screen: WorkoutDataScreen,
-
     navigationOptions: {
       tabBarLabel: 'Métricas',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="md-pie" size={20} color="#0174DF" />
       )
     },
-  },
-  Register: {
-    screen: Register,
-    navigationOptions: {
-      tabBarLabel: 'Register',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
-      )
-    }
   },
   InfoAdminScreen: {
     screen: InfoAdminScreen,
@@ -92,4 +103,16 @@ const AppNavigator = createBottomTabNavigator({
 );
 
 
-export default createAppContainer(AppNavigator);
+
+export default createAppContainer(
+  createSwitchNavigator({
+    App: AppNavigator,
+    Login: LoginStack,
+    Register: RegisterStack
+  },
+  {
+    initialRouteName: "Login"
+  })
+)
+
+
