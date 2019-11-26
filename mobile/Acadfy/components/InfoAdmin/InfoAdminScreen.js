@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp
 } from "react-native-responsive-screen";
-import DatePicker from "react-native-date-picker";
+
 
 class InfoAdminScreen extends React.Component {
   render() {
