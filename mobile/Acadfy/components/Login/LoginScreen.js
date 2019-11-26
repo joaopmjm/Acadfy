@@ -1,90 +1,103 @@
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import api from '../../services/api';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { Text, TextInput, View, ScrollView, Button, StyleSheet } from 'react-native';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 class LoginScreen extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-          email: '',
-          password: '',
-          token: ''
-      } 
-    };
-    postUser = async () => {
-      const {email, password} = this.state
-      try{
-      const response = await api.post('/auth/login',{
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      token: ''
+    }
+  };
+  postUser = async () => {
+    const { email, password } = this.state
+    try {
+      const response = await api.post('/auth/login', {
         email: email,
         password: password
       })
       console.log(response.data)
-      this.setState(response.data["token"])
-    } catch (e){
+      this.setState({
+        token: response.data['token']
+      })
+    } catch (e) {
       console.log(e)
-    } 
+    }
   }
-    render() {
-      return (
-        <View style={style.page}>
-          <View>
-            <Text style={style.title}>Login</Text>
-          </View>
-        <ScrollView>
-          <View>
-          <View>
-            <Text style={style.text}>Email: </Text>
-            <TextInput style={style.input} placeholder="nome@mail.com" onChange={(e) => this.setState({...this.state, email: e.target.value})}></TextInput>
-            <Text style={style.text}>Senha: </Text>
-            <TextInput style={style.input} secureTextEntry={true} placeholder="senha" onChange={(e) => this.setState({...this.state, password: e.target.value})}></TextInput> 
-          </View>
-
-          <View>
-            <Button title="Entrar" type="clear" style={style.button} onClick={() => {this.postUser()}}></Button>
-          </View>
-
-          <View>
-            <Button title="Cadstrar" type="text" style={style.button} onClick={() => {console.log("ir para cadastro")}}></Button>
-          </View>
-          </View>
-        </ScrollView>
+  render() {
+    return (
+      <View style={styles.page}>
+        
+        <Text style={styles.label}>Email: </Text>
+        <TextInput placeholderTextColor='gray' style={styles.input} placeholder="Digite seu email" onChange={(e) => this.setState({ ...this.state, email: e.target.value })}></TextInput>
+        <Text style={styles.label}>Senha: </Text>
+        <TextInput placeholderTextColor='gray' style={styles.input} secureTextEntry={true} placeholder="Digite sua senha" onChange={(e) => this.setState({ ...this.state, password: e.target.value })}></TextInput>
+        <View style={styles.buttonView}>
+          <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('App') }}><Text style={styles.buttonText}>Entrar</Text></TouchableOpacity>
         </View>
-      );
-    }
+        <View style={styles.buttonView}>
+          <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('Register') }}><Text style={styles.buttonText}>Cadastrar</Text></TouchableOpacity>
+        </View>
+      </View>
+    );
   }
+}
 
-  const style = StyleSheet.create({
-    page: {
-        flex: 1,
-        height: '100%',
-        alignItems: 'center',
-        backgroundColor: "#2E2E2E",
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#2E2E2E",
 
-    },
-    title: {
-        color: 'white',
-        letterSpacing: 5,
-        fontSize: 40,
-        marginTop: 2,
-        marginBottom: 7,
-        alignSelf: 'center',
-    },
-    text: {
-      color: 'white',
-      fontSize: 25,
-    },
-    input: {
-      backgroundColor: 'white',
-      borderColor: 'red',
-      width: wp('30%'),
-      borderRadius: 8,
-      marginBottom: 30
-    },
-    button: {
-      borderRadius: 8,
-      marginBottom: 50
-    }
-  })
+  },
+  title: {
+    color: 'white',
+    letterSpacing: 5,
+    fontSize: 40,
+    marginBottom: hp('10%') ,
+    alignSelf: 'center',
+  },
+  label: {
+    letterSpacing: 5,
+    color: 'white',
+    fontSize: hp('3%'),
+    alignSelf: 'center',
+
+  },
+  input: {
+    borderBottomColor: 'gray',
+    borderBottomWidth: 1,
+    backgroundColor: '#2E2E2E',
+    color: 'gray',
+    width: wp('40%'),
+    borderRadius: 8,
+    marginBottom: 30,
+    alignSelf: 'center',
+    textAlign: 'center'
+
+  },
+  actionButtons: {
+    borderRadius: 20,
+    width: wp('40%'),
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#069'
+  },
+  buttonView: {
+    marginTop: hp('4%')
+  },
+  buttonText: {
+    fontSize: wp('4%'),
+    letterSpacing: 1,
+    fontWeight: 'bold',
+    color: 'white',
+
+  }
+})
 export default LoginScreen;
-   
