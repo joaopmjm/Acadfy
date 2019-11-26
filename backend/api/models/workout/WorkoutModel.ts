@@ -8,6 +8,10 @@ import * as bcrypt from 'bcryptjs';
 class WorkoutModel extends BaseModel {
   static Schema = WorkoutSchema;
 
+  // public static async findExercises(exercises: []) {
+  //   return await this.find({exercises})
+  // }
+
 }
 
 export default MainDatabase.model(WorkoutModel);
