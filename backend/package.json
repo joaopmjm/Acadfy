@@ -13,7 +13,7 @@
     "eslint": "^6.6.0",
     "jsonwebtoken": "^8.5.1",
     "pjson": "^1.0.9",
-    "ts-framework": "github:nxtep-io/ts-framework",
+    "ts-framework": "nxtep-io/ts-framework.git#v2.0",
     "ts-framework-cli": "nxtep-io/ts-framework-cli#v2.5",
     "ts-framework-common": "nxtep-io/ts-framework-common#v2.4",
     "ts-framework-mongo": "https://github.com/nxtep-io/ts-framework-mongo",
