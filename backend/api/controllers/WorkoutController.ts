@@ -3,21 +3,21 @@ import Workout from '../models/workout/WorkoutModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
 import { patch } from 'semver';
+import { NODATA } from 'dns';
 
 @Controller('/workouts')
 export default class WorkoutController {
 
-  @Post('/', [checkJwt, checkRole])
+  @Post('/')
   static async storeWorkout(req, res) {
 
-    const { name, user, creator, exercises, day } = req.body;
+    const { name, userId, creator, exercises, day } = req.body;
     const workout = await Workout.create({
       name,
-      user,
+      userId,
       day,
       creator,
       exercises,
-      completed: false,
       counter: 0
     });
     return res.success(workout);
@@ -27,10 +27,10 @@ export default class WorkoutController {
   static async updateWorkout(req, res) {
 
     const filter = {id: req.params.id};
-    const { name, user, exercises, day} = req.body;
+    const { name, userId, exercises, day} = req.body;
     const update = {
       name: name,
-      user: user,
+      userId: userId,
       exercises: exercises,
       day: day,
     }
@@ -38,31 +38,52 @@ export default class WorkoutController {
     return res.success(workout);
   }
 
-  @Put('completeWorkout/:id', [checkJwt])
+  @Post('/completeWorkout', [checkJwt])
   static async completeWorkout(req, res) {
 
-    const filter = {id: req.params.id};
-    const {counter, completed } = req.body;
-    const update = {
-      completed: completed,
-      counter: counter,
-    }
-    const workout = await Workout.findOneAndUpdate(filter, update);
+    const {id} = req.body;
+    const workout = await Workout.findOne({_id: id})
+    const update = {counter: workout.counter+1}
+
+    const newworkout = await Workout.findOneAndUpdate({_id: id}, update);
+    return res.success(newworkout);
+  }
+
+  @Get('/training', [checkJwt])
+  static async getWorkout(req, res) {
+    
+    const filter = res.locals.userId.id;
+    const workout = await Workout.find({userId: filter});
     return res.success(workout);
   }
 
-  @Get('/:id', [checkJwt])
-  static async getWorkout(req, res) {
+  @Get('/workoutCounter', [checkJwt])
+  static async getWorkoutCounter(req, res) {
     
-    const filter = {id: req.params.id};
-    const workout = await Workout.findOne(filter);
-    return res.success(workout);
+    const filter = res.locals.userId.id;
+    const workout = await Workout.find({userId: filter});
+    let nameAndCounter = {}
+    for (var i = 0; i < workout.length; i++){
+      const name = workout[i].name;
+      const counter = workout[i].counter;
+      nameAndCounter[name] = counter;
+    }
+    return res.success(nameAndCounter);
   }
+
+  // @Get('/exercises', [checkJwt])
+  // static async getWorkoutExercise(req, res) {
+    
+  //   const userId = res.locals.userId;
+  //   const {exercises} = req.body;= {id:
+  //   const workout = await Workout.findOne(filter, exercises)
+  //   return res.success(workout)
+  // }
 
   @Get('/', [checkJwt, checkRole])
   static async getWorkoutDay(req, res) {
     
-    const { user, day} = req.body;
+    const {user, day} = req.body;
     const filter = {
       user: user,
       day: day
