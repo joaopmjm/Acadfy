@@ -1,13 +1,13 @@
 import { BaseSchema } from 'ts-framework-mongo';
 
-const MensageSchema = new BaseSchema({
+const MessageSchema = new BaseSchema({
   name: String,
   role: ["admin", "consumer"],
   msn: String,
-  admin_id:String,
-  user_id:String
+  admin_id: String,
+  user_id: String
 },                            { 
   timestamps: { createdAt: true, updatedAt: true },
 });
 
-export default MensageSchema;
+export default MessageSchema;

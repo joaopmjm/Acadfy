@@ -1,26 +1,27 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, Put } from 'ts-framework';
-import Mensage from '../models/mensage/MensageModel';
+import Message from '../models/message/MessageModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
 
-@Controller('/mensage')
-export default class MensageController {
+@Controller('/message')
+export default class MessageController {
 
-  @Get('/history')
-  static async sample(req: BaseRequest, res: BaseResponse) {
-    
-    const historic = await Mensage.getHistoric();
+  @Get('/history',[checkJwt])
+  static async hist(req: BaseRequest, res: BaseResponse) {
+    const {admin_id,user_id} = req.body;
+
+    const historic = await Message.find({ admin_id: admin_id, user_id:user_id});
 
     return res.success(historic);
 
   }
 
-  @Post('/admin_mensage')
+  @Post('/admin_message',[checkJwt,checkRole])
   static async adMSN(req: BaseRequest, res: BaseResponse) {
     try {
       
       const {name, role, msn,admin_id,user_id} = req.body;
-      const insert = await Mensage.create({
+      const insert = await Message.create({
       name,
       role,
       msn,
@@ -35,12 +36,12 @@ export default class MensageController {
     }
   }
 
-  @Post('/user_mensage')
+  @Post('/user_message',[checkJwt])
   static async usMSN(req: BaseRequest, res: BaseResponse) {
     try {
       
       const {name, role, msn,admin_id,user_id} = req.body;
-      const insert = await Mensage.create({
+      const insert = await Message.create({
       name,
       role,
       msn,

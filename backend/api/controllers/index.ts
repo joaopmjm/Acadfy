@@ -1,12 +1,12 @@
 import StatusController from './StatusController';
 import UserController from './UserController';
 import AuthController from './AuthController';
-import MensageController from './MensageController';
+import MessageController from './MessageController';
 
 
 export default {
   StatusController,
   UserController,
   AuthController,
-  MensageController
+  MessageController
 };

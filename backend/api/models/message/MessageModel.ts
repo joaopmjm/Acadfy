@@ -1,20 +1,19 @@
 import { Model, BaseModel } from 'ts-framework-mongo';
 import MainDatabase from '../../database';
-import MensageSchema from './MensageSchema';
+import MessageSchema from './MessageSchema';
 import * as bcrypt from 'bcryptjs';
 export enum UserRole{
   ADMIN = "admin",
   CONSUMER = "consumer"
 }
 
-@Model('Mensage')
-class MensageModel extends BaseModel {
-  static Schema = MensageSchema;
+@Model('Message')
+class MessageModel extends BaseModel {
+  static Schema = MessageSchema;
 
   public static async getHistoric() {
     return this
   }
-
 }
 
-export default MainDatabase.model(MensageModel);
+export default MainDatabase.model(MessageModel);
