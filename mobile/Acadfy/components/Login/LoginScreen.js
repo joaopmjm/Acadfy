@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import api from '../../services/api';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -10,41 +10,45 @@ class LoginScreen extends React.Component {
       email: '',
       password: '',
       token: '',
+      erro: '',
     }
     
     this.postUser = this.postUser.bind(this)  
   };
 
   postUser = async () => {
-    console.log(this.state)
-    const { email, password } = this.state
+    const { email, password} = this.state
     try {
       const response = await api.post('/auth/login', {
         email: email,
         password: password
       })
-      console.log(response.data["expiresIn"])
       if (response.data["expiresIn"] == "900") {
         console.log("Logou")
         this.setState({
           token: response.data["token"]
         })
+        await AsyncStorage.setItem('token', response.data['token'])
         this.props.navigation.navigate("App")
       }
-
     } catch (e) {
-      console.log("a" + e)
+      console.log(e)
     }
   }
+
 
   
   render() {
     return (
       <View style={styles.page}>
+        
         <Text style={styles.label}>Email: </Text>
         <TextInput placeholderTextColor='gray' style={styles.input} placeholder="Digite seu email" onChangeText={(text) => this.setState({email: text})}></TextInput>
         <Text style={styles.label}>Senha: </Text>
         <TextInput placeholderTextColor='gray' style={styles.input} secureTextEntry={true} placeholder="Digite sua senha" onChangeText={(text) => this.setState({password: text})}></TextInput>
+    
+        {this.state.erro != null? <View><Text style={styles.erro}>{this.state.erro}</Text></View>:null}
+        
         <View style={styles.buttonView}>
           <TouchableOpacity style={styles.actionButtons} onPress={() => {this.postUser()}}><Text style={styles.buttonText}>Entrar</Text></TouchableOpacity>
         </View>
@@ -109,6 +113,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
 
+  },
+  erro: {
+    color: "red"
   }
 })
 export default LoginScreen;
