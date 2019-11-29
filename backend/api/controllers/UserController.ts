@@ -51,4 +51,21 @@ export default class UserController {
 
     return res.success(user);
   }
+
+  @Post('/update', [checkJwt, checkRole])
+  static async findAndUpdate(req, res) {
+    const user = await User.findOneAndUpdate({
+      email: req.body.email,
+    },                                       {
+      $set: {
+          name: req.body.name,
+          weight: req.body.weight,
+          height: req.body.height,
+          birthdate: req.body.birthdate,
+          gender: req.body.gender
+      },
+    });
+
+    return res.success(user);
+  }
 }
