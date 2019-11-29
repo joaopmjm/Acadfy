@@ -1,6 +1,6 @@
-import { default as MensageModel } from './MensageModel';
-import { default as MensageSchema } from './MensageSchema';
+import { default as MessageModel } from './MessageModel';
+import { default as MessageSchema } from './MessageSchema';
 
-export { MensageModel, MensageSchema };
+export { MessageModel, MessageSchema };
 
-export default { MensageModel, MensageSchema }
+export default { MessageModel, MessageSchema }
