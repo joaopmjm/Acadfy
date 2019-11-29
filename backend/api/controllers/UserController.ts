@@ -31,7 +31,7 @@ export default class UserController {
     return res.success(user);
   }
 
-  @Get('/', [checkJwt, checkRole])
+  @Get('/')
   static async findAll(req: BaseRequest, res: BaseResponse) {
     try {
       const users = await User.find()
