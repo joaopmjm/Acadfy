@@ -12,6 +12,5 @@ export default {
   AuthController,
   MessageController,
   ExerciseController,
-  AuthController,
   WorkoutController,
 };
