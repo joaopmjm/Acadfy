@@ -15,14 +15,40 @@ export default class MensageController {
 
   }
 
-  @Post('/mensage')
-  static async logIn(req: BaseRequest, res: BaseResponse) {
+  @Post('/admin_mensage')
+  static async adMSN(req: BaseRequest, res: BaseResponse) {
     try {
       
-      const {name, role, msn} = req.body;
+      const {name, role, msn,admin_id,user_id} = req.body;
+      const insert = await Mensage.create({
+      name,
+      role,
+      msn,
+      admin_id,
+      user_id
+    });
 
-      const put = await Mensage.putMensage(name, role, msn)
+    return res.success(insert);
 
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  @Post('/user_mensage')
+  static async usMSN(req: BaseRequest, res: BaseResponse) {
+    try {
+      
+      const {name, role, msn,admin_id,user_id} = req.body;
+      const insert = await Mensage.create({
+      name,
+      role,
+      msn,
+      admin_id,
+      user_id
+    });
+
+    return res.success(insert);
 
     } catch (error) {
       console.error(error)

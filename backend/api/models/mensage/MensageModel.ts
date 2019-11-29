@@ -15,19 +15,6 @@ class MensageModel extends BaseModel {
     return this
   }
 
-  public async putMensage(  name: String, role: UserRole, msn: String) {
-
-    try {
-
-      this.name = name
-      this.role = role
-      this.msn = msn
-
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
 }
 
 export default MainDatabase.model(MensageModel);
