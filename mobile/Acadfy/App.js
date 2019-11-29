@@ -10,7 +10,7 @@ import InfoAdminScreen from './components/InfoAdmin/InfoAdminScreen';
 import HomeScreen from './components/Home/HomeScreen';
 import DoubtScreen from './components/Doubts/DoubtScreen';
 import InformationScreen from './components/Informations/InformationsScreen';
-import BuildWorkoutScreen from './components/BuildWorkout/BuildWorkoutScreen';
+import BuildWorkout from './components/BuildWorkout/BuildWorkout';
 import WorkoutDataScreen from './components/WorkoutData/WorkoutDataScreen';
 import LoginScreen from './components/Login/LoginScreen';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -81,7 +81,7 @@ const AppNavigator = createBottomTabNavigator({
     },
   },
   BuildWorkoutScreen: {
-    screen: BuildWorkoutScreen,
+    screen: BuildWorkout,
     navigationOptions: {
       tabBarLabel: 'Build Workout',
       tabBarIcon: ({ tintColor }) => (
