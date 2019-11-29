@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { Text, View, ScrollView, StyleSheet, KeyboardAvoidingView } from "react-native";
 import { Formik } from "formik";
 import { Button, Input, ButtonGroup } from "react-native-elements";
 import {
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#2E2E2E",
     color: "white",
-    marginLeft: 30,
-    marginRight: 30
+    marginLeft: wp('5%'),
+    marginRight: wp('5%')
   },
   forgottenPasswordButtonContainer: {
     width: imageWidth
@@ -47,28 +47,42 @@ const styles = StyleSheet.create({
   },
   input: {
     color: "white",
+    width: wp('80%')
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "white"
+    color: "white",
+    marginBottom: hp('5%'),
+    marginTop: hp('1%')
   },
   item: {
     fontSize: 16,
     fontWeight: "bold",
     color: "white",
     textAlign: "left",
-    width: 330
+    width: 330,
   },
-  background:{
+  background: {
     backgroundColor: "#2E2E2E",
     height: '100%',
 
   },
   inputField: {
     marginBottom: hp("4%")
-  }
-
+  },
+  box: {
+    marginBottom: hp('5%'),
+  },
+  boxSelector: {
+    marginTop: hp('5%'),
+    marginBottom: hp('5%')
+  },
+  calendar: {
+    marginTop: hp('5%'),
+    marginBottom: hp('5%')
+  },
+  
 });
 
 export const MyReactNativeForm = props => (
@@ -77,56 +91,63 @@ export const MyReactNativeForm = props => (
     onSubmit={values => console.log(values)}
   >
     {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
-      <View style={styles.background}>
-      <KeyboardAvoidingView style={styles.container}>
-        <Text style={styles.title}>Informações</Text>
+      <ScrollView>
+        <View style={styles.background}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Informações</Text>
+            <KeyboardAvoidingView style={styles.box}>
+              <Input
+                label="Nome"
+                labelStyle={styles.input}
+                placeholder="Escreva seu nome"
+                inputStyle={styles.input}
+                onChangeText={handleChange("nome")}
+                onBlur={handleBlur("nome")}
+                value={values.nome}
+              />
+            </KeyboardAvoidingView>
+            <KeyboardAvoidingView style={styles.box}>
+              <Input
+                label="Peso"
+                labelStyle={styles.input}
+                placeholder="Escreva seu peso"
+                inputStyle={styles.input}
+                onChangeText={handleChange("peso")}
+                onBlur={handleBlur("peso")}
+                value={values.peso}
+              />
+            </KeyboardAvoidingView>
+            <KeyboardAvoidingView style={styles.box}>
+              <Input
+                label="Altura"
+                labelStyle={styles.input}
+                placeholder="Escreva sua altura"
+                inputStyle={styles.input}
+                onChangeText={handleChange("altura")}
+                onBlur={handleBlur("altura")}
+                value={values.altura}
+              />
+            </KeyboardAvoidingView>
 
-        <Input
-          label="Nome"
-          labelStyle={styles.input}
-          placeholder="Escreva seu nome"
-          inputStyle={styles.input}
-          onChangeText={handleChange("nome")}
-          onBlur={handleBlur("nome")}
-          value={values.nome}
-        />
-        
-        <Input
-          label="Peso"
-          labelStyle={styles.input}
-          placeholder="Escreva seu peso"
-          inputStyle={styles.input}
-          onChangeText={handleChange("peso")}
-          onBlur={handleBlur("peso")}
-          value={values.peso}
-        />
-        <Input
-          label="Altura"
-          labelStyle={styles.input}
-          placeholder="Escreva sua altura"
-          inputStyle={styles.input}
-          onChangeText={handleChange("altura")}
-          onBlur={handleBlur("altura")}
-          value={values.altura}
-        />
+            <Text style={styles.item}>Data de Nascimento</Text>
 
-        <Text style={styles.item}>Data de Nascimento</Text>
+            <DatePicker style={styles.calendar} mode="date" date={values.date} onDateChange={date => setFieldValue("date", date, false)} />
 
-        <DatePicker mode="date" date={values.date} onDateChange={date => setFieldValue("date", date, false)} />
+            <Text style={styles.item}>Gênero</Text>
 
-        <Text style={styles.item}>Gênero</Text>
-        
-        <ButtonGroup
-          onPress={selectedIndex => setFieldValue("sexo", selectedIndex, false)}
-          selectedIndex={values.sexo}
-          buttons={["Masculino", "Feminino"]}
-          containerStyle={{ height: 40 }}
-        />
-      
-        <Button onPress={handleSubmit} title="Salvar" />
+            <ButtonGroup
+              onPress={selectedIndex => setFieldValue("sexo", selectedIndex, false)}
+              selectedIndex={values.sexo}
+              buttons={["Masculino", "Feminino"]}
+              containerStyle={{ height: 40, marginTop: hp('5%') }}
+            />
+            <View style={styles.boxSelector}>
+              <Button onPress={handleSubmit} title="Salvar" />
+            </View>
 
-      </KeyboardAvoidingView>
-      </View>
+          </View>
+        </View>
+      </ScrollView>
     )}
   </Formik>
 );
