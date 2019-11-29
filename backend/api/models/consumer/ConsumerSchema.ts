@@ -3,7 +3,7 @@ import { BaseSchema } from 'ts-framework-mongo';
 const ConsumerSchema = new BaseSchema({
   name: String,
   email: String,
-  role: ["admin", "consumer"],
+  role: "consumer",
   password: String,
   height: Number,
   weight: Number,

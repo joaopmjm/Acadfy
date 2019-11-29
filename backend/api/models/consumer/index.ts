@@ -1,6 +1,6 @@
-import { default as UserModel } from './UserModel';
-import { default as UserSchema } from './UserSchema';
+import { default as ConsumerModel } from './ConsumerModel';
+import { default as ConsumerSchema } from './ConsumerSchema';
 
-export { UserModel, UserSchema };
+export { ConsumerModel, ConsumerSchema };
 
-export default { UserModel, UserSchema }
+export default { ConsumerModel, ConsumerSchema }

@@ -1,9 +1,9 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, Put } from 'ts-framework';
-import Admin from '../models/Admin/AdminModel';
+import AdminModel from '../models/admin/AdminModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
 
-@Controller('/Admins')
+@Controller('/admin')
 export default class AdminController {
 
   @Post('/', [checkJwt, checkRole])
@@ -11,13 +11,13 @@ export default class AdminController {
 
     const { name, email, role, password, birthDate, athletes} = req.body;
 
-    const Admindb = await Admin.findOne({email})
+    const admindb = await AdminModel.findOne({email})
 
-    if (Admindb) {
+    if (admindb) {
       throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
     }
 
-    const insert = await Admin.create({
+    const insert = await AdminModel.create({
       name,
       email,
       role,
@@ -25,42 +25,42 @@ export default class AdminController {
       athletes
     });
 
-    const Admin = await Admin.findOne({email})
+    const admin = await AdminModel.findOne({email})
 
-    await Admin.setPassword(password);
-    await Admin.save();
+    await admin.setPassword(password);
+    await admin.save();
 
-    return res.success(Admin);
+    return res.success(admin);
   }
 
   @Get('/', [checkJwt, checkRole])
   static async findAll(req: BaseRequest, res: BaseResponse) {
     try {
-      const Admins = await Admin.find()
-      return res.success(Admins)
+      const admin = await AdminModel.find()
+      return res.success(admin)
     } catch (error) {
       console.error(error)
     }
   }
 
-  @Get('/athletes', [checkJwt, checkRole])
-  static async findAll(req: BaseRequest, res: BaseResponse) {
-    try {
-      const athletes = await Admin.athletes()
-      return res.success(athletes)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // @Get('/athletes', [checkJwt, checkRole])
+  // static async findAll(req: BaseRequest, res: BaseResponse) {
+  //   try {
+  //     const athletes = await Admin.athletes()
+  //     return res.success(athletes)
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   @Post('/:id', [checkJwt, checkRole])
   static async findAndUpdate(req, res) {
-    const Admin = await Admin.findOneAndUpdate({
+    const admin = await AdminModel.findOneAndUpdate({
       email: req.body.email,
     },                                       {
       $set: { name: req.body.name },
     });
 
-    return res.success(Admin);
+    return res.success(admin);
   }
 }

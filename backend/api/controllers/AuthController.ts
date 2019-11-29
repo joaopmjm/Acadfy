@@ -1,20 +1,11 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post } from 'ts-framework';
-import { UserModel } from '../models/user';
+import { AdminModel } from '../models/admin';
+import { ConsumerModel } from '../models/consumer';
+
 import JwtService from '../services/JwtService';
 
-@Controller('/consumerauth')
+@Controller('/auth')
 export default class AuthController {
-
-  /**
-   * GET /auth/
-   * 
-   * @description A sample controller.
-   */
-  @Get('/')
-  static async sample(req: BaseRequest, res: BaseResponse) {
-    throw new HttpError('Method not implemented yet', HttpCode.Server.INTERNAL_SERVER_ERROR);
-  }
-
 
   @Post('/login')
   static async logIn(req: BaseRequest, res: BaseResponse) {
@@ -22,22 +13,20 @@ export default class AuthController {
       
       const { email, password } = req.body;
 
-      const userdb = await UserModel.findOne({email})
+      const consumerdb = await ConsumerModel.findOne({email})
 
-      console.log(userdb)
-
-      if (!userdb) {
+      if (!consumerdb) {
         throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
       }
 
-      const matchPassword = await userdb.validatePassword(password);
+      const matchPassword = await consumerdb.validatePassword(password);
 
       if (!matchPassword){
         throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
       }
 
       else if (matchPassword) {
-        const token = await JwtService.createSignToken(userdb);
+        const token = await JwtService.createSignToken(consumerdb);
         return res.success(token);
       }
 
@@ -52,13 +41,13 @@ export default class AuthController {
 
       const { name, email, password, height, weight, birthDate, personal } = req.body;
 
-      const userdb = await UserModel.findOne({email})
+      const consumerdb = await ConsumerModel.findOne({email})
 
-      if (userdb) {
+      if (consumerdb) {
         throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
       }
 
-      const insert = await UserModel.create({
+      const insert = await ConsumerModel.create({
         name,
         email,
         role: 'consumer',
@@ -68,10 +57,69 @@ export default class AuthController {
         personal
       });
   
-      const user = await UserModel.findOne({email})
+      const consumer = await ConsumerModel.findOne({email})
   
-      await user.setPassword(password);
-      await user.save();
+      await consumer.setPassword(password);
+      await consumer.save();
+
+      return res.success("Registro confirmado na plataforma")
+
+    } catch (error) {
+      return res.error(error)
+    }
+  }
+
+  @Post('/login-admin')
+  static async logInAdmin(req: BaseRequest, res: BaseResponse) {
+    try {
+      
+      const { email, password } = req.body;
+
+      const admindb = await AdminModel.findOne({email})
+
+      if (!admindb) {
+        throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
+      }
+
+      const matchPassword = await admindb.validatePassword(password);
+
+      if (!matchPassword){
+        throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
+      }
+
+      else if (matchPassword) {
+        const token = await JwtService.createSignToken(admindb);
+        return res.success(token);
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  @Post('/register-admin')
+  static async registerAdmin(req: BaseRequest, res: BaseResponse) { 
+    try {
+
+      const { name, email, password, birthDate, athletes } = req.body;
+
+      const admindb = await AdminModel.findOne({email})
+
+      if (admindb) {
+        throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
+      }
+
+      const insert = await AdminModel.create({
+        name,
+        email,
+        birthDate, 
+        athletes
+      });
+  
+      const admin = await AdminModel.findOne({email})
+  
+      await admin.setPassword(password);
+      await admin.save();
 
       return res.success("Registro confirmado na plataforma")
 

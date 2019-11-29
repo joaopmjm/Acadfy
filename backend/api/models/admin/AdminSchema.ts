@@ -3,10 +3,10 @@ import { BaseSchema } from 'ts-framework-mongo';
 const AdminSchema = new BaseSchema({
   name: String,
   email: String,
-  role: ["admin", "consumer"],
+  role: "admin",
   password: String,
   birthDate: String,
-  athletes: Array,
+  athletes: [],
 },                            { 
   timestamps: { createdAt: true, updatedAt: true },
 });
