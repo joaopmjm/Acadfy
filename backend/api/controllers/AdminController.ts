@@ -43,6 +43,16 @@ export default class AdminController {
     }
   }
 
+  @Get('/athletes', [checkJwt, checkRole])
+  static async findAll(req: BaseRequest, res: BaseResponse) {
+    try {
+      const athletes = await Admin.athletes()
+      return res.success(athletes)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   @Post('/:id', [checkJwt, checkRole])
   static async findAndUpdate(req, res) {
     const Admin = await Admin.findOneAndUpdate({
