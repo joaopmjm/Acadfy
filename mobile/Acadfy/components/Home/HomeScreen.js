@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, ScrollView, AsyncStorage } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { ListItem, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -22,9 +22,16 @@ class HomeScreen extends React.Component {
             friday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
             saturday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
             currentDayNumber: '',
-            currentDay: 'sunday'
+            currentDay: 'sunday',
+            token: "",
         }
+        this.getToken();
+    }
 
+    async getToken(){
+        this.setState({
+            token: await AsyncStorage.getItem('token'),
+        });
     }
 
     componentDidMount() {
