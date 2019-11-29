@@ -9,37 +9,48 @@ class LoginScreen extends React.Component {
     this.state = {
       email: '',
       password: '',
-      token: ''
+      token: '',
     }
+    
+    this.postUser = this.postUser.bind(this)  
   };
+
   postUser = async () => {
+    console.log(this.state)
     const { email, password } = this.state
     try {
       const response = await api.post('/auth/login', {
         email: email,
         password: password
       })
-      console.log(response.data)
-      this.setState({
-        token: response.data['token']
-      })
+      console.log(response.data["expiresIn"])
+      if (response.data["expiresIn"] == "900") {
+        console.log("Logou")
+        this.setState({
+          token: response.data["token"]
+        })
+        this.props.navigation.navigate("App")
+      }
+
     } catch (e) {
-      console.log(e)
+      console.log("a" + e)
     }
   }
+
+  
   render() {
     return (
       <View style={styles.page}>
-        
         <Text style={styles.label}>Email: </Text>
-        <TextInput placeholderTextColor='gray' style={styles.input} placeholder="Digite seu email" onChange={(e) => this.setState({ ...this.state, email: e.target.value })}></TextInput>
+        <TextInput placeholderTextColor='gray' style={styles.input} placeholder="Digite seu email" onChangeText={(text) => this.setState({email: text})}></TextInput>
         <Text style={styles.label}>Senha: </Text>
-        <TextInput placeholderTextColor='gray' style={styles.input} secureTextEntry={true} placeholder="Digite sua senha" onChange={(e) => this.setState({ ...this.state, password: e.target.value })}></TextInput>
+        <TextInput placeholderTextColor='gray' style={styles.input} secureTextEntry={true} placeholder="Digite sua senha" onChangeText={(text) => this.setState({password: text})}></TextInput>
         <View style={styles.buttonView}>
-          <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('App') }}><Text style={styles.buttonText}>Entrar</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.actionButtons} onPress={() => {this.postUser()}}><Text style={styles.buttonText}>Entrar</Text></TouchableOpacity>
         </View>
+        
         <View style={styles.buttonView}>
-          <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('Register') }}><Text style={styles.buttonText}>Cadastrar</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.actionButtons} onPress={() => {this.props.navigation.navigate('Register')}}><Text style={styles.buttonText}>Cadastrar</Text></TouchableOpacity>
         </View>
       </View>
     );
@@ -59,7 +70,7 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 5,
     fontSize: 40,
-    marginBottom: hp('10%') ,
+    marginBottom: hp('10%'),
     alignSelf: 'center',
   },
   label: {
