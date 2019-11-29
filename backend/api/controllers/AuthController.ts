@@ -38,7 +38,7 @@ export default class AuthController {
 
       else if (matchPassword) {
         const token = await JwtService.createSignToken(userdb);
-        return res.success(token);
+        return res.success({...token, role:userdb.role[0]});
       }
 
     } catch (error) {
