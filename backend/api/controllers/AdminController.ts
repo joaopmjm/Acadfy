@@ -2,6 +2,8 @@ import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, 
 import AdminModel from '../models/admin/AdminModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
+import { BaseRequest } from 'ts-framework';
+import { BaseResponse } from 'ts-framework';
 
 @Controller('/admin')
 export default class AdminController {
@@ -54,7 +56,7 @@ export default class AdminController {
   // }
 
   @Post('/:id', [checkJwt, checkRole])
-  static async findAndUpdate(req, res) {
+  static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
     const admin = await AdminModel.findOneAndUpdate({
       email: req.body.email,
     },                                       {
