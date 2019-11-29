@@ -52,7 +52,7 @@ export default class UserController {
     return res.success(user);
   }
 
-  @Post('/update', [checkJwt, checkRole])
+  @Post('/update', [checkJwt])
   static async findAndUpdate(req, res) {
     const user = await User.findOneAndUpdate({
       email: req.body.email,
@@ -62,6 +62,24 @@ export default class UserController {
           weight: req.body.weight,
           height: req.body.height,
           birthdate: req.body.birthdate,
+          gender: req.body.gender
+      },
+    });
+
+    return res.success(user);
+  }
+
+
+  @Post('/update_trainer', [checkJwt, checkRole])
+  static async findAndUpdate(req, res) {
+    const user = await User.findOneAndUpdate({
+      email: req.body.email,
+    }, {
+      $set: {
+          name: req.body.name,
+          email: req.body.email,
+          telephone: req.body.telephone,
+          cref: req.body.cref,
           gender: req.body.gender
       },
     });
