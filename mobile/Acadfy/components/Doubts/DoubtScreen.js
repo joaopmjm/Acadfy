@@ -1,67 +1,80 @@
-import React, {useEffect} from 'react';
-import { Text, TextInput, Button, StyleSheet } from 'react-native';
+import React from 'react';
+import { 
+  Text, 
+  View,
+  TextInput,
+  StyleSheet,
+   Button,
+   TouchableOpacity,
+   ViewPropTypes,
+ } from 'react-native';
+ import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp
+} from "react-native-responsive-screen";import api from '../../services/api';
 
-const getHistory = async (e) => {
-  try {let response = await fetch(
-    "localhost://3000/getHistory",{
-      headers:{
-        userid : "1",
-        username : "rod",
-        teacherid : "14"
-      }
+class DoubtScreen extends React.Component { 
+  constructor(props){
+    super(props);
+    this.state = {
+      msg : "",
+      messages: [],
+      name: "",
+    };
+  }
+  
+
+  onPress = () => {
+    //send msg
+  }
+  onChangeText = msg => this.setState({msg});
+
+  postMsg = async () => {
+    const { email, password } = this.state
+    try {
+      const response = await api.post('/mensage/user_mensage', {
+        name: this.state.name,
+        role: "user",
+        msn:"" 
+      });
+      console.log(response.data)
+      this.setState({
+        token: response.data['token']
+      })
+    } catch (e) {
+      console.log(e)
     }
-  );
-  let responseJson = await response.json();
-  setHist(responseJson);
-} catch (error) {
-  console.error(error);
-};
-};
+  }
 
-class DoubtScreen extends React.Component {
-  // state = {
-  //   hist = [],
-  // };
-
-  // getHistory = async () => {
-  //   await fetch("localhost://3000/getHistory")
-  //   .then((response) => response.json())
-  //   .then((responseJson) => {
-  //     this.setState({hist: responseJson});
-  //   })
-  // }
-    
-  //   render() {
-  //       return (
-  //           <View style={styles.page}>
-  //               <ScrollView
-  //         contentInsetAdjustmentBehavior="automatic"
-  //         style={styles.scrollView}>
-  //       </ScrollView>
-
-  //       <Text>Tire sua duvida:</Text><br/>
-  //       <TextInput placeholder="Sua duvida"></TextInput>
-  //       <Button title="Enviar" onClick={handleSend()}/>
-  //       {this.state.hist.map(mens => (
-  //         (<Text style={styles.sender}>{mens.author}</Text>,<Text style={styles.msg}>{mens.msg}</Text>)
-  //       ))}
-  //           </View>
-
-  //       );
-  //   }
-}
-
-function showHistory(props){
-  const msg = props.msg;
-  const listarMsg = msg.map((msg) => 
-  <View>
-    <Text style={style.sender}>{msg.author}</Text><br/>
-    <Text style={style.msg}>{msg.text}</Text><br/>
-  </View>
-  );
+  render() {
+        return (
+          <View style={styles.background}>
+            <Text style={styles.title}>Tire sua duvida</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="your doubt"
+              onChangeText={this.onChangeText}
+            />
+            <TouchableOpacity onPress={this.onPress}>
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
+  background:{
+    backgroundColor: "#2E2E2E",
+    height: '100%',
+  },
+    textInput: {
+      height: hp("10%"),
+      margin: 10,
+      paddingHorizontal: 10,
+      borderColor: '#111111',
+      borderWidth: 1,
+    },
     sender: {
         flex: 1,
         alignItems: 'center',
@@ -72,6 +85,22 @@ const styles = StyleSheet.create({
         fontSize: 25,
         marginTop: 20,
         marginBottom: 30
-    }
+    },
+    buttonText: { // 5.
+      marginLeft: 10,
+      fontSize: 10,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: "white"
+    },
 })
+
+export const msgBox = props => (
+  <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+    <Text>{props.sender}</Text><Text>{props.msg}</Text>
+  </View>
+)
 export default DoubtScreen;
+  
