@@ -111,7 +111,7 @@ export default createAppContainer(
     Register: RegisterStack
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "App"
   })
 )
 

@@ -1,77 +1,88 @@
-import React, {useEffect} from 'react';
-import { Text, TextInput, Button, StyleSheet } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { Text, TextInput,StyleSheet, View, ScrollView } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { ListItem, Button } from 'react-native-elements';
 
-const getHistory = async (e) => {
-  try {let response = await fetch(
-    "localhost://3000/getHistory",{
-      headers:{
-        userid : "1",
-        username : "rod",
-        teacherid : "14"
-      }
-    }
-  );
-  let responseJson = await response.json();
-  setHist(responseJson);
-} catch (error) {
-  console.error(error);
-};
-};
+import Icon from 'react-native-vector-icons/Ionicons';
 
-class DoubtScreen extends React.Component {
-  // state = {
-  //   hist = [],
-  // };
+function DoubtScreen(){
+  var [msgs, setMsgs] = useState([{msg:"socorro",author:"User"},{msg:"o que foi senhor",author:"Treinador"},{msg:"quebrei do dedo",author:"User"}]);
+  var [text, setText] = useState("");
 
-  // getHistory = async () => {
-  //   await fetch("localhost://3000/getHistory")
-  //   .then((response) => response.json())
-  //   .then((responseJson) => {
-  //     this.setState({hist: responseJson});
-  //   })
-  // }
+  const getHistory = () => {
+    // get Hist of chat
+  } 
+
+  const handleSend = () => {
+    // send msg
+    var new_msg = [{msg : text.text,author:"User"},{msg : "Hard coded response msg please finish the backend", author:"Server"}];
+    var new_hist = msgs.concat(new_msg);
+    setText("");
+    setMsgs(new_hist);
+  }
+
+  const handlePhoto= () => {
+
+  };
+  useEffect(()=>{
+    getHistory();
+  },[msgs,text]);
     
-  //   render() {
-  //       return (
-  //           <View style={styles.page}>
-  //               <ScrollView
-  //         contentInsetAdjustmentBehavior="automatic"
-  //         style={styles.scrollView}>
-  //       </ScrollView>
-
-  //       <Text>Tire sua duvida:</Text><br/>
-  //       <TextInput placeholder="Sua duvida"></TextInput>
-  //       <Button title="Enviar" onClick={handleSend()}/>
-  //       {this.state.hist.map(mens => (
-  //         (<Text style={styles.sender}>{mens.author}</Text>,<Text style={styles.msg}>{mens.msg}</Text>)
-  //       ))}
-  //           </View>
-
-  //       );
-  //   }
-}
-
-function showHistory(props){
-  const msg = props.msg;
-  const listarMsg = msg.map((msg) => 
-  <View>
-    <Text style={style.sender}>{msg.author}</Text><br/>
-    <Text style={style.msg}>{msg.text}</Text><br/>
-  </View>
+  return (
+    <View style={styles.page}>
+      <Text style={styles.title}>Tire sua duvida:</Text>
+      <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+        <TextInput style={styles.textBox} onChangeText={(text) => setText({text})} placeholder="Sua duvida" value={text}></TextInput>
+        <Button type="clear" icon={<Icon name="ios-arrow-dropup" size={30} color="white" />} onPress={() => {handlePhoto()}}/>
+        <Button type="clear" icon={<Icon name="md-send" size={30} color="white" />} onPress={() => {handleSend()}}/>
+      </View>
+      <ScrollView>
+        {msgs.map(mens => (
+          (<Text style={styles.msg}>{mens.author} : {mens.msg}</Text>)
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-    sender: {
+      page: {
         flex: 1,
+        height: '100%',
         alignItems: 'center',
-        backgroundColor: "#2E2E2E"
+        backgroundColor: "#2E2E2E",
+
+    },
+    title:{
+        color: 'white',
+        letterSpacing: 4,
+        fontSize: wp('7%'),
+        marginTop: hp('2%'),
+        marginBottom: hp('7%'),
+        alignSelf: 'center',
+    },
+    chat : {
+      alignItems: 'flex-start',
+      height: '100%',
+      width:"100%"
+    },
+    textBox:{
+      width: wp("75%"),
+      color: "white",
+      fontSize:18,
+    },
+    botao:{
+      width: wp('10%'),
+      height:hp("100%"),
+    },    
+    sender: {
+      color: "white",
+      fontSize: 18,
     },
     msg: {
         color: "white",
-        fontSize: 25,
-        marginTop: 20,
-        marginBottom: 30
+        fontSize: 18,
     }
 })
 export default DoubtScreen;
+  
