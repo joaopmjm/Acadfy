@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, KeyboardAvoidingView } from "react-native";
 import { Formik } from "formik";
 import { Button, Input, ButtonGroup } from "react-native-elements";
 import {
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#2E2E2E",
     color: "white",
-    marginLeft: 30,
-    marginRight: 30
+    marginLeft: wp('5%'),
+    marginRight: wp('5%')
   },
   forgottenPasswordButtonContainer: {
     width: imageWidth
@@ -47,11 +47,14 @@ const styles = StyleSheet.create({
   },
   input: {
     color: "white",
+    width: wp('80%')
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "white"
+    color: "white",
+    marginBottom: hp('5%'),
+    marginTop: hp('1%')
   },
   item: {
     fontSize: 16,
@@ -60,15 +63,21 @@ const styles = StyleSheet.create({
     textAlign: "left",
     width: 330
   },
-  background:{
+  background: {
     backgroundColor: "#2E2E2E",
     height: '100%',
 
   },
   inputField: {
     marginBottom: hp("4%")
-  }
-
+  },
+  box: {
+    marginBottom: hp('5%'),
+  },
+  saveButton: {
+    marginTop: hp('5%'),
+    marginBottom: hp('5%')
+  },
 });
 
 export const MyReactNativeForm = props => (
@@ -77,65 +86,69 @@ export const MyReactNativeForm = props => (
     onSubmit={values => console.log(values)}
   >
     {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
-      <View style={styles.background}>
-      <KeyboardAvoidingView style={styles.container}>
-        <Text style={styles.title}>Informações</Text>
-
-        <Input
-          label="Nome"
-          labelStyle={styles.input}
-          placeholder="Escreva seu nome"
-          inputStyle={styles.input}
-          onChangeText={handleChange("nome")}
-          onBlur={handleBlur("nome")}
-          value={values.nome}
-        />
-        
-        <Input
-          label="E-mail"
-          labelStyle={styles.input}
-          placeholder="Escreva seu e-mail"
-          inputStyle={styles.input}
-          onChangeText={handleChange("email")}
-          onBlur={handleBlur("email")}
-          value={values.email}
-        />
-        <Input
-          label="Telefone"
-          labelStyle={styles.input}
-          placeholder="Digite seu telefone"
-          inputStyle={styles.input}
-          onChangeText={handleChange("telefone")}
-          onBlur={handleBlur("telefone")}
-          value={values.altura}
-        />
-
-        <Input
-          label="CREF:"
-          labelStyle={styles.input}
-          placeholder="Informe seu registro do CREF "
-          inputStyle={styles.input}
-          onChangeText={handleChange("telefone")}
-          onBlur={handleBlur("telefone")}
-          value={values.altura}
-        />
-
-
-        
-        <Text style={styles.item}>Gênero</Text>
-        
-        <ButtonGroup
-          onPress={selectedIndex => setFieldValue("sexo", selectedIndex, false)}
-          selectedIndex={values.sexo}
-          buttons={["Masculino", "Feminino"]}
-          containerStyle={{ height: 40 }}
-        />
-      
-        <Button onPress={handleSubmit} title="Salvar" />
-
-      </KeyboardAvoidingView>
-      </View>
+      <ScrollView>
+        <View style={styles.background}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Informações</Text>
+            <KeyboardAvoidingView style={styles.box}>
+              <Input
+                label="Nome"
+                labelStyle={styles.input}
+                placeholder="Escreva seu nome"
+                inputStyle={styles.input}
+                onChangeText={handleChange("nome")}
+                onBlur={handleBlur("nome")}
+                value={values.nome}
+              />
+            </KeyboardAvoidingView>
+            <KeyboardAvoidingView style={styles.box}>
+              <Input
+                label="E-mail"
+                labelStyle={styles.input}
+                placeholder="Escreva seu e-mail"
+                inputStyle={styles.input}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+              />
+            </KeyboardAvoidingView>
+            <KeyboardAvoidingView style={styles.box}>
+              <Input
+                label="Telefone"
+                labelStyle={styles.input}
+                placeholder="Digite seu telefone"
+                inputStyle={styles.input}
+                onChangeText={handleChange("telefone")}
+                onBlur={handleBlur("telefone")}
+                value={values.altura}
+              />
+            </KeyboardAvoidingView>
+            <KeyboardAvoidingView style={styles.box}>
+              <Input
+                label="CREF:"
+                labelStyle={styles.input}
+                placeholder="Informe seu registro do CREF "
+                inputStyle={styles.input}
+                onChangeText={handleChange("telefone")}
+                onBlur={handleBlur("telefone")}
+                value={values.altura}
+              />
+            </KeyboardAvoidingView>
+            <Text style={styles.item}>Gênero</Text>
+            <ButtonGroup
+              onPress={selectedIndex => setFieldValue("sexo", selectedIndex, false)}
+              selectedIndex={values.sexo}
+              buttons={["Masculino", "Feminino"]}
+              containerStyle={{ height: 40 }}
+            />
+            <View style={styles.saveButton}>
+              <Button onPress={handleSubmit} title="Salvar" />
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     )}
+
   </Formik>
 );
 

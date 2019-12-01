@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   box: {
     marginBottom: hp('5%'),
   },
-  boxSelector: {
+  saveButton: {
     marginTop: hp('5%'),
     marginBottom: hp('5%')
   },
@@ -141,7 +141,7 @@ export const MyReactNativeForm = props => (
               buttons={["Masculino", "Feminino"]}
               containerStyle={{ height: 40, marginTop: hp('5%') }}
             />
-            <View style={styles.boxSelector}>
+            <View style={styles.saveButton}>
               <Button onPress={handleSubmit} title="Salvar" />
             </View>
 
