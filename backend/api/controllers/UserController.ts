@@ -6,7 +6,7 @@ import { checkRole } from '../middlewares/checkRole';
 @Controller('/users')
 export default class UserController {
 
-  @Post('/', [checkJwt, checkRole])
+  @Post('/', ) // [checkJwt, checkRole]
   static async storeUser(req, res) {
 
     const { name, email, role, password } = req.body;

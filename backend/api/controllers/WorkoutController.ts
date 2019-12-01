@@ -1,27 +1,67 @@
-import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, Put } from 'ts-framework';
+import { Controller, Get, BaseRequest, BaseResponse, Post, Put } from 'ts-framework';
 import Workout from '../models/workout/WorkoutModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
-import { patch } from 'semver';
-import { NODATA } from 'dns';
+import WorkoutModel from '../models/workout/WorkoutModel';
+import { ExerciseModel } from '../models/exercise';
 
 @Controller('/workouts')
 export default class WorkoutController {
 
-  @Post('/')
-  static async storeWorkout(req, res) {
+  @Post('/', [checkJwt, checkRole])
+  static async storeExerciseWorkout(req: BaseRequest, res: BaseResponse) {
+    try {
 
-    const { name, userId, creator, exercises, day } = req.body;
-    const workout = await Workout.create({
-      name,
-      userId,
-      day,
-      creator,
-      exercises,
-      counter: 0
-    });
-    return res.success(workout);
+      const { consumerId, day, name, series, repetition} = req.body;
+      const training = await WorkoutModel.findOne({consumerId, day});
+
+      let workoutdb;
+
+      if (!training) {
+        const workout = await Workout.create({
+          consumerId,
+          day,
+          trainerId: res.locals.userId.id,
+          counter: 0
+        });
+        workoutdb = await WorkoutModel.findOne({consumerId, day})
+      } else {
+        workoutdb = training
+      }
+
+      const exercise = await ExerciseModel.create({
+        consumerId,
+        name,
+        trainerId: res.locals.userId.id,
+        series,
+        repetition
+      });
+
+      await workoutdb.exercises.push(exercise.id)
+
+      await workoutdb.save()
+
+      return res.success("Exércio adicionado ao treino com sucesso")
+      
+    } catch (error) {
+      return res.error(error)
+    }
   }
+
+  // @Post('/')
+  // static async storeWorkout(req, res) {
+
+  //   const { name, userId, creator, exercises, day } = req.body;
+  //   const workout = await Workout.create({
+  //     name,
+  //     userId,
+  //     day,
+  //     creator,
+  //     exercises,
+  //     counter: 0
+  //   });
+  //   return res.success(workout);
+  // }
 
   @Put('/:id', [checkJwt, checkRole])
   static async updateWorkout(req, res) {
