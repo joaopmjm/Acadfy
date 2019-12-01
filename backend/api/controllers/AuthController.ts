@@ -24,8 +24,6 @@ export default class AuthController {
 
       const userdb = await UserModel.findOne({email})
 
-      console.log(userdb)
-
       if (!userdb) {
         throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
       }
@@ -35,10 +33,11 @@ export default class AuthController {
       if (!matchPassword){
         throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
       }
+      
 
       else if (matchPassword) {
         const token = await JwtService.createSignToken(userdb);
-        return res.success({...token, role:userdb.role[0]});
+        return res.success({...token, user:userdb});
       }
 
     } catch (error) {
