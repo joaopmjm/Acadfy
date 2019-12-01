@@ -1,10 +1,10 @@
 import { BaseSchema } from 'ts-framework-mongo';
 
 const ExerciseSchema = new BaseSchema({
-  trainer_id: String,
+  trainerId: String,
   name: String,
-  description: String,
-  gif: String,
+  series: String,
+  repetition: String,
 }, {
   timestamps: { createdAt: true, updatedAt: true },
 });

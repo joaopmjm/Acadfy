@@ -1,10 +1,9 @@
 import { BaseSchema } from 'ts-framework-mongo';
 
 const WorkoutSchema = new BaseSchema({
-  name: String,
-  userId: String,
-  day: [],
-  creator: String,
+  consumerId: String,
+  day: String,
+  trainerId: String,
   exercises: [],
   counter: Number,
 });
