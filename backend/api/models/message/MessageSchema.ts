@@ -6,7 +6,7 @@ const MessageSchema = new BaseSchema({
   msn: String,
   admin_id: String,
   user_id: String
-},                            { 
+}, {
   timestamps: { createdAt: true, updatedAt: true },
 });
 

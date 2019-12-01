@@ -51,7 +51,7 @@ export default class WorkoutController {
 
   @Get('/training', [checkJwt])
   static async getWorkout(req, res) {
-    
+
     const filter = res.locals.userId.id;
     const workout = await Workout.find({userId: filter});
     return res.success(workout);
@@ -59,7 +59,7 @@ export default class WorkoutController {
 
   @Get('/workoutCounter', [checkJwt])
   static async getWorkoutCounter(req, res) {
-    
+
     const filter = res.locals.userId.id;
     const workout = await Workout.find({userId: filter});
     let nameAndCounter = {}
@@ -73,7 +73,7 @@ export default class WorkoutController {
 
   // @Get('/exercises', [checkJwt])
   // static async getWorkoutExercise(req, res) {
-    
+
   //   const userId = res.locals.userId;
   //   const {exercises} = req.body;= {id:
   //   const workout = await Workout.findOne(filter, exercises)
@@ -82,7 +82,7 @@ export default class WorkoutController {
 
   @Get('/', [checkJwt, checkRole])
   static async getWorkoutDay(req, res) {
-    
+
     const {user, day} = req.body;
     const filter = {
       user: user,

@@ -55,7 +55,7 @@ export default class JwtService extends Service {
       console.error(error)
     }
   }
-  
+
   async onMount(): Promise<void> {
     this.logger.debug('Mounting JwtService instance');
   }

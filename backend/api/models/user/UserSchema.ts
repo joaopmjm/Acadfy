@@ -5,7 +5,7 @@ const UserSchema = new BaseSchema({
   email: String,
   role: ["admin", "consumer"],
   password: String
-},                            { 
+}, {
   timestamps: { createdAt: true, updatedAt: true },
 });
 

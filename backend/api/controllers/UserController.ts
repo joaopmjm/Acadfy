@@ -45,7 +45,7 @@ export default class UserController {
   static async findAndUpdate(req, res) {
     const user = await User.findOneAndUpdate({
       email: req.body.email,
-    },                                       {
+    }, {
       $set: { name: req.body.name },
     });
 

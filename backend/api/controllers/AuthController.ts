@@ -7,7 +7,7 @@ export default class AuthController {
 
   /**
    * GET /auth/
-   * 
+   *
    * @description A sample controller.
    */
   @Get('/')
@@ -19,7 +19,7 @@ export default class AuthController {
   @Post('/login')
   static async logIn(req: BaseRequest, res: BaseResponse) {
     try {
-      
+
       const { email, password } = req.body;
 
       const userdb = await UserModel.findOne({email})
@@ -47,7 +47,7 @@ export default class AuthController {
   }
 
   @Post('/register')
-  static async register(req: BaseRequest, res: BaseResponse) { 
+  static async register(req: BaseRequest, res: BaseResponse) {
     try {
 
       const { name, email, password } = req.body;
@@ -63,9 +63,9 @@ export default class AuthController {
         email,
         role: 'consumer'
       });
-  
+
       const user = await UserModel.findOne({email})
-  
+
       await user.setPassword(password);
       await user.save();
 

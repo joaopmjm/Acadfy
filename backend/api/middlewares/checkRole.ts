@@ -22,7 +22,7 @@ export const checkRole = async (req: BaseRequest, res: BaseResponse, next: NextF
     const userdb = await UserModel.findById(id.id);
 
     console.log(userdb)
-    
+
     if (userdb.role == "admin") {
         next()
     } else {

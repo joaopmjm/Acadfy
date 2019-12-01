@@ -19,7 +19,7 @@ export default class MessageController {
   @Post('/admin_message',[checkJwt,checkRole])
   static async adMSN(req: BaseRequest, res: BaseResponse) {
     try {
-      
+
       const {name, role, msn,admin_id,user_id} = req.body;
       const insert = await Message.create({
       name,
@@ -39,7 +39,7 @@ export default class MessageController {
   @Post('/user_message',[checkJwt])
   static async usMSN(req: BaseRequest, res: BaseResponse) {
     try {
-      
+
       const {name, role, msn,admin_id,user_id} = req.body;
       const insert = await Message.create({
       name,
