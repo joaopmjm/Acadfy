@@ -33,11 +33,12 @@ export default class AuthController {
       if (!matchPassword){
         throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
       }
-      
 
       else if (matchPassword) {
         const token = await JwtService.createSignToken(userdb);
-        return res.success({...token, user:userdb});
+
+        const {_id, name, email, role} = userdb
+        return res.success({...token, role:role[0], _id, name, email});
       }
 
     } catch (error) {
