@@ -48,6 +48,47 @@ export default class WorkoutController {
     }
   }
 
+  @Get('/', [checkJwt, checkRole])
+  static async listWorkout(req: BaseRequest, res: BaseResponse) {
+    try {
+      
+      const { consumerId, day } = req.body;
+      const training = await WorkoutModel.findOne({consumerId, day});
+
+      const exercises = []
+
+      for (const i in training.exercises) {
+        exercises.push(await ExerciseModel.findOne({_id:training.exercises[i]}))
+      }
+
+      return res.success(exercises)
+
+    } catch (error) {
+      return res.error(error)
+    }
+  }
+
+    @Get('/consumer', [checkJwt])
+    static async getWorkoutDay(req: BaseRequest, res: BaseResponse) {
+      try {
+
+        const { day } = req.body;
+        const training = await WorkoutModel.findOne({consumerId: res.locals.userId.id, day});
+  
+        const exercises = []
+  
+        for (const i in training.exercises) {
+          exercises.push(await ExerciseModel.findOne({_id:training.exercises[i]}))
+        }
+  
+        return res.success(exercises)
+
+      } catch (error) {
+        return res.error(error)
+      }
+
+    }
+
   // @Post('/')
   // static async storeWorkout(req, res) {
 
@@ -120,15 +161,5 @@ export default class WorkoutController {
   //   return res.success(workout)
   // }
 
-  @Get('/', [checkJwt, checkRole])
-  static async getWorkoutDay(req, res) {
 
-    const {user, day} = req.body;
-    const filter = {
-      user: user,
-      day: day
-    };
-    const workout = await Workout.findOne(filter);
-    return res.success(workout);
-  }
 }
