@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { AsyncStorage } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,7 +17,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 const LoginStack = createStackNavigator({
-  Login:{
+  Login: {
     screen: LoginScreen,
     navigationOptions: {
       header: null
@@ -26,7 +26,7 @@ const LoginStack = createStackNavigator({
 })
 
 const RegisterStack = createStackNavigator({
-  Register:{
+  Register: {
     screen: Register,
     navigationOptions: {
       header: null
@@ -34,6 +34,37 @@ const RegisterStack = createStackNavigator({
   },
 })
 
+
+const AppNavigatorAdmin = createBottomTabNavigator({
+  InfoAdminScreen: {
+    screen: InfoAdminScreen,
+    navigationOptions: {
+      tabBarLabel: 'InfoAdmin',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
+      )
+    }
+  },
+  BuildWorkoutScreen: {
+    screen: BuildWorkout,
+    navigationOptions: {
+      tabBarLabel: 'Build Workout',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="ios-settings" size={20} color="#0174DF" />
+      )
+    }
+  },
+},
+  {
+    initialRouteName: 'InfoAdminScreen',
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#1C1C1C',
+      }
+    }
+  },
+
+)
 const AppNavigator = createBottomTabNavigator({
   WorkoutDataScreen: {
     screen: WorkoutDataScreen,
@@ -43,15 +74,6 @@ const AppNavigator = createBottomTabNavigator({
         <Icon name="md-pie" size={20} color="#0174DF" />
       )
     },
-  },
-  InfoAdminScreen: {
-    screen: InfoAdminScreen,
-    navigationOptions: {
-      tabBarLabel: 'InfoAdmin',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-information-circle-outline" size={20} color="#0174DF" />
-      )
-    }
   },
   DoubtScreen: {
     screen: DoubtScreen,
@@ -80,15 +102,6 @@ const AppNavigator = createBottomTabNavigator({
       )
     },
   },
-  BuildWorkoutScreen: {
-    screen: BuildWorkout,
-    navigationOptions: {
-      tabBarLabel: 'Build Workout',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-settings" size={20} color="#0174DF" />
-      )
-    }
-  },
 },
 
   {
@@ -107,12 +120,13 @@ const AppNavigator = createBottomTabNavigator({
 export default createAppContainer(
   createSwitchNavigator({
     App: AppNavigator,
+    AppAdmin: AppNavigatorAdmin,
     Login: LoginStack,
     Register: RegisterStack
   },
-  {
-    initialRouteName: "App"
-  })
+    {
+      initialRouteName: "Login"
+    })
 )
 
 

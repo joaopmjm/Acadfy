@@ -12,24 +12,31 @@ class LoginScreen extends React.Component {
       token: '',
       erro: '',
     }
-    
-    this.postUser = this.postUser.bind(this)  
+
+    this.postUser = this.postUser.bind(this)
   };
 
   postUser = async () => {
-    const { email, password} = this.state
+    const { email, password } = this.state
     try {
       const response = await api.post('/auth/login', {
         email: email,
         password: password
       })
-      if (response.data["expiresIn"] == "900") {
+      if (response.data["expiresIn"] == "900" || response.data["expiresIn"] == "9000000") {
         console.log("Logou")
         this.setState({
           token: response.data["token"]
         })
         await AsyncStorage.setItem('token', response.data['token'])
-        this.props.navigation.navigate("App")
+        if (response.data['role'] == 'admin') {
+          await AsyncStorage.setItem('role', response.data['role'])
+          this.props.navigation.navigate("AppAdmin")
+        } else {
+          await AsyncStorage.setItem('role', response.data['role'])
+          this.props.navigation.navigate("App")
+        }
+
       }
     } catch (e) {
       console.log(e)
@@ -37,24 +44,24 @@ class LoginScreen extends React.Component {
   }
 
 
-  
+
   render() {
     return (
       <View style={styles.page}>
-        
+
         <Text style={styles.label}>Email: </Text>
-        <TextInput placeholderTextColor='gray' style={styles.input} placeholder="Digite seu email" onChangeText={(text) => this.setState({email: text})}></TextInput>
+        <TextInput placeholderTextColor='gray' style={styles.input} placeholder="Digite seu email" onChangeText={(text) => this.setState({ email: text })}></TextInput>
         <Text style={styles.label}>Senha: </Text>
-        <TextInput placeholderTextColor='gray' style={styles.input} secureTextEntry={true} placeholder="Digite sua senha" onChangeText={(text) => this.setState({password: text})}></TextInput>
-    
-        {this.state.erro != null? <View><Text style={styles.erro}>{this.state.erro}</Text></View>:null}
-        
+        <TextInput placeholderTextColor='gray' style={styles.input} secureTextEntry={true} placeholder="Digite sua senha" onChangeText={(text) => this.setState({ password: text })}></TextInput>
+
+        {this.state.erro != null ? <View><Text style={styles.erro}>{this.state.erro}</Text></View> : null}
+
         <View style={styles.buttonView}>
-          <TouchableOpacity style={styles.actionButtons} onPress={() => {this.postUser()}}><Text style={styles.buttonText}>Entrar</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.actionButtons} onPress={() => { this.postUser() }}><Text style={styles.buttonText}>Entrar</Text></TouchableOpacity>
         </View>
-        
+
         <View style={styles.buttonView}>
-          <TouchableOpacity style={styles.actionButtons} onPress={() => {this.props.navigation.navigate('Register')}}><Text style={styles.buttonText}>Cadastrar</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('Register') }}><Text style={styles.buttonText}>Cadastrar</Text></TouchableOpacity>
         </View>
       </View>
     );
