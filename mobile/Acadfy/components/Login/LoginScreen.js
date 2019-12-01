@@ -29,11 +29,11 @@ class LoginScreen extends React.Component {
           token: response.data["token"]
         })
         await AsyncStorage.setItem('token', response.data['token'])
-        if (response.data['role'] == 'admin') {
-          await AsyncStorage.setItem('role', response.data['role'])
+        if (response.data.user.role[0] == 'admin') {
+          await AsyncStorage.setItem('role', response.data.user.role[0])
           this.props.navigation.navigate("AppAdmin")
         } else {
-          await AsyncStorage.setItem('role', response.data['role'])
+          await AsyncStorage.setItem('role', response.data.user.role[0])
           this.props.navigation.navigate("App")
         }
 
