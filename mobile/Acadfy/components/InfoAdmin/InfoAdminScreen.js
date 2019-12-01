@@ -134,10 +134,7 @@ export const MyReactNativeForm = props => (
                 value={values.altura}
               />
             </KeyboardAvoidingView>
-
-
             <Text style={styles.item}>Gênero</Text>
-
             <ButtonGroup
               onPress={selectedIndex => setFieldValue("sexo", selectedIndex, false)}
               selectedIndex={values.sexo}
