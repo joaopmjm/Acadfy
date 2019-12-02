@@ -10,14 +10,17 @@ function DoubtScreen(){
   var [msgs, setMsgs] = useState([]);
   var [text, setText] = useState("");
   const [name, setName] = useState("");
-  const [token, setToken] = useState("");
   const [user_id, setUserId] = useState("");
   const [role, setRole] = useState("");
   const [coach_id, setCoachId] = useState("");
 
   const getCoachId = async () => {
       await api.post("/consumer/trainer",{
-      token : token,
+        locals:{
+          userId:{
+            id:user_id,
+          }
+        }
     }).then((response)=> response.json())
     .then((responseJSON)=>{
       setCoachId(responseJSON.id)
@@ -41,8 +44,10 @@ function DoubtScreen(){
   const getHistory = async () => {
     // get Hist of chat
     const response = await api.post('mensage/history',{
+      body:{
       admin_id: coach_id,
       user_id : user_id,
+      }
     }).then((response) => response.json())
     .then((responseJSON) => {
       setMsgs(responseJSON);
@@ -67,11 +72,13 @@ function DoubtScreen(){
     // actual coding after this line
     if (role === "admin"){
       await api.post('mensage/admin_mensage',{
-        name: name,
-        role:"admin",
-        msn:text,
-        admin_id:coach_id,
-        user_id:user_id,
+        body:{
+          name: name,
+          role:"admin",
+          msn:text,
+          admin_id:coach_id,
+          user_id:user_id,
+        }
       }).then((response)=>{
         console.log(response);
       }).catch((error)=>{
@@ -80,11 +87,13 @@ function DoubtScreen(){
 
     }else{
       await api.post('mensage/user_mensage',{
-        name: name,
-        role:"user",
-        msn:text,
-        admin_id:coach_id,
-        user_id:user_id,
+        body:{
+          name: name,
+          role:"user",
+          msn:text,
+          admin_id:coach_id,
+          user_id:user_id,
+        }
       }).then((response)=>{
         console.log(response);
       }).catch((error)=>{
