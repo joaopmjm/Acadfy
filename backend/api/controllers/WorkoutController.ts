@@ -48,7 +48,7 @@ export default class WorkoutController {
     }
   }
 
-  @Get('/', [checkJwt, checkRole])
+  @Post('/', [checkJwt, checkRole])
   static async listWorkout(req: BaseRequest, res: BaseResponse) {
     try {
       
@@ -68,7 +68,7 @@ export default class WorkoutController {
     }
   }
 
-    @Get('/consumer', [checkJwt])
+    @Post('/consumer', [checkJwt])
     static async getWorkoutDay(req: BaseRequest, res: BaseResponse) {
       try {
 
