@@ -1,6 +1,6 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, Put } from 'ts-framework';
 import AdminModel from '../models/admin/AdminModel';
-import UserModel from '../models/admin/UserModel';
+import ConsumerModel from '../models/admin/ConsumerModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
 import { BaseRequest } from 'ts-framework';
@@ -50,12 +50,12 @@ export default class AdminController {
   static async findAll(req: BaseRequest, res: BaseResponse) {
 
     try {
-      const Id = req.body;
-      const admin = await AdminModel.findById({Id});
+      const Id = res.locals.userId.id;
+      const admin = await AdminModel.findById({id});
       const athletesList = []
 
       for (const i in admin.athletes) {
-        athletesList.push(await UserModel.findById({i}))
+        athletesList.push(await ConsumerModel.findById({i}))
       }
       return res.success(athletesList)
 
