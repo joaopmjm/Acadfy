@@ -154,11 +154,11 @@ class HomeScreen extends React.Component {
                                     key={i}
                                     title={l}
                                     subtitle="3x10 repetições"
-                                    checkBox
-                                    titleStyle={{ color: "white" }}
-                                    subtitleStyle={{ color: "white" }}
+                                    titleStyle={{ color: "white", alignSelf: 'center'}}
+                                    subtitleStyle={{ color: "white", alignSelf: 'center'}}
                                     containerStyle={{ backgroundColor: "#2E2E2E" }}
                                     bottomDivider
+
                                 />
                             ))
                         }

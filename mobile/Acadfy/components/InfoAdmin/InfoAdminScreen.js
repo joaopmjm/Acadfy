@@ -125,7 +125,7 @@ export const MyReactNativeForm = props => (
             </KeyboardAvoidingView>
             <KeyboardAvoidingView style={styles.box}>
               <Input
-                label="CREF:"
+                label="CREF"
                 labelStyle={styles.input}
                 placeholder="Informe seu registro do CREF "
                 inputStyle={styles.input}
