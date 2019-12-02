@@ -92,4 +92,50 @@ export default class UserController {
 
   //   return res.success(user);
   // }
+  // @Post('/:id', [checkJwt, checkRole])
+  // static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
+  //   const user = await ConsumerModel.findOneAndUpdate({
+  //     email: req.body.email,
+  //   }, {
+  //     $set: { name: req.body.name },
+  //   });
+
+  //   return res.success(user);
+  // }
+
+  // @Post('/update', [checkJwt])
+  // static async updateUser(req: BaseRequest, res: BaseResponse) {
+  //   const user = await ConsumerModel.findOneAndUpdate({
+  //     email: req.body.email,
+  //   },                                       {
+  //     $set: {
+  //         name: req.body.name,
+  //         weight: req.body.weight,
+  //         height: req.body.height,
+  //         birthdate: req.body.birthdate,
+  //         gender: req.body.gender
+  //     },
+  //   });
+
+  //   return res.success(user);
+  // }
+
+
+//   @Post('/update_trainer', [checkJwt, checkRole])
+//   static async updateTrainer(req: BaseRequest, res: BaseResponse) {
+//     const user = await ConsumerModel.findOneAndUpdate({
+//       email: req.body.email,
+//     }, {
+//       $set: {
+//           name: req.body.name,
+//           email: req.body.email,
+//           telephone: req.body.telephone,
+//           cref: req.body.cref,
+//           gender: req.body.gender
+//       },
+//     });
+
+//     return res.success(user);
+//   }
+// >>>>>>> a6f4e38d3a52c6ebebeb74bdaeb889dbbc6fbec4
 }

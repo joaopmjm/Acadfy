@@ -8,7 +8,7 @@ import { checkRole } from '../middlewares/checkRole';
 export default class AdminController {
 
   @Post('/', [checkJwt, checkRole])
-  static async storeAdmin(req, res) {
+  static async storeAdmin(req: BaseRequest, res: BaseResponse) {
 
     const { name, email, password, birthDate, phone, cref } = req.body;
 
