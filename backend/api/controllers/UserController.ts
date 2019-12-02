@@ -53,7 +53,7 @@ export default class UserController {
   }
 
   @Post('/update', [checkJwt])
-  static async findAndUpdate(req, res) {
+  static async updateUser(req, res) {
     const user = await User.findOneAndUpdate({
       email: req.body.email,
     },                                       {
@@ -71,7 +71,7 @@ export default class UserController {
 
 
   @Post('/update_trainer', [checkJwt, checkRole])
-  static async findAndUpdate(req, res) {
+  static async updateTrainer(req, res) {
     const user = await User.findOneAndUpdate({
       email: req.body.email,
     }, {
