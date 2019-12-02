@@ -18,17 +18,36 @@ export default class AuthController {
         throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
       }
 
-      const matchPassword = await consumerdb.validatePassword(password);
+      const admindb = await AdminModel.findOne({email});
 
-      if (!matchPassword){
-        throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
+      if (!admindb) {
+        throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
       }
 
-      else if (matchPassword) {
-        const token = await JwtService.createSignToken(consumerdb);
+      if (consumerdb) {
+        const matchPassword = await consumerdb.validatePassword(password);
+          if (!matchPassword){
+            throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
+          }
+          else if (matchPassword) {
+            const token = await JwtService.createSignToken(consumerdb);
+    
+            const {_id, name, email, role} = consumerdb
+            return res.success({...token, role, _id, name, email});
+          }
+      }
 
-        const {_id, name, email, role} = consumerdb
-        return res.success({...token, role, _id, name, email});
+      if(admindb) {
+        const matchPassword = await admindb.validatePassword(password);
+        if (!matchPassword){
+          throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
+        }
+        else if (matchPassword) {
+          const token = await JwtService.createSignToken(admindb);
+  
+          const {_id, name, email, role} = admindb
+          return res.success({...token, role, _id, name, email});
+        }
       }
 
     } catch (error) {
@@ -68,42 +87,10 @@ export default class AuthController {
 
       await admin.save()
 
-      console.log(admin)
-
       return res.success("Registro confirmado na plataforma")
 
     } catch (error) {
       return res.error(error)
-    }
-  }
-
-  @Post('/login-admin')
-  static async logInAdmin(req: BaseRequest, res: BaseResponse) {
-    try {
-      
-      const { email, password } = req.body;
-
-      const admindb = await AdminModel.findOne({email})
-
-      if (!admindb) {
-        throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
-      }
-
-      const matchPassword = await admindb.validatePassword(password);
-
-      if (!matchPassword){
-        throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
-      }
-
-      else if (matchPassword) {
-        const token = await JwtService.createSignToken(admindb);
-
-        const {_id, name, email, role} = admindb
-        return res.success({...token, role, _id, name, email});
-      }
-
-    } catch (error) {
-      console.error(error)
     }
   }
 
