@@ -1,16 +1,18 @@
 import StatusController from './StatusController';
-import UserController from './UserController';
-import ExerciseController from './ExerciseController';
+import ConsumerController from './ConsumerController';
 import AuthController from './AuthController';
+import AdminController from './AdminController';
+import ExerciseController from './ExerciseController';
+import WorkoutController from './AdminController';
 import MessageController from './MessageController';
-import WorkoutController from './WorkoutController';
 
 
 export default {
   StatusController,
-  UserController,
+  ConsumerController,
   AuthController,
-  MessageController,
-  ExerciseController,
+  AdminController,
   WorkoutController,
+  ExerciseController,
+  MessageController
 };

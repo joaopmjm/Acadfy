@@ -1,29 +1,33 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, Put } from 'ts-framework';
-import User from '../models/user/UserModel';
+import { ConsumerModel } from '../models/consumer/';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
 
-@Controller('/users')
+@Controller('/consumer')
 export default class UserController {
 
   @Post('/', ) // [checkJwt, checkRole]
   static async storeUser(req, res) {
 
-    const { name, email, role, password } = req.body;
+    const { name, email, role, password, height, weight, birthDate, personal} = req.body;
 
-    const userdb = await User.findOne({email})
+    const userdb = await ConsumerModel.findOne({email})
 
     if (userdb) {
       throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
     }
 
-    const insert = await User.create({
+    const insert = await ConsumerModel.create({
       name,
       email,
-      role
+      role: "consumer",
+      height, 
+      weight, 
+      birthDate, 
+      personal
     });
 
-    const user = await User.findOne({email})
+    const user = await ConsumerModel.findOne({email})
 
     await user.setPassword(password);
     await user.save();
@@ -34,7 +38,7 @@ export default class UserController {
   @Get('/')
   static async findAll(req: BaseRequest, res: BaseResponse) {
     try {
-      const users = await User.find()
+      const users = await ConsumerModel.find()
       return res.success(users)
     } catch (error) {
       console.error(error)
@@ -43,7 +47,7 @@ export default class UserController {
 
   @Post('/:id', [checkJwt, checkRole])
   static async findAndUpdate(req, res) {
-    const user = await User.findOneAndUpdate({
+    const user = await ConsumerModel.findOneAndUpdate({
       email: req.body.email,
     }, {
       $set: { name: req.body.name },
@@ -54,7 +58,7 @@ export default class UserController {
 
   @Post('/update', [checkJwt])
   static async updateUser(req, res) {
-    const user = await User.findOneAndUpdate({
+    const user = await ConsumerModel.findOneAndUpdate({
       email: req.body.email,
     },                                       {
       $set: {
@@ -72,7 +76,7 @@ export default class UserController {
 
   @Post('/update_trainer', [checkJwt, checkRole])
   static async updateTrainer(req, res) {
-    const user = await User.findOneAndUpdate({
+    const user = await ConsumerModel.findOneAndUpdate({
       email: req.body.email,
     }, {
       $set: {
