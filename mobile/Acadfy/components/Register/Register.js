@@ -169,12 +169,13 @@ const styles = StyleSheet.create({
         marginTop: hp('1%'),
 
         height: 45,
-        width: hp('40%'),
+        width: wp('40%'),
         borderRadius: 20,
         backgroundColor: '#069',
 
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center'
     },
     buttonText: {
         fontSize: wp('4%'),
@@ -184,10 +185,11 @@ const styles = StyleSheet.create({
     },
     menssageResView: {
         marginTop: hp('1.5%'),
+        alignSelf: 'center'
     },
     menssageRes: {
         color: 'white',
-        alignSelf: 'center',
+        alignSelf: 'center'
     }
 })
 
