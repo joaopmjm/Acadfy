@@ -9,7 +9,8 @@ const ConsumerSchema = new BaseSchema({
   height: String,
   birthdate: String,
   gender: String,
-  trainerId: String
+  trainerId: String,
+  code: String
 },                            { 
   timestamps: { createdAt: true, updatedAt: true },
 });

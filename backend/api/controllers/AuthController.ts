@@ -1,8 +1,11 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post } from 'ts-framework';
-import { AdminModel } from '../models/admin';
+import admin, { AdminModel } from '../models/admin';
 import { ConsumerModel } from '../models/consumer';
 
 import JwtService from '../services/JwtService';
+import { checkJwt } from '../middlewares/checkJwt';
+import { checkRole } from '../middlewares/checkRole';
+import NotificationService from '../services/NotificationService';
 
 @Controller('/auth')
 export default class AuthController {
@@ -119,6 +122,80 @@ export default class AuthController {
 
     } catch (error) {
       return res.error(error)
+    }
+  }
+
+  @Post("/forgot-password")
+  static async forgotPassword(req: BaseRequest, res: BaseResponse) {
+    try {
+
+      let userdb;
+      let admindb;
+
+      const consumerdb = await ConsumerModel.findOne({email: req.body.email})
+
+      if(!consumerdb) {
+        admindb = await AdminModel.findOne({email: req.body.email})
+        if (admindb) {
+          throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
+        }
+      }
+
+      if(consumerdb) {
+        userdb = consumerdb
+      } else {
+        userdb = admindb
+      }
+
+      const code = String(Math.floor(100000 + Math.random() * 900000))
+      userdb.code = code;
+      await userdb.save();
+
+      const notification = await NotificationService.sendEmailForgotPassword(userdb);
+
+      return res.success("Email enviado com sucesso")
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  @Post('/reset-password')
+  static async resetPassword(req: BaseRequest, res: BaseResponse) {
+    try {
+      
+      let userdb;
+      let admindb;
+
+      const consumerdb = await ConsumerModel.findOne({email: req.body.email})
+
+      if(!consumerdb) {
+        admindb = await AdminModel.findOne({email: req.body.email})
+        if (admindb) {
+          throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
+        }
+      }
+
+      if(consumerdb) {
+        userdb = consumerdb
+      } else {
+        userdb = admindb
+      }
+
+      if (userdb.code == req.body.code){
+
+        const set_password = await userdb.setPassword(req.body.password);
+
+        await userdb.save();
+
+        return res.success(userdb)
+
+      } else {
+        throw new HttpError("Código incorreto", HttpCode.Client.NOT_FOUND);
+      }
+
+    } catch (error) {
+      console.error(error)
     }
   }
 }

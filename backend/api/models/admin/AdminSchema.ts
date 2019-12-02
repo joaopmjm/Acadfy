@@ -7,7 +7,8 @@ const AdminSchema = new BaseSchema({
   password: String,
   athletes: [],
   phone: String,
-  cref: String
+  cref: String,
+  code: String
 },                            { 
   timestamps: { createdAt: true, updatedAt: true },
 });
