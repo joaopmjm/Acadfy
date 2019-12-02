@@ -11,8 +11,7 @@ export default class WorkoutController {
   @Post('/', [checkJwt, checkRole])
   static async storeExerciseWorkout(req: BaseRequest, res: BaseResponse) {
     try {
-
-      const { consumerId, day, name, series, repetition} = req.body;
+      const { consumerId, day, name, series, repetition, role} = req.body;
       const training = await WorkoutModel.findOne({consumerId, day});
 
       let workoutdb;
@@ -20,6 +19,7 @@ export default class WorkoutController {
       if (!training) {
         const workout = await Workout.create({
           consumerId,
+          role,
           day,
           trainerId: res.locals.userId.id,
           counter: 0
@@ -38,14 +38,23 @@ export default class WorkoutController {
       });
 
       await workoutdb.exercises.push(exercise.id)
-
       await workoutdb.save()
-
       return res.success("Treino adicionado com sucesso, id: " + exercise.id)
       
     } catch (error) {
       return res.error(error)
     }
+  }
+
+  @Post('/completeWorkout', [checkJwt])
+  static async completeWorkout(req, res) {
+
+    const {id} = req.body;
+    const workout = await Workout.findOne({_id: id})
+    const update = {counter: workout.counter + 1}
+
+    const newworkout = await Workout.findOneAndUpdate({_id: id}, update);
+    return res.success(newworkout);
   }
 
   @Get('/', [checkJwt, checkRole])
@@ -67,27 +76,57 @@ export default class WorkoutController {
       return res.error(error)
     }
   }
-
-    @Get('/consumer', [checkJwt])
-    static async getWorkoutDay(req: BaseRequest, res: BaseResponse) {
-      try {
-
-        const { day } = req.body;
-        const training = await WorkoutModel.findOne({consumerId: res.locals.userId.id, day});
   
-        const exercises = []
-  
-        for (const i in training.exercises) {
-          exercises.push(await ExerciseModel.findOne({_id:training.exercises[i]}))
-        }
-  
-        return res.success(exercises)
+  @Get('/consumer', [checkJwt])
+  static async getWorkoutDay(req: BaseRequest, res: BaseResponse) {
+    try {
 
-      } catch (error) {
-        return res.error(error)
+      const { day } = req.body;
+      const training = await WorkoutModel.findOne({consumerId: res.locals.userId.id, day});
+  
+      const exercises = []
+  
+      for (const i in training.exercises) {
+        exercises.push(await ExerciseModel.findOne({_id:training.exercises[i]}))
       }
+  
+      return res.success(exercises)
 
+    } catch (error) {
+      return res.error(error)
     }
+  }
+
+  @Get('/training', [checkJwt])
+  static async getWorkout(req, res) {
+
+    const filter = res.locals.userId.id;
+    const workout = await Workout.find({consumerId: filter});
+    return res.success(workout);
+  }
+
+  @Get('/workoutCounter', [checkJwt])
+  static async getWorkoutCounter(req, res) {
+
+    const filter = res.locals.userId.id;
+    const workout = await Workout.find({consumerId: filter});
+    let roleAndCounter = {}
+    for (var i = 0; i < workout.length; i++){
+      const role = workout[i].role;
+      const counter = workout[i].counter;
+      roleAndCounter[role] = counter;
+    }
+    return res.success(roleAndCounter);
+  }
+
+  // @Get('/exercises', [checkJwt])
+  // static async getWorkoutExercise(req, res) {
+
+  //   const userId = res.locals.userId;
+  //   const {exercises} = req.body;= {id:
+  //   const workout = await Workout.findOne(filter, exercises)
+  //   return res.success(workout)
+  // }
 
   // @Post('/')
   // static async storeWorkout(req, res) {
@@ -104,62 +143,18 @@ export default class WorkoutController {
   //   return res.success(workout);
   // }
 
-  @Put('/:id', [checkJwt, checkRole])
-  static async updateWorkout(req, res) {
+  // @Put('/:id', [checkJwt, checkRole])
+  // static async updateWorkout(req, res) {
 
-    const filter = {id: req.params.id};
-    const { name, userId, exercises, day} = req.body;
-    const update = {
-      name: name,
-      userId: userId,
-      exercises: exercises,
-      day: day,
-    }
-    const workout = await Workout.findOneAndUpdate(filter, update);
-    return res.success(workout);
-  }
-
-  @Post('/completeWorkout', [checkJwt])
-  static async completeWorkout(req, res) {
-
-    const {id} = req.body;
-    const workout = await Workout.findOne({_id: id})
-    const update = {counter: workout.counter+1}
-
-    const newworkout = await Workout.findOneAndUpdate({_id: id}, update);
-    return res.success(newworkout);
-  }
-
-  @Get('/training', [checkJwt])
-  static async getWorkout(req, res) {
-
-    const filter = res.locals.userId.id;
-    const workout = await Workout.find({userId: filter});
-    return res.success(workout);
-  }
-
-  @Get('/workoutCounter', [checkJwt])
-  static async getWorkoutCounter(req, res) {
-
-    const filter = res.locals.userId.id;
-    const workout = await Workout.find({userId: filter});
-    let nameAndCounter = {}
-    for (var i = 0; i < workout.length; i++){
-      const name = workout[i].name;
-      const counter = workout[i].counter;
-      nameAndCounter[name] = counter;
-    }
-    return res.success(nameAndCounter);
-  }
-
-  // @Get('/exercises', [checkJwt])
-  // static async getWorkoutExercise(req, res) {
-
-  //   const userId = res.locals.userId;
-  //   const {exercises} = req.body;= {id:
-  //   const workout = await Workout.findOne(filter, exercises)
-  //   return res.success(workout)
+  //   const filter = {id: req.params.id};
+  //   const { name, userId, exercises, day} = req.body;
+  //   const update = {
+  //     name: name,
+  //     userId: userId,
+  //     exercises: exercises,
+  //     day: day,
+  //   }
+  //   const workout = await Workout.findOneAndUpdate(filter, update);
+  //   return res.success(workout);
   // }
-
-
 }

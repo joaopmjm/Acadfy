@@ -40,7 +40,7 @@ export default class JwtService extends Service {
 
   public static async createSignToken(user) {
     try {
-      const expiresIn = 60*150000;
+      const expiresIn = 60*15;
       const secret = JwtConfig.privateKey;
       const datatStoredInToken: DataStoredInToken = {
         id: user.id
