@@ -57,7 +57,7 @@ export default class AdminController {
       for (const i in admin.athletes) {
         athletesList.push(await UserModel.findById({i}))
       }
-      return res.success(exercises)
+      return res.success(athletesList)
 
   } catch (error) {
     console.error(error)
