@@ -47,7 +47,7 @@ export default class AdminController {
   }
 
   @Get('/athletes', [checkJwt, checkRole])
-  static async findAll(req: BaseRequest, res: BaseResponse) {
+  static async findAthletes(req: BaseRequest, res: BaseResponse) {
 
     try {
       const Id = res.locals.userId.id;
