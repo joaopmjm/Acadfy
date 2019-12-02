@@ -28,7 +28,7 @@ export default class AuthController {
         const token = await JwtService.createSignToken(consumerdb);
 
         const {_id, name, email, role} = consumerdb
-        return res.success({...token, role:role[0], _id, name, email});
+        return res.success({...token, role, _id, name, email});
       }
 
     } catch (error) {
@@ -40,7 +40,7 @@ export default class AuthController {
   static async register(req: BaseRequest, res: BaseResponse) {
     try {
 
-      const { name, email, password } = req.body;
+      const { name, email, password, height, weight, birthDate, trainerId } = req.body;
 
       const consumerdb = await ConsumerModel.findOne({email})
 
@@ -51,13 +51,24 @@ export default class AuthController {
       const insert = await ConsumerModel.create({
         name,
         email,
-        role: 'consumer'
+        role: "consumer",
+        trainerId,
+        height, 
+        weight, 
+        birthDate
       });
   
       const consumer = await ConsumerModel.findOne({email})
   
       await consumer.setPassword(password);
       await consumer.save();
+
+      const admin = await AdminModel.findOne({_id:trainerId})
+      await admin.athletes.push(consumer._id)
+
+      await admin.save()
+
+      console.log(admin)
 
       return res.success("Registro confirmado na plataforma")
 
@@ -86,7 +97,9 @@ export default class AuthController {
 
       else if (matchPassword) {
         const token = await JwtService.createSignToken(admindb);
-        return res.success(token);
+
+        const {_id, name, email, role} = admindb
+        return res.success({...token, role, _id, name, email});
       }
 
     } catch (error) {
@@ -98,7 +111,7 @@ export default class AuthController {
   static async registerAdmin(req: BaseRequest, res: BaseResponse) { 
     try {
 
-      const { name, email, password } = req.body;
+      const { name, email, password, phone, cref } = req.body;
 
       const admindb = await AdminModel.findOne({email})
 
@@ -109,7 +122,9 @@ export default class AuthController {
       const insert = await AdminModel.create({
         name,
         email,
-        role: "admin"
+        role: "admin",
+        phone,
+        cref
       });
   
       const admin = await AdminModel.findOne({email})

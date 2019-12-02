@@ -3,7 +3,6 @@ import MainDatabase from '../../database';
 import ConsumerSchema from './ConsumerSchema';
 import * as bcrypt from 'bcryptjs';
 
-
 @Model('Consumers')
 class ConsumerModel extends BaseModel {
   static Schema = ConsumerSchema;

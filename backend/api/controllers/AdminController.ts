@@ -7,10 +7,10 @@ import { checkRole } from '../middlewares/checkRole';
 @Controller('/admin')
 export default class AdminController {
 
-  @Post('/') // [checkJwt, checkRole]
+  @Post('/', [checkJwt, checkRole])
   static async storeAdmin(req, res) {
 
-    const { name, email, role, password, birthDate, athletes} = req.body;
+    const { name, email, password, birthDate, phone, cref } = req.body;
 
     const admindb = await AdminModel.findOne({email})
 
@@ -22,8 +22,9 @@ export default class AdminController {
       name,
       email,
       role: "admin",
-      birthDate, 
-      athletes
+      birthDate,
+      phone,
+      cref
     });
 
     const admin = await AdminModel.findOne({email})
@@ -53,23 +54,38 @@ export default class AdminController {
       const athletesList = []
 
       for (const i in admin.athletes) {
-        athletesList.push(await ConsumerModel.findById({i}))
+        athletesList.push(await ConsumerModel.findOne({_id: admin.athletes[i]}))
       }
       return res.success(athletesList)
 
   } catch (error) {
     console.error(error)
+    }
   }
-}
 
-@Post('/:id', [checkJwt, checkRole])
-static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
-  const admin = await AdminModel.findOneAndUpdate({
-    email: req.body.email,
-  },                                       {
-    $set: { name: req.body.name },
-  });
+  @Post('/update', [checkJwt, checkRole])
+  static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
 
-  return res.success(admin);
-}
+    try {
+      const id = res.locals.userId.id;
+      const { name, email, phone, cref } = req.body;
+      const admin = await AdminModel.findById({_id:id});
+
+      if(admin) {
+        admin.name = name
+        admin.email = email
+        admin.phone = phone
+        admin.cref = cref
+      } else {
+        throw new HttpError("Administrador não existe", HttpCode.Client.BAD_REQUEST)
+      }
+
+      await admin.save()
+
+      return res.success("Treinador atualizado com sucesso")
+
+  } catch (error) {
+    console.error(error)
+    }
+  }
 }

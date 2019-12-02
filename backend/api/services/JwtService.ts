@@ -42,6 +42,7 @@ export default class JwtService extends Service {
     try {
       const expiresIn = 60*150000;
       const secret = JwtConfig.privateKey;
+      
       const datatStoredInToken: DataStoredInToken = {
         id: user.id
       }

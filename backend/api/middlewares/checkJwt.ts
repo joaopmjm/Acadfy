@@ -2,8 +2,9 @@ import { BaseRequest, BaseResponse, HttpError, HttpCode } from "ts-framework";
 import { NextFunction } from "express";
 import * as jwt from 'jsonwebtoken';
 import { JwtConfig } from "../../config";
-import { UserModel } from "../models/user";
 import JwtService from "../services/JwtService";
+import { ConsumerModel } from "../models/consumer";
+import { AdminModel } from "../models/admin";
 
 export const checkJwt = async (req: BaseRequest, res: BaseResponse, next: NextFunction) => {
 
@@ -16,7 +17,17 @@ export const checkJwt = async (req: BaseRequest, res: BaseResponse, next: NextFu
         throw new HttpError("Token inválido", HttpCode.Client.UNAUTHORIZED)
     }
 
-    const userdb = await UserModel.findOne(userId);
+    let userdb;
+
+    userdb = await ConsumerModel.findOne({_id:userId.id});
+
+    if (!userdb) {
+        userdb = await AdminModel.findOne({_id:userId.id})
+        if(!userdb) {
+            throw new HttpError("Token inválido", HttpCode.Client.UNAUTHORIZED)
+        }
+    }
+
     const newToken = await JwtService.createSignToken(userdb)
 
     res.locals.token = newToken;

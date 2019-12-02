@@ -11,8 +11,11 @@ export default class WorkoutController {
   @Post('/', [checkJwt, checkRole])
   static async storeExerciseWorkout(req: BaseRequest, res: BaseResponse) {
     try {
+      console.log("consumerId")
 
-      const { consumerId, day, name, series, repetition} = req.body;
+      const { consumerId, day, name, series, repetition } = req.body;
+
+
       const training = await WorkoutModel.findOne({consumerId, day});
 
       let workoutdb;
@@ -37,18 +40,19 @@ export default class WorkoutController {
         repetition
       });
 
+
       await workoutdb.exercises.push(exercise.id)
 
       await workoutdb.save()
 
-      return res.success("Exércio adicionado ao treino com sucesso")
+      return res.success("Exércicio adicionado ao treino com sucesso")
       
     } catch (error) {
       return res.error(error)
     }
   }
 
-  @Post('/', [checkJwt, checkRole])
+  @Post('/list', [checkJwt, checkRole])
   static async listWorkout(req: BaseRequest, res: BaseResponse) {
     try {
       

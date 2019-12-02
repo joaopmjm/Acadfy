@@ -2,14 +2,15 @@ import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, 
 import { ConsumerModel } from '../models/consumer/';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
+import { AdminModel } from '../models/admin';
 
 @Controller('/consumer')
 export default class UserController {
 
-  @Post('/', ) // [checkJwt, checkRole]
-  static async storeUser(req, res) {
+  @Post('/', [checkJwt, checkRole]) 
+  static async storeUser(req: BaseRequest, res: BaseResponse) {
 
-    const { name, email, role, password, height, weight, birthDate, personal} = req.body;
+    const { name, email, password, height, weight, birthDate, trainerId } = req.body;
 
     const userdb = await ConsumerModel.findOne({email})
 
@@ -24,18 +25,23 @@ export default class UserController {
       height, 
       weight, 
       birthDate, 
-      personal
+      trainerId
     });
 
-    const user = await ConsumerModel.findOne({email})
+    const consumer = await ConsumerModel.findOne({email})
+  
+    await consumer.setPassword(password);
+    await consumer.save();
 
-    await user.setPassword(password);
-    await user.save();
+    const admin = await AdminModel.findOne({_id:trainerId})
+    await admin.athletes.push(consumer._id)
 
-    return res.success(user);
+    await admin.save()
+    
+    return res.success(consumer);
   }
 
-  @Get('/')
+  @Get('/', [checkJwt, checkRole])
   static async findAll(req: BaseRequest, res: BaseResponse) {
     try {
       const users = await ConsumerModel.find()
@@ -45,49 +51,45 @@ export default class UserController {
     }
   }
 
-  @Post('/:id', [checkJwt, checkRole])
-  static async findAndUpdate(req, res) {
-    const user = await ConsumerModel.findOneAndUpdate({
-      email: req.body.email,
-    }, {
-      $set: { name: req.body.name },
-    });
-
-    return res.success(user);
-  }
-
   @Post('/update', [checkJwt])
-  static async updateUser(req, res) {
-    const user = await ConsumerModel.findOneAndUpdate({
-      email: req.body.email,
-    },                                       {
-      $set: {
-          name: req.body.name,
-          weight: req.body.weight,
-          height: req.body.height,
-          birthdate: req.body.birthdate,
-          gender: req.body.gender
-      },
-    });
+  static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
+    try {
+      const id = res.locals.userId.id;
+      const { name, email, weight, height, birthdate, gender } = req.body;
+      const consumer = await ConsumerModel.findById({_id:id});
 
-    return res.success(user);
+      if(consumer) {
+        consumer.name = name
+        consumer.email = email
+        consumer.weight = weight
+        consumer.height = height
+        consumer.birthDate = birthdate
+        consumer.gender = gender
+      }
+
+      await consumer.save()
+
+      return res.success("Consumidor atualizado com sucesso")
+    } catch (error) {
+      return res.error(error)
+    }
   }
 
 
-  @Post('/update_trainer', [checkJwt, checkRole])
-  static async updateTrainer(req, res) {
-    const user = await ConsumerModel.findOneAndUpdate({
-      email: req.body.email,
-    }, {
-      $set: {
-          name: req.body.name,
-          email: req.body.email,
-          telephone: req.body.telephone,
-          cref: req.body.cref,
-          gender: req.body.gender
-      },
-    });
+  // @Post('/update_trainer', [checkJwt, checkRole])
+  // static async updateTrainer(req: BaseRequest, res: BaseResponse) {
+  //   const user = await ConsumerModel.findOneAndUpdate({
+  //     email: req.body.email,
+  //   }, {
+  //     $set: {
+  //         name: req.body.name,
+  //         email: req.body.email,
+  //         telephone: req.body.telephone,
+  //         cref: req.body.cref,
+  //         gender: req.body.gender
+  //     },
+  //   });
 
-    return res.success(user);
-  }
+  //   return res.success(user);
+  // }
 }
