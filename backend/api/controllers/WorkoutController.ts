@@ -90,7 +90,7 @@ export default class WorkoutController {
     }
 
   // @Post('/')
-  // static async storeWorkout(req, res) {
+  // static async storeWorkout(req: BaseRequest, res: BaseResponse) {
 
   //   const { name, userId, creator, exercises, day } = req.body;
   //   const workout = await Workout.create({
@@ -105,7 +105,7 @@ export default class WorkoutController {
   // }
 
   @Put('/:id', [checkJwt, checkRole])
-  static async updateWorkout(req, res) {
+  static async updateWorkout(req: BaseRequest, res: BaseResponse) {
 
     const filter = {id: req.params.id};
     const { name, userId, exercises, day} = req.body;
@@ -120,7 +120,7 @@ export default class WorkoutController {
   }
 
   @Post('/completeWorkout', [checkJwt])
-  static async completeWorkout(req, res) {
+  static async completeWorkout(req: BaseRequest, res: BaseResponse) {
 
     const {id} = req.body;
     const workout = await Workout.findOne({_id: id})
@@ -131,7 +131,7 @@ export default class WorkoutController {
   }
 
   @Get('/training', [checkJwt])
-  static async getWorkout(req, res) {
+  static async getWorkout(req: BaseRequest, res: BaseResponse) {
 
     const filter = res.locals.userId.id;
     const workout = await Workout.find({userId: filter});
@@ -139,7 +139,7 @@ export default class WorkoutController {
   }
 
   @Get('/workoutCounter', [checkJwt])
-  static async getWorkoutCounter(req, res) {
+  static async getWorkoutCounter(req: BaseRequest, res: BaseResponse) {
 
     const filter = res.locals.userId.id;
     const workout = await Workout.find({userId: filter});
@@ -153,7 +153,7 @@ export default class WorkoutController {
   }
 
   // @Get('/exercises', [checkJwt])
-  // static async getWorkoutExercise(req, res) {
+  // static async getWorkoutExercise(req: BaseRequest, res: BaseResponse) {
 
   //   const userId = res.locals.userId;
   //   const {exercises} = req.body;= {id:

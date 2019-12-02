@@ -7,7 +7,7 @@ import { checkRole } from '../middlewares/checkRole';
 export default class UserController {
 
   @Post('/', ) // [checkJwt, checkRole]
-  static async storeUser(req, res) {
+  static async storeUser(req: BaseRequest, res: BaseResponse) {
 
     const { name, email, role, password, height, weight, birthDate, personal} = req.body;
 
@@ -46,7 +46,7 @@ export default class UserController {
   }
 
   @Post('/:id', [checkJwt, checkRole])
-  static async findAndUpdate(req, res) {
+  static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
     const user = await ConsumerModel.findOneAndUpdate({
       email: req.body.email,
     }, {
@@ -57,7 +57,7 @@ export default class UserController {
   }
 
   @Post('/update', [checkJwt])
-  static async updateUser(req, res) {
+  static async updateUser(req: BaseRequest, res: BaseResponse) {
     const user = await ConsumerModel.findOneAndUpdate({
       email: req.body.email,
     },                                       {
@@ -75,7 +75,7 @@ export default class UserController {
 
 
   @Post('/update_trainer', [checkJwt, checkRole])
-  static async updateTrainer(req, res) {
+  static async updateTrainer(req: BaseRequest, res: BaseResponse) {
     const user = await ConsumerModel.findOneAndUpdate({
       email: req.body.email,
     }, {

@@ -7,7 +7,7 @@ import { checkRole } from '../middlewares/checkRole';
 export default class ExerciseController {
 
   @Post('/', [checkJwt, checkRole])
-  static async storeExercise(req, res) {
+  static async storeExercise(req: BaseRequest, res: BaseResponse) {
     const { trainer_id, name, description, gif } = req.body;
 
     const insert = await Exercise.create({
@@ -21,13 +21,13 @@ export default class ExerciseController {
   }
 
   @Get('/trainer', [checkJwt, checkRole])
-  static async getExercises(req, res) {
+  static async getExercises(req: BaseRequest, res: BaseResponse) {
     const trainer_id = res.locals.userId;
     return res.success(await Exercise.findByTrainer(trainer_id))
   }
 
   @Get('/description', [checkJwt, checkRole])
-  static async getDescription(req, res) {
+  static async getDescription(req: BaseRequest, res: BaseResponse) {
     const description = res.locals.description;
     return res.success(await Exercise.findByDescription(description))
   }
