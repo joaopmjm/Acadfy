@@ -13,4 +13,4 @@ const ConsumerSchema = new BaseSchema({
   timestamps: { createdAt: true, updatedAt: true },
 });
 
-export default UserSchema;
+export default ConsumerSchema;
