@@ -1,5 +1,6 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, Put } from 'ts-framework';
 import AdminModel from '../models/admin/AdminModel';
+import UserModel from '../models/admin/UserModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
 import { BaseRequest } from 'ts-framework';
@@ -45,24 +46,32 @@ export default class AdminController {
     }
   }
 
-  // @Get('/athletes', [checkJwt, checkRole])
-  // static async findAll(req: BaseRequest, res: BaseResponse) {
-  //   try {
-  //     const athletes = await Admin.athletes()
-  //     return res.success(athletes)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+  @Get('/athletes', [checkJwt, checkRole])
+  static async findAll(req: BaseRequest, res: BaseResponse) {
 
-  @Post('/:id', [checkJwt, checkRole])
-  static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
-    const admin = await AdminModel.findOneAndUpdate({
-      email: req.body.email,
-    },                                       {
-      $set: { name: req.body.name },
-    });
+    try {
+      const Id = req.body;
+      const admin = await AdminModel.findById({Id});
+      const athletesList = []
 
-    return res.success(admin);
+      for (const i in admin.athletes) {
+        athletesList.push(await UserModel.findById({i}))
+      }
+      return res.success(exercises)
+
+  } catch (error) {
+    console.error(error)
   }
+}
+
+@Post('/:id', [checkJwt, checkRole])
+static async findAndUpdate(req: BaseRequest, res: BaseResponse) {
+  const admin = await AdminModel.findOneAndUpdate({
+    email: req.body.email,
+  },                                       {
+    $set: { name: req.body.name },
+  });
+
+  return res.success(admin);
+}
 }
