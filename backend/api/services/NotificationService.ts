@@ -45,7 +45,7 @@ export default class NotificationService extends Service {
           html: email.html
         },
         recipients: [
-          {address: "felipe.nudelman@gmail.com"}
+          {address: user.email}
         ]
       })
       .then(data => {

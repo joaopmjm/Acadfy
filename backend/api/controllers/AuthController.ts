@@ -1,10 +1,8 @@
-import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post } from 'ts-framework';
-import admin, { AdminModel } from '../models/admin';
+import { Controller, BaseRequest, BaseResponse, HttpError, HttpCode, Post } from 'ts-framework';
+import { AdminModel } from '../models/admin';
 import { ConsumerModel } from '../models/consumer';
 
 import JwtService from '../services/JwtService';
-import { checkJwt } from '../middlewares/checkJwt';
-import { checkRole } from '../middlewares/checkRole';
 import NotificationService from '../services/NotificationService';
 
 @Controller('/auth')
@@ -66,6 +64,12 @@ export default class AuthController {
         throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
       }
 
+      const admindb = await AdminModel.findOne({email})
+
+      if (admindb) {
+        throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN)
+      }
+
       const insert = await ConsumerModel.create({
         name,
         email,
@@ -102,6 +106,12 @@ export default class AuthController {
       const admindb = await AdminModel.findOne({email})
 
       if (admindb) {
+        throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
+      }
+      
+      const consumerdb = await ConsumerModel.findOne({email})
+
+      if (consumerdb) {
         throw new HttpError('Email registrado na plataforma, prossiga com o login', HttpCode.Client.FORBIDDEN);
       }
 
