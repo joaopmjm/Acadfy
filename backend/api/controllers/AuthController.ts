@@ -12,42 +12,38 @@ export default class AuthController {
     try {
       const { email, password } = req.body;
 
-      const consumerdb = await ConsumerModel.findOne({email})
+      const consumerdb = await ConsumerModel.findOne({email});
+
+      let admindb;
 
       if (!consumerdb) {
-        throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
+        
+        admindb = await AdminModel.findOne({email})
+
+        if (!admindb) {
+          throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
+        }
       }
 
-      const admindb = await AdminModel.findOne({email});
-
-      if (!admindb) {
-        throw new HttpError('Email não registrado na plataforma', HttpCode.Client.NOT_FOUND);
-      }
+      let userdb;
 
       if (consumerdb) {
-        const matchPassword = await consumerdb.validatePassword(password);
+        userdb = consumerdb
+      } else {
+        userdb = admindb
+      }
+
+      if (userdb) {
+        const matchPassword = await userdb.validatePassword(password);
           if (!matchPassword){
             throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
           }
           else if (matchPassword) {
-            const token = await JwtService.createSignToken(consumerdb);
+            const token = await JwtService.createSignToken(userdb);
     
-            const {_id, name, email, role} = consumerdb
+            const {_id, name, email, role} = userdb
             return res.success({...token, role, _id, name, email});
           }
-      }
-
-      if(admindb) {
-        const matchPassword = await admindb.validatePassword(password);
-        if (!matchPassword){
-          throw new HttpError('Senha incorreta, tente novamente', HttpCode.Client.FORBIDDEN);
-        }
-        else if (matchPassword) {
-          const token = await JwtService.createSignToken(admindb);
-  
-          const {_id, name, email, role} = admindb
-          return res.success({...token, role, _id, name, email});
-        }
       }
 
     } catch (error) {

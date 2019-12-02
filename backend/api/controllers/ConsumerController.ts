@@ -75,6 +75,17 @@ export default class UserController {
     }
   }
 
+  @Post('/trainer', [checkJwt])
+  static async getTrainer(req: BaseRequest, res: BaseResponse) {
+    try {
+      const id = res.locals.userId.id;
+      const consumer = await ConsumerModel.findById({_id:id});
+      return res.success(consumer.trainerId)
+    } catch (error) {
+      return res.error(error)
+    }
+  }
+
 
   // @Post('/update_trainer', [checkJwt, checkRole])
   // static async updateTrainer(req: BaseRequest, res: BaseResponse) {
