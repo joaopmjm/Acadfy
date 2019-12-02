@@ -4,22 +4,36 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { ListItem, Button } from 'react-native-elements';
 import api from "../../services/api";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { nominalTypeHack } from 'prop-types';
 
 function DoubtScreen(){
   var [msgs, setMsgs] = useState([]);
   var [text, setText] = useState("");
   const [name, setName] = useState("");
+  const [token, setToken] = useState("");
   const [user_id, setUserId] = useState("");
   const [role, setRole] = useState("");
   const [coach_id, setCoachId] = useState("");
 
-
+  const getCoachId = async () => {
+      await api.post("/consumer/trainer",{
+      token : token,
+    }).then((response)=> response.json())
+    .then((responseJSON)=>{
+      setCoachId(responseJSON.id)
+    }).catch((error) => {
+      console.error(error);
+    })
+  }
 
   const getUserData = async () => {
       const get_name = await AsyncStorage.getItem("name");
       const get_usr_id = await AsyncStorage.getItem("id");
       const get_role = await AsyncStorage.getItem("role");
+      const get_token = await AsyncStorage.getItem("token");
       setName(get_name);
+      setToken(get_token);
+      getCoachId();
       setUserId(get_usr_id);
       setRole(get_role);
     };
@@ -27,7 +41,7 @@ function DoubtScreen(){
   const getHistory = async () => {
     // get Hist of chat
     const response = await api.post('mensage/history',{
-      admin_id:"123",
+      admin_id: coach_id,
       user_id : user_id,
     }).then((response) => response.json())
     .then((responseJSON) => {
@@ -37,7 +51,7 @@ function DoubtScreen(){
     });
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     // send msg, no momento soh atualiza localmente como o backend ainda nao esta finalizado
     if (role === "admin"){
       //para o professor mandar
@@ -49,6 +63,35 @@ function DoubtScreen(){
     var new_hist = msgs.concat(new_msg);
     setText("");
     setMsgs(new_hist);
+
+    // actual coding after this line
+    if (role === "admin"){
+      await api.post('mensage/admin_mensage',{
+        name: name,
+        role:"admin",
+        msn:text,
+        admin_id:coach_id,
+        user_id:user_id,
+      }).then((response)=>{
+        console.log(response);
+      }).catch((error)=>{
+        console.error(error);
+      })
+
+    }else{
+      await api.post('mensage/user_mensage',{
+        name: name,
+        role:"user",
+        msn:text,
+        admin_id:coach_id,
+        user_id:user_id,
+      }).then((response)=>{
+        console.log(response);
+      }).catch((error)=>{
+        console.error(error);
+      })
+
+    }
 
   };
 
