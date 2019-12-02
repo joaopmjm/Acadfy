@@ -20,7 +20,7 @@ export default class UserController {
     const insert = await ConsumerModel.create({
       name,
       email,
-      role,
+      role: "consumer",
       height, 
       weight, 
       birthDate, 

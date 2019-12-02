@@ -39,7 +39,7 @@ export default class AuthController {
   static async register(req: BaseRequest, res: BaseResponse) { 
     try {
 
-      const { name, email, password, height, weight, birthDate, personal } = req.body;
+      const { name, email, password } = req.body;
 
       const consumerdb = await ConsumerModel.findOne({email})
 
@@ -50,11 +50,7 @@ export default class AuthController {
       const insert = await ConsumerModel.create({
         name,
         email,
-        role: 'consumer',
-        height, 
-        weight, 
-        birthDate, 
-        personal
+        role: 'consumer'
       });
   
       const consumer = await ConsumerModel.findOne({email})
@@ -101,7 +97,7 @@ export default class AuthController {
   static async registerAdmin(req: BaseRequest, res: BaseResponse) { 
     try {
 
-      const { name, email, password, birthDate, athletes } = req.body;
+      const { name, email, password } = req.body;
 
       const admindb = await AdminModel.findOne({email})
 
@@ -112,8 +108,7 @@ export default class AuthController {
       const insert = await AdminModel.create({
         name,
         email,
-        birthDate, 
-        athletes
+        role: "admin"
       });
   
       const admin = await AdminModel.findOne({email})

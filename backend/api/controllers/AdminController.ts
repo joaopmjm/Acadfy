@@ -1,10 +1,8 @@
 import { Controller, Get, BaseRequest, BaseResponse, HttpError, HttpCode, Post, Put } from 'ts-framework';
 import AdminModel from '../models/admin/AdminModel';
-import ConsumerModel from '../models/admin/ConsumerModel';
+import ConsumerModel from '../models/consumer/ConsumerModel';
 import { checkJwt } from '../middlewares/checkJwt';
 import { checkRole } from '../middlewares/checkRole';
-import { BaseRequest } from 'ts-framework';
-import { BaseResponse } from 'ts-framework';
 
 @Controller('/admin')
 export default class AdminController {
@@ -23,7 +21,7 @@ export default class AdminController {
     const insert = await AdminModel.create({
       name,
       email,
-      role,
+      role: "admin",
       birthDate, 
       athletes
     });
@@ -37,7 +35,7 @@ export default class AdminController {
   }
 
   @Get('/', [checkJwt, checkRole])
-  static async findAll(req: BaseRequest, res: BaseResponse) {
+  static async findAllAdmin(req: BaseRequest, res: BaseResponse) {
     try {
       const admin = await AdminModel.find()
       return res.success(admin)
@@ -50,8 +48,8 @@ export default class AdminController {
   static async findAll(req: BaseRequest, res: BaseResponse) {
 
     try {
-      const Id = res.locals.userId.id;
-      const admin = await AdminModel.findById({id});
+      const id = res.locals.userId.id;
+      const admin = await AdminModel.findById({_id:id});
       const athletesList = []
 
       for (const i in admin.athletes) {
