@@ -11,10 +11,7 @@ export default class WorkoutController {
   @Post('/', [checkJwt, checkRole])
   static async storeExerciseWorkout(req: BaseRequest, res: BaseResponse) {
     try {
-      console.log("consumerId")
-
       const { consumerId, day, name, series, repetition } = req.body;
-
 
       const training = await WorkoutModel.findOne({consumerId, day});
 
@@ -93,6 +90,24 @@ export default class WorkoutController {
 
     }
 
+    @Post('/complete-workout', [checkJwt])
+    static async completeWorkout(req: BaseRequest, res: BaseResponse) {
+
+      try {
+        const { day } = req.body;
+        const workout = await Workout.findOne({day, consumerId: res.locals.userId.id})
+  
+        workout.counter = workout.counter + 1
+  
+        await workout.save()
+  
+        return res.success("Contador atualizado");
+
+      } catch (error) {
+        return res.error(error)
+      }
+    }
+
   // @Post('/')
   // static async storeWorkout(req: BaseRequest, res: BaseResponse) {
 
@@ -123,16 +138,16 @@ export default class WorkoutController {
     return res.success(workout);
   }
 
-  @Post('/completeWorkout', [checkJwt])
-  static async completeWorkout(req: BaseRequest, res: BaseResponse) {
+  // @Post('/completeWorkout', [checkJwt])
+  // static async completeWorkout(req: BaseRequest, res: BaseResponse) {
 
-    const {id} = req.body;
-    const workout = await Workout.findOne({_id: id})
-    const update = {counter: workout.counter+1}
+  //   const {id} = req.body;
+  //   const workout = await Workout.findOne({_id: id})
+  //   const update = {counter: workout.counter+1}
 
-    const newworkout = await Workout.findOneAndUpdate({_id: id}, update);
-    return res.success(newworkout);
-  }
+  //   const newworkout = await Workout.findOneAndUpdate({_id: id}, update);
+  //   return res.success(newworkout);
+  // }
 
   @Get('/training', [checkJwt])
   static async getWorkout(req: BaseRequest, res: BaseResponse) {
