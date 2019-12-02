@@ -41,7 +41,7 @@ export default class WorkoutController {
 
       await workoutdb.save()
 
-      return res.success("Exércio adicionado ao treino com sucesso")
+      return res.success("Treino adicionado com sucesso, id: " + exercise.id)
       
     } catch (error) {
       return res.error(error)
