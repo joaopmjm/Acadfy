@@ -19,7 +19,6 @@ export default class AuthController {
   @Post('/login')
   static async logIn(req: BaseRequest, res: BaseResponse) {
     try {
-
       const { email, password } = req.body;
 
       const userdb = await UserModel.findOne({email})
