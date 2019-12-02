@@ -3,6 +3,7 @@ import api from '../../services/api';
 
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import Toast from 'react-native-simple-toast';
 
 class Register extends Component {
     state = {
@@ -116,7 +117,10 @@ class Register extends Component {
 
                     <View style={styles.menssageResView}>
                         {this.state.isRegistred ?
-                            <Text style={styles.menssageRes}>{this.props.navigation.navigate('Login')}</Text> :
+                            <Text style={styles.menssageRes}>{
+                                Toast.show(this.state.menssage),
+                                this.props.navigation.navigate('Login')    
+                            }</Text> :
                             <Text style={styles.menssageRes}>{this.state.erro}</Text>}
                     </View>
 
