@@ -116,7 +116,7 @@ class Register extends Component {
 
                     <View style={styles.menssageResView}>
                         {this.state.isRegistred ?
-                            <Text style={styles.menssageRes}>{this.state.menssage}</Text> :
+                            <Text style={styles.menssageRes}>{this.props.navigation.navigate('Login')}</Text> :
                             <Text style={styles.menssageRes}>{this.state.erro}</Text>}
                     </View>
 
