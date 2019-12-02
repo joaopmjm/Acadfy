@@ -22,7 +22,7 @@ export default class ExerciseController {
 
   @Get('/trainer', [checkJwt, checkRole])
   static async getExercises(req, res) {
-    const trainer_id = req.locals.userId;
+    const trainer_id = res.locals.userId;
     return res.success(await Exercise.findByTrainer(trainer_id))
   }
 
