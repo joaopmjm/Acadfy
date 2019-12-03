@@ -23,7 +23,7 @@ class LoginScreen extends React.Component {
         email: email,
         password: password
       })
-      if (response.data["expiresIn"] == "900" || response.data["expiresIn"] == "9000000") {
+      if (response) {
         console.log("Logou")
         this.setState({
           token: response.data["token"]
