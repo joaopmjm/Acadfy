@@ -31,7 +31,7 @@ class HomeScreen extends React.Component {
         }
         var today = new Date().getDay();
         this.getWorkouts(today);
-        
+
     }
 
 
@@ -85,19 +85,21 @@ class HomeScreen extends React.Component {
         }
         var today = this.state.currentDayNumber;
         var todayNumber = this.state.day;
-        if (today === 6) {
-            this.setState({
-                day: todayNumber + 1,
-                currentDay: days[0],
-                currentDayNumber: 0
-            })
-        } else {
-            this.setState({
-                day: todayNumber + 1,
-                currentDay: days[today + 1],
-                currentDayNumber: today + 1
-            })
+        if (this.state.day !== 30) {
+            if (today === 6) {
+                this.setState({
+                    day: todayNumber + 1,
+                    currentDay: days[0],
+                    currentDayNumber: 0
+                })
+            } else {
+                this.setState({
+                    day: todayNumber + 1,
+                    currentDay: days[today + 1],
+                    currentDayNumber: today + 1
+                })
 
+            }
         }
         setTimeout(() => this.getWorkouts(this.state.currentDayNumber), 500);
 
@@ -115,23 +117,25 @@ class HomeScreen extends React.Component {
         }
         var today = this.state.currentDayNumber;
         var todayNumber = this.state.day;
-        if (today === 0) {
-            this.setState({
-                day: todayNumber - 1,
-                currentDay: days[6],
-                currentDayNumber: 6
-            })
-        } else {
-            this.setState({
-                day: todayNumber - 1,
-                currentDay: days[today - 1],
-                currentDayNumber: today - 1,
-            })
+        if (this.state.day !== 1) {
+            if (today === 0) {
+                this.setState({
+                    day: todayNumber - 1,
+                    currentDay: days[6],
+                    currentDayNumber: 6
+                })
+            } else {
+                this.setState({
+                    day: todayNumber - 1,
+                    currentDay: days[today - 1],
+                    currentDayNumber: today - 1,
+                })
+            }
         }
         setTimeout(() => this.getWorkouts(this.state.currentDayNumber), 500);
 
     }
-  
+
 
     async getWorkouts(day) {
         const days = {
