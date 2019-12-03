@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 
 export const MyReactNativeForm = props => (
   <Formik
-    initialValues={{ nome: "", idade: "", peso: "", altura: "", sexo: 0, date: new Date() }}
+    initialValues={{ nome: "Alberto", email: "alberto12@gmail.com", idade: "35", telefone: "11999898989", cref: "12345678", sexo: 0, date: new Date(441860400000) }}
     onSubmit={values => console.log(values)}
   >
     {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
@@ -120,7 +120,7 @@ export const MyReactNativeForm = props => (
                 inputStyle={styles.input}
                 onChangeText={handleChange("telefone")}
                 onBlur={handleBlur("telefone")}
-                value={values.altura}
+                value={values.telefone}
               />
             </KeyboardAvoidingView>
             <KeyboardAvoidingView style={styles.box}>
@@ -131,7 +131,7 @@ export const MyReactNativeForm = props => (
                 inputStyle={styles.input}
                 onChangeText={handleChange("telefone")}
                 onBlur={handleBlur("telefone")}
-                value={values.altura}
+                value={values.cref}
               />
             </KeyboardAvoidingView>
             <Text style={styles.item}>Gênero</Text>

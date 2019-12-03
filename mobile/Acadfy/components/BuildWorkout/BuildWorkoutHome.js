@@ -15,13 +15,29 @@ export default class BuildWorkoutHome extends React.Component {
                     '1': {
                         name: 'Supino reto',
                         sets: '3',
-                        reps: '10'
+                        reps: '15'
                     },
                     '2': {
                         name: 'Supino inclinado',
                         sets: '3',
-                        reps: '20'
-                    }
+                        reps: '15'
+                    },
+                    '3': {
+                        name: 'Crucifixo invertido',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Crucifixo inferior',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '5': {
+                        name: 'Elevação lateral',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    
                 },
             },
             currentStudent: 'Nicolas',
@@ -36,7 +52,7 @@ export default class BuildWorkoutHome extends React.Component {
 
     loadStudents() {
         // get students
-        this.setState({ students: ['Nicolas', 'Gustavo'] });
+        this.setState({ students: ['Roberto'] });
     }
 
     changeStudent(newStudent) {
@@ -52,86 +68,163 @@ export default class BuildWorkoutHome extends React.Component {
                 Seg: {
                     '1': {
                         name: 'Supino reto',
-                        sets: Math.random().toString(),
-                        reps: '10'
+                        sets: '3',
+                        reps: '15'
                     },
                     '2': {
                         name: 'Supino inclinado',
                         sets: '3',
-                        reps: '20'
-                    }
+                        reps: '15'
+                    },
+                    '3': {
+                        name: 'Crucifixo invertido',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Crucifixo inferior',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '5': {
+                        name: 'Elevação lateral',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    
                 },
                 Ter: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
-                        reps: '10'
+                        name: 'Leg Press',
+                        sets: '3',
+                        reps: '15'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Leg Curl',
                         sets: '3',
-                        reps: '20'
+                        reps: '15'
+                    },
+                    '3': {
+                        name: 'Levantamento terra',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Leg extension',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Agachamento livre',
+                        sets: '3',
+                        reps: '15'
                     }
                 },
                 Qua: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
-                        reps: '10'
+                        name: '15 min esteira',
+                        sets: '1',
+                        reps: '1'
                     },
                     '2': {
-                        name: 'Supino inclinado',
-                        sets: '3',
-                        reps: '20'
+                        name: '25 min escada',
+                        sets: '1',
+                        reps: '1'
                     }
                 },
                 Qui: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        name: 'Elevação lateral',
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Desenvolvimento com barra livre',
                         sets: '3',
                         reps: '20'
-                    }
+                    },
+                    '3': {
+                        name: 'Abdominal infra',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '4': {
+                        name: 'Abdominal supra',
+                        sets: '3',
+                        reps: '20'
+                    },
+
                 },
                 Sex: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        name: 'Supino Inclinado',
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Supino com halteres',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '3': {
+                        name: 'Flexão de cotovelo',
                         sets: '3',
                         reps: '20'
                     }
                 },
                 Sab: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        name: 'Remada curva',
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Remada pronada',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '3': {
+                        name: 'Rosca direta',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '4': {
+                        name: 'Tríceps testa',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '5': {
+                        name: 'Bíceps polia',
                         sets: '3',
                         reps: '20'
                     }
                 },
                 Dom: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        name: 'Stiff',
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Prancha',
                         sets: '3',
-                        reps: '20'
-                    }
+                        reps: '30s'
+                    },
+                    '3': {
+                        name: 'Barra fixa',
+                        sets: '3',
+                        reps: '10'
+                    },
+                    '4': {
+                        name: 'Cross over crucifixo',
+                        sets: '3',
+                        reps: '10'
+                    },
+                    '5': {
+                        name: 'Cross over tríceps corda',
+                        sets: '3',
+                        reps: '10'
+                    },
                 },
             }
         });
