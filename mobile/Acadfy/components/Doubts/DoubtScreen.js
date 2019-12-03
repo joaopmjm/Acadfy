@@ -6,7 +6,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Axios from 'axios';
 
 function DoubtScreen(){
-  var [msgs, setMsgs] = useState([]);
+  var [msgs, setMsgs] = useState([{msg:"Eae Roberto como tem ido os treinos?",author:"Alberto"},{msg:"Razoaveis, tenho tido dores no joelho direito",author:"Roberto"}
+  ,{msg:"Nossa que pena ouvir isso, vamos tentar pegar mais leve entao!",author:"Alberto"},{msg:"Sim, mas tenho feito gelo e passado catafan",author:"Roberto"},
+  {msg:"Pelo menos alivia sua dor, mas vamos pegar mais leve.",author:"Alberto"},{msg:"Claro, sempre",author:"Roberto"}
+  ,{msg:"Bons treinos, e evite agachar muito esses dias, estou aqui se precisar",author:"Alberto"},{msg:"Obrigado! Adeus.",author:"Roberto"},]);
   var [text, setText] = useState("");
   const [name, setName] = useState("");
   const [user_id, setUserId] = useState("");
@@ -73,7 +76,7 @@ function DoubtScreen(){
       var new_msg = [{msg : text.text,author: name}];
     }else{
       //para o usuario mandar
-      var new_msg = [{msg : text.text,author: name}];
+      var new_msg = [{msg : text.text,author: "Roberto"}];
     }
     var new_hist = msgs.concat(new_msg);
     setText("");
