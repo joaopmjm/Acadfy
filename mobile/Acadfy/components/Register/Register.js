@@ -31,8 +31,6 @@ class Register extends Component {
 
     register = async () => {
         const { name, email, password, password2 } = this.state;
-        
-        console.log(email)
 
         try {
             if (name !== '' && email !== '' && password !== '' && password2 !== '') {
@@ -45,11 +43,13 @@ class Register extends Component {
                             const response = await api.post('/auth/register', {
                                 name,
                                 email,
-                                password
+                                password,
+                                height: "100",
+                                weight: "100",
+                                birthDate: "01/01/1999",
+                                trainerId: "5de55f99625bde281a996515",
                             })
-                                .catch(response => console.log(response))
         
-                            console.log(response)
                             this.setState({ isRegistred: true, menssage: response.data })
 
                         } else { this.setState({ isRegistred: false, erro: "Senhas não coincidem!" }) }
@@ -61,7 +61,7 @@ class Register extends Component {
             } else { this.setState({ isRegistred: false, erro: "Há campos não preenchidos!" }) }
 
         } catch (err) {
-            this.setState({ isRegistred: false, erro: "Email já registrado!" })
+            this.setState({ isRegistred: false, erro: "Email ja registrado!" })
             console.log(err);
         }
     }
