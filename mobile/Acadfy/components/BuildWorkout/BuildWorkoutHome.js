@@ -134,51 +134,97 @@ export default class BuildWorkoutHome extends React.Component {
                 },
                 Qui: {
                     '1': {
-                        name: 'Supino reto',
+                        name: 'Elevação lateral',
                         sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Desenvolvimento com barra livre',
                         sets: '3',
                         reps: '20'
-                    }
+                    },
+                    '3': {
+                        name: 'Abdominal infra',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '4': {
+                        name: 'Abdominal supra',
+                        sets: '3',
+                        reps: '20'
+                    },
+
                 },
                 Sex: {
                     '1': {
-                        name: 'Supino reto',
+                        name: 'Supino Inclinado',
                         sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Supino com halteres',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '3': {
+                        name: 'Flexão de cotovelo',
                         sets: '3',
                         reps: '20'
                     }
                 },
                 Sab: {
                     '1': {
-                        name: 'Supino reto',
+                        name: 'Remada curva',
                         sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Remada pronada',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '3': {
+                        name: 'Rosca direta',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '4': {
+                        name: 'Tríceps testa',
+                        sets: '3',
+                        reps: '20'
+                    },
+                    '5': {
+                        name: 'Bíceps polia',
                         sets: '3',
                         reps: '20'
                     }
                 },
                 Dom: {
                     '1': {
-                        name: 'Supino reto',
+                        name: 'Stiff',
                         sets: '3',
                         reps: '10'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Prancha',
                         sets: '3',
-                        reps: '20'
-                    }
+                        reps: '30s'
+                    },
+                    '3': {
+                        name: 'Barra fixa',
+                        sets: '3',
+                        reps: '10'
+                    },
+                    '4': {
+                        name: 'Cross over crucifixo',
+                        sets: '3',
+                        reps: '10'
+                    },
+                    '5': {
+                        name: 'Cross over tríceps corda',
+                        sets: '3',
+                        reps: '10'
+                    },
                 },
             }
         });
