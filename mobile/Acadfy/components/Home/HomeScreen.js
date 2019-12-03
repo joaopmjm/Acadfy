@@ -216,6 +216,9 @@ class HomeScreen extends React.Component {
                     <View style={styles.end}>
                         <Button title="Finalizar treino" buttonStyle={{ backgroundColor: '#0174DF', borderRadius: 20 }} />
                     </View>
+                    <View style={styles.end}>
+                        <Button title="Sair" buttonStyle={{ backgroundColor: '#cc0000', borderRadius: 20 }} onPress={() => {this.props.navigation.navigate('Login')}} />
+                    </View>
                 </ScrollView>
             </View>
 
