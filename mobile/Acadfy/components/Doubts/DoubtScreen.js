@@ -47,26 +47,26 @@ function DoubtScreen(){
     
   const getHistory = async () => {
     // get Hist of chat
-    let token = await AsyncStorage.getItem('token')
-        try {
-            const response = await Axios({
-                url: 'http://107.20.116.185/message/history',
-                method: 'get',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token': token,
-                },
-                body:{
-                  'user_id':user_id,
-                  'admin_id':admin_id,
-                }
-            })
-            const resJSON = JSON.stringify(response.data);
-            console.log("Historico "+ resJSON);
-            //setMsgs(resJSON.data);
-        } catch (error) {
-            console.error(error);
-        }
+    // let token = await AsyncStorage.getItem('token')
+    //     try {
+    //         const response = await Axios({
+    //             url: 'http://107.20.116.185/message/history',
+    //             method: 'get',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'token': token,
+    //             },
+    //             body:{
+    //               'user_id':user_id,
+    //               'admin_id':admin_id,
+    //             }
+    //         })
+    //         const resJSON = JSON.stringify(response.data);
+    //         console.log("Historico "+ resJSON);
+    //         //setMsgs(resJSON.data);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
   };
 
   const handleSend = async () => {
@@ -83,58 +83,58 @@ function DoubtScreen(){
     setMsgs(new_hist);
 
     // actual coding after this line
-    if (role === "admin"){
-      let token = await AsyncStorage.getItem('token')
-        try {
-            const response = await Axios({
-                url: 'http://107.20.116.185/message/admin-mensage',
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token': token,
-                },
-                body:{
-                  'name': name,
-                  'role':"admin",
-                  'msn':text.text,
-                  'admin_id':admin_id,
-                  'user_id':user_id,
-                }
-            })
-        } catch (error) {
-            console.error(error);
-        } finally{
-          console.log("Added msg: " + text.text);
-          setText("");
-        }
+    // if (role === "admin"){
+    //   let token = await AsyncStorage.getItem('token')
+    //     try {
+    //         const response = await Axios({
+    //             url: 'http://107.20.116.185/message/admin-mensage',
+    //             method: 'post',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'token': token,
+    //             },
+    //             body:{
+    //               'name': name,
+    //               'role':"admin",
+    //               'msn':text.text,
+    //               'admin_id':admin_id,
+    //               'user_id':user_id,
+    //             }
+    //         })
+    //     } catch (error) {
+    //         console.error(error);
+    //     } finally{
+    //       console.log("Added msg: " + text.text);
+    //       setText("");
+    //     }
 
-    }else{
-      let token = await AsyncStorage.getItem('token')
-      const msn = text.text
-        try {
-            const response = await Axios({
-                url: 'http://107.20.116.185/message/user-message',
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token': token,
-                },
-                body:{
-                  'name': name,
-                  'role':"consumer",
-                  'msn':msn,
-                  'admin_id':admin_id,
-                  'user_id':user_id, 
-                }
-            })
-            console.log("Exited sending")
-        } catch (error) {
-            console.error(error);
-        }finally{
-          console.log("Added msg: " + text.text);
-          setText("");
-        }
-  };}
+    // }else{
+    //   let token = await AsyncStorage.getItem('token')
+    //   const msn = text.text
+    //     try {
+    //         const response = await Axios({
+    //             url: 'http://107.20.116.185/message/user-message',
+    //             method: 'post',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'token': token,
+    //             },
+    //             body:{
+    //               'name': name,
+    //               'role':"consumer",
+    //               'msn':msn,
+    //               'admin_id':admin_id,
+    //               'user_id':user_id, 
+    //             }
+    //         })
+    //         console.log("Exited sending")
+    //     } catch (error) {
+    //         console.error(error);
+    //     }finally{
+    //       console.log("Added msg: " + text.text);
+    //       setText("");
+    //     }}
+  };
 
   useEffect(()=>{
     if (name === ""){getUserData();}
