@@ -16,12 +16,12 @@ class WorkoutDataScreen extends React.Component {
             <View style={styles.page}>
                 <ScrollView>
                     <Text style={styles.title}>Treinos realizados</Text>
-                    <Text style={styles.workoutsNumber}>10</Text>
-                    <Text style={styles.workoutsDescription}>Treinos de perna realizados no último mês</Text>
                     <Text style={styles.workoutsNumber}>15</Text>
                     <Text style={styles.workoutsDescription}>Treinos de superiores realizados no último mês</Text>
                     <Text style={styles.workoutsNumber}>10</Text>
                     <Text style={styles.workoutsDescription}>Treinos cardiovasculares realizados no último mês</Text>
+                    <Text style={styles.workoutsNumberRed}>3</Text>
+                    <Text style={styles.workoutsDescription}>Treinos de perna realizados no último mês</Text>
                 </ScrollView>
             </View>
 
@@ -65,6 +65,14 @@ const styles = StyleSheet.create({
         textAlign: 'center', 
         fontSize: hp('3%')
     },
+    workoutsNumberRed: {
+        fontSize: hp('3%'),
+        color: 'white',
+        alignSelf: 'center',
+        backgroundColor: '#cc0000',
+        borderRadius: wp('5%'),
+        padding: wp('2%')
+    }
   
   
 })

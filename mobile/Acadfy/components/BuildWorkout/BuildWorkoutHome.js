@@ -15,13 +15,29 @@ export default class BuildWorkoutHome extends React.Component {
                     '1': {
                         name: 'Supino reto',
                         sets: '3',
-                        reps: '10'
+                        reps: '15'
                     },
                     '2': {
                         name: 'Supino inclinado',
                         sets: '3',
-                        reps: '20'
-                    }
+                        reps: '15'
+                    },
+                    '3': {
+                        name: 'Crucifixo invertido',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Crucifixo inferior',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '5': {
+                        name: 'Elevação lateral',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    
                 },
             },
             currentStudent: 'Nicolas',
@@ -36,7 +52,7 @@ export default class BuildWorkoutHome extends React.Component {
 
     loadStudents() {
         // get students
-        this.setState({ students: ['Nicolas', 'Gustavo'] });
+        this.setState({ students: ['Roberto'] });
     }
 
     changeStudent(newStudent) {
@@ -52,43 +68,74 @@ export default class BuildWorkoutHome extends React.Component {
                 Seg: {
                     '1': {
                         name: 'Supino reto',
-                        sets: Math.random().toString(),
-                        reps: '10'
+                        sets: '3',
+                        reps: '15'
                     },
                     '2': {
                         name: 'Supino inclinado',
                         sets: '3',
-                        reps: '20'
-                    }
+                        reps: '15'
+                    },
+                    '3': {
+                        name: 'Crucifixo invertido',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Crucifixo inferior',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '5': {
+                        name: 'Elevação lateral',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    
                 },
                 Ter: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
-                        reps: '10'
+                        name: 'Leg Press',
+                        sets: '3',
+                        reps: '15'
                     },
                     '2': {
-                        name: 'Supino inclinado',
+                        name: 'Leg Curl',
                         sets: '3',
-                        reps: '20'
+                        reps: '15'
+                    },
+                    '3': {
+                        name: 'Levantamento terra',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Leg extension',
+                        sets: '3',
+                        reps: '15'
+                    },
+                    '4': {
+                        name: 'Agachamento livre',
+                        sets: '3',
+                        reps: '15'
                     }
                 },
                 Qua: {
                     '1': {
-                        name: 'Supino reto',
-                        sets: Math.random().toString(),
-                        reps: '10'
+                        name: '15 min esteira',
+                        sets: '1',
+                        reps: '1'
                     },
                     '2': {
-                        name: 'Supino inclinado',
-                        sets: '3',
-                        reps: '20'
+                        name: '25 min escada',
+                        sets: '1',
+                        reps: '1'
                     }
                 },
                 Qui: {
                     '1': {
                         name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {
@@ -100,7 +147,7 @@ export default class BuildWorkoutHome extends React.Component {
                 Sex: {
                     '1': {
                         name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {
@@ -112,7 +159,7 @@ export default class BuildWorkoutHome extends React.Component {
                 Sab: {
                     '1': {
                         name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {
@@ -124,7 +171,7 @@ export default class BuildWorkoutHome extends React.Component {
                 Dom: {
                     '1': {
                         name: 'Supino reto',
-                        sets: Math.random().toString(),
+                        sets: '3',
                         reps: '10'
                     },
                     '2': {

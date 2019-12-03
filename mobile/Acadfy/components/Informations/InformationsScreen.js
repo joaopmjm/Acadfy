@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
 export const MyReactNativeForm = props => (
   <Formik
-    initialValues={{ nome: "", idade: "", peso: "", altura: "", sexo: 0, date: new Date() }}
+    initialValues={{ nome: "Roberto", idade: "22", peso: "75 kg", altura: "1,80", sexo: 0, date: new Date(852170400000) }}
     onSubmit={values => console.log(values)}
   >
     {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
