@@ -4,6 +4,8 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { ListItem, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { api } from '../../services/api';
+import Axios from 'axios';
 
 
 
@@ -14,25 +16,25 @@ class HomeScreen extends React.Component {
             day: '',
             month: '',
             year: '',
-            sunday: ["Supino reto", "Supino inclinado", "Leg Press", "Stiff", "Levantamento Terra"],
-            monday: ["Agachamento livre", "Avanço livre", "Levantamento Terra", "Remada fechada", "Elevação lateral"],
-            tuesday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
-            wednesday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
-            thursday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
-            friday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
-            saturday: ["Exercício 1", "Exercício 2", "Exercício 3", "Exercício 4"],
-            currentDayNumber: '',
+            sunday: [],
+            monday: [],
+            tuesday: [],
+            wednesday: [],
+            thursday: [],
+            friday: [],
+            saturday: [],
+            currentDayNumber: 0,
             currentDay: 'sunday',
             token: "",
+            series: [],
+            reps: []
         }
-        this.getToken();
+        var today = new Date().getDay();
+        this.getWorkouts(today);
+        
     }
 
-    async getToken(){
-        this.setState({
-            token: await AsyncStorage.getItem('token'),
-        });
-    }
+
 
     componentDidMount() {
         var day = new Date().getDate();
@@ -97,6 +99,7 @@ class HomeScreen extends React.Component {
             })
 
         }
+        setTimeout(() => this.getWorkouts(this.state.currentDayNumber), 500);
 
     }
 
@@ -125,10 +128,53 @@ class HomeScreen extends React.Component {
                 currentDayNumber: today - 1,
             })
         }
+        setTimeout(() => this.getWorkouts(this.state.currentDayNumber), 500);
 
     }
+  
 
-    finishExercise(){
+    async getWorkouts(day) {
+        const days = {
+            0: 'sunday',
+            1: 'monday',
+            2: 'tuesday',
+            3: 'wednesday',
+            4: 'thursday',
+            5: 'friday',
+            6: 'saturday'
+        }
+        let token = await AsyncStorage.getItem('token')
+        try {
+            const response = await Axios({
+                url: "http://107.20.116.185/workouts/consumer",
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': token
+                },
+                data: {
+                    'day': day
+                }
+            })
+            let weekDay = days[day]
+            let exerciseList = []
+            let exerciseSeries = []
+            let exerciseReps = []
+            response.data.map((i) => exerciseList.push(i['name']))
+            response.data.map((i) => exerciseSeries.push(i['series']))
+            response.data.map((i) => exerciseReps.push(i['repetition']))
+            this.setState({
+                [weekDay]: exerciseList,
+                series: exerciseSeries,
+                reps: exerciseReps
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    }
+    finishExercise() {
         //call API to finish exercise
     }
 
@@ -153,9 +199,9 @@ class HomeScreen extends React.Component {
                                 <ListItem
                                     key={i}
                                     title={l}
-                                    subtitle="3x10 repetições"
-                                    titleStyle={{ color: "white", alignSelf: 'center'}}
-                                    subtitleStyle={{ color: "white", alignSelf: 'center'}}
+                                    subtitle={this.state.series[i] + "x" + this.state.reps[i]}
+                                    titleStyle={{ color: "white", alignSelf: 'center' }}
+                                    subtitleStyle={{ color: "white", alignSelf: 'center' }}
                                     containerStyle={{ backgroundColor: "#2E2E2E" }}
                                     bottomDivider
 

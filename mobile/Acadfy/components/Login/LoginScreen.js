@@ -28,6 +28,7 @@ class LoginScreen extends React.Component {
         this.setState({
           token: response.data["token"]
         })
+        await AsyncStorage.removeItem('token')
         await AsyncStorage.setItem('token', response.data['token'])
         if (response.data['role'] == 'admin') {
           this.props.navigation.navigate("AppAdmin")

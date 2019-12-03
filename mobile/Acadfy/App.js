@@ -87,7 +87,7 @@ const AppNavigator = createBottomTabNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'Exercícios',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-home" size={20} color="#0174DF" />
       )
