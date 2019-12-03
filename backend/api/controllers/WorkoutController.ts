@@ -37,7 +37,6 @@ export default class WorkoutController {
         repetition
       });
 
-
       await workoutdb.exercises.push(exercise.id)
 
       await workoutdb.save()

@@ -55,4 +55,17 @@ export default class MessageController {
       console.error(error)
     }
   }
+
+  @Post('/user_message',[checkJwt])
+  static async findAll(req: BaseRequest, res: BaseResponse) {
+    try {
+
+      const messages = await Message.find()
+
+      return res.success(messages);
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }

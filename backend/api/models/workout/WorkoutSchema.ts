@@ -6,6 +6,7 @@ const WorkoutSchema = new BaseSchema({
   trainerId: String,
   exercises: [],
   counter: Number,
+  workout: ["perna", "braço", "ombro", "costas","peito"]
 });
 
 export default WorkoutSchema;
