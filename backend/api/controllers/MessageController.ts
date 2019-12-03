@@ -6,9 +6,10 @@ import { checkRole } from '../middlewares/checkRole';
 @Controller('/message')
 export default class MessageController {
 
-  @Get('/history',[checkJwt])
+  @Post('/history',[checkJwt])
   static async hist(req: BaseRequest, res: BaseResponse) {
-    const {admin_id,user_id} = req.body;
+
+    const { admin_id, user_id } = req.body;
 
     const historic = await Message.find({ admin_id: admin_id, user_id:user_id});
 
@@ -16,7 +17,7 @@ export default class MessageController {
 
   }
 
-  @Post('/admin_message',[checkJwt,checkRole])
+  @Post('/admin-message',[checkJwt,checkRole])
   static async adMSN(req: BaseRequest, res: BaseResponse) {
     try {
 
@@ -36,7 +37,7 @@ export default class MessageController {
     }
   }
 
-  @Post('/user_message',[checkJwt])
+  @Post('/user-message',[checkJwt])
   static async usMSN(req: BaseRequest, res: BaseResponse) {
     try {
 
@@ -56,7 +57,7 @@ export default class MessageController {
     }
   }
 
-  @Post('/user_message',[checkJwt])
+  @Get('/find',[checkJwt])
   static async findAll(req: BaseRequest, res: BaseResponse) {
     try {
 
