@@ -8,6 +8,7 @@ Type=simple
 # User=ubuntu
 Environment="PORT=80"
 Environment="NODE_ENV=production"
+Environment="JWTKEY=CHANGETHIS"
 WorkingDirectory=/home/ubuntu/acadfy/backend/
 ExecStart=/usr/bin/yarn start
 
