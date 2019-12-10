@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import api from '../../services/api';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, AsyncStorage, ScrollView } from 'react-native';
 
 class ForgotPasswordScreen extends React.Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class ForgotPasswordScreen extends React.Component {
       if (response) {
         console.log('Senha Atualizada')
         this.setState({
-          msg2: response.data
+          msg2: 'Senha atualizada'
         })
       }
     } catch (e) {
@@ -59,7 +59,9 @@ class ForgotPasswordScreen extends React.Component {
 
   render() {
     return (
+      
       <View style={styles.page}>
+        <ScrollView>
 
         <Text style={styles.label}>Email: </Text>
         <TextInput placeholderTextColor='gray' style={styles.input} placeholder="Digite seu email" onChangeText={(text) => this.setState({ email: text })}></TextInput>
@@ -85,7 +87,7 @@ class ForgotPasswordScreen extends React.Component {
         <View style={styles.buttonView}>
           <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('Login') }}><Text style={styles.buttonText}>Voltar</Text></TouchableOpacity>
         </View>
-        
+      </ScrollView>
       </View>
     );
   }
