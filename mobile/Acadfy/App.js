@@ -14,6 +14,7 @@ import BuildWorkout from './components/BuildWorkout/BuildWorkout';
 import WorkoutDataScreen from './components/WorkoutData/WorkoutDataScreen';
 import LoginScreen from './components/Login/LoginScreen';
 import { createStackNavigator } from 'react-navigation-stack';
+import ForgotPasswordScreen from './components/ForgotPassword/ForgotPasswordScreen';
 
 
 const LoginStack = createStackNavigator({
@@ -28,6 +29,14 @@ const LoginStack = createStackNavigator({
 const RegisterStack = createStackNavigator({
   Register: {
     screen: Register,
+    navigationOptions: {
+      header: null
+    }
+  },
+})
+const ForgotPasswordStack = createStackNavigator({
+  ForgotPassword: {
+    screen: ForgotPasswordScreen,
     navigationOptions: {
       header: null
     }
@@ -122,7 +131,8 @@ export default createAppContainer(
     App: AppNavigator,
     AppAdmin: AppNavigatorAdmin,
     Login: LoginStack,
-    Register: RegisterStack
+    Register: RegisterStack,
+    ForgotPassword: ForgotPasswordStack
   },
     {
       initialRouteName: "Login"
