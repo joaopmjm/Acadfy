@@ -65,6 +65,10 @@ class LoginScreen extends React.Component {
         <View style={styles.buttonView}>
           <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('Register') }}><Text style={styles.buttonText}>Cadastrar</Text></TouchableOpacity>
         </View>
+
+        <View style={styles.buttonView}>
+          <TouchableOpacity style={styles.actionButtons} onPress={() => { this.props.navigation.navigate('ForgotPassword') }}><Text style={styles.buttonText2}>Esqueci minha senha</Text></TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -118,6 +122,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: wp('4%'),
+    letterSpacing: 1,
+    fontWeight: 'bold',
+    color: 'white',
+
+  },
+  buttonText2: {
+    fontSize: wp('3%'),
     letterSpacing: 1,
     fontWeight: 'bold',
     color: 'white',
